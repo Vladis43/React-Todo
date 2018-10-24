@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
 import ToDoElement from './ToDoElement'
 
 class ToDo extends Component{
@@ -6,16 +6,16 @@ class ToDo extends Component{
         toDoTitle: '',
         toDos: [],
         errorMessage: ''
-    };
+    }
 
     handleChange = (event) => {
         this.setState({
             toDoTitle: event.target.value
         })
-    };
+    }
 
     handleAdd = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if(this.state.toDoTitle === ''){
             this.setState({
@@ -27,34 +27,30 @@ class ToDo extends Component{
                 errorMessage: ''
             })
         }
-    };
+    }
 
-    handleRemove = (event, elem) => {
-        event.preventDefault();
-
+    handleRemove = (todo) => {
         const newToDos = this.state.toDos.filter((elems) => {
-            return elems !== elem
+            return elems !== todo
         })
 
         this.setState({
-            toDos: [...newToDos]
+            toDos: newToDos
         })
-    };
+    }
 
-    handleClear = (event) => {
-        event.preventDefault();
-
+    handleClear = () => {
         this.setState({
             toDos: []
         })
-    };
+    }
 
     render(){
         return(
             <div className="wrapper">
                 <button onClick={event => this.handleClear(event)}>Clear</button>
                 <form onSubmit={event => this.handleAdd(event)}>
-                    <input type="text" value={this.state.toDoTitle} onChange={event => this.handleChange(event)}/>
+                    <input type="text" value={this.state.toDoTitle} onChange={this.handleChange}/>
                     <button type="submit">enter</button>
                 </form>
 
@@ -62,11 +58,11 @@ class ToDo extends Component{
                 <label style={{color: 'red'}}>{this.state.errorMessage}</label>
 
                 <div className="outputList">
-                    {this.state.toDos.map((elem, index) => {
+                    {this.state.toDos.map((todo, index) => {
                         return (
-                            <div key={`${elem} ${index}`}>
-                                <ToDoElement element={elem} />
-                                <button onClick={event => this.handleRemove(event, elem)}>Remove</button>
+                            <div key={index}>
+                                <ToDoElement element={todo} />
+                                <button onClick={event => this.handleRemove(todo)}>Remove</button>
                             </div>
                         )
                     })}
