@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32ad1b08-392a-4696-95a4-1725c7b496c7" name="Default Changelist" comment="Remove ToDos">
+    <list default="true" id="32ad1b08-392a-4696-95a4-1725c7b496c7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/Components/ToDo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ToDo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ToDoElement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ToDoElement.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,12 +27,14 @@
         <counts>
           <entry key="js" value="7" />
           <entry key="jsx" value="13" />
+          <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSX Harmony" value="13" />
           <entry key="JavaScript" value="7" />
+          <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -44,13 +45,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="2070" />
-          <entry key="jsx" value="2321" />
+          <entry key="jsx" value="2336" />
           <entry key="txt" value="99" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSX Harmony" value="2321" />
+          <entry key="JSX Harmony" value="2336" />
           <entry key="JavaScript" value="2070" />
           <entry key="PLAIN_TEXT" value="99" />
         </counts>
@@ -82,8 +83,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/ToDo.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="39" column="32" lean-forward="true" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+            <state relative-caret-position="903">
+              <caret line="78" column="13" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="13" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -225,11 +226,18 @@
       <option name="project" value="LOCAL" />
       <updated>1540388852710</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Remove ToDos">
+      <created>1540390765940</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1540390765940</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30297000" />
+    <option name="totallyTimeSpent" value="30730000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -256,10 +264,10 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32822967" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.27177033" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.27177033" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3291866" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.3291866" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.3291866" />
+      <window_info active="true" anchor="bottom" id="Messages" order="11" weight="0.3291866" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -325,6 +333,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/ToDoElement.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -337,8 +348,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/ToDo.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="39" column="32" lean-forward="true" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+        <state relative-caret-position="903">
+          <caret line="78" column="13" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="13" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

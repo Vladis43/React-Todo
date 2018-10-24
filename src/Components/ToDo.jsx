@@ -76,4 +76,6 @@ class ToDo extends Component{
     }
 }
 
+//TODO styles
+
 export default ToDo
