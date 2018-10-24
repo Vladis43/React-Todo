@@ -16,11 +16,11 @@ class ToDoElement extends Component{
         return(
             <div>
                 <div className="ToDoElement" onClick={event => this.handleClick(event)}>{this.props.element}</div>
-                <div>{this.state.isActive ? '' : <button>Close</button>}</div>
+                <div>{this.state.isActive ? '' : <label>&#10003; Checked</label>}</div>
             </div>
         )
     }
 }
-//TODO remove element onClick={event => this.removeElement(event)}
+
 
 export default ToDoElement

@@ -14,7 +14,7 @@ class ToDo extends Component{
         })
     };
 
-    handleClick = (event) => {
+    handleAdd = (event) => {
         event.preventDefault();
 
         if(this.state.toDoTitle === ''){
@@ -29,6 +29,18 @@ class ToDo extends Component{
         }
     };
 
+    handleRemove = (event, elem) => {
+        event.preventDefault();
+
+        const newToDos = this.state.toDos.filter((elems) => {
+            return elems !== elem
+        })
+
+        this.setState({
+            toDos: [...newToDos]
+        })
+    };
+
     handleClear = (event) => {
         event.preventDefault();
 
@@ -41,7 +53,7 @@ class ToDo extends Component{
         return(
             <div className="wrapper">
                 <button onClick={event => this.handleClear(event)}>Clear</button>
-                <form onSubmit={event => this.handleClick(event)}>
+                <form onSubmit={event => this.handleAdd(event)}>
                     <input type="text" value={this.state.toDoTitle} onChange={event => this.handleChange(event)}/>
                     <button type="submit">enter</button>
                 </form>
@@ -50,8 +62,13 @@ class ToDo extends Component{
                 <label style={{color: 'red'}}>{this.state.errorMessage}</label>
 
                 <div className="outputList">
-                    {this.state.toDos.map(function (elem, index) {
-                        return <ToDoElement key={`${elem} ${index}`} element={elem} />
+                    {this.state.toDos.map((elem, index) => {
+                        return (
+                            <div key={`${elem} ${index}`}>
+                                <ToDoElement element={elem} />
+                                <button onClick={event => this.handleRemove(event, elem)}>Remove</button>
+                            </div>
+                        )
                     })}
                 </div>
             </div>
