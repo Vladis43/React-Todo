@@ -29,11 +29,20 @@ class ToDo extends Component{
         }
     };
 
+    handleClear = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            toDos: []
+        })
+    };
+
     render(){
         return(
             <div className="wrapper">
-                <form onSubmit={e => this.handleClick(e)}>
-                    <input type="text" value={this.state.toDoTitle} onChange={e => this.handleChange(e)}/>
+                <button onClick={event => this.handleClear(event)}>Clear</button>
+                <form onSubmit={event => this.handleClick(event)}>
+                    <input type="text" value={this.state.toDoTitle} onChange={event => this.handleChange(event)}/>
                     <button type="submit">enter</button>
                 </form>
 
