@@ -1,15 +1,12 @@
-import React, {Component} from "react"
+import React from "react"
 
-class ToDoElement extends Component{
-    render(){
-        return(
-            <div>
-                <div>{this.props.element}</div>
-                <button onClick={this.props.removeClick}>Remove</button>
-            </div>
-        )
-    }
-}
+const ToDoElement = ({todo, id, onCheckedClicked, removeClick}) => (
+    <div id={id}>
+        <input type="checkbox" checked={todo.onChecked} onChange={() => onCheckedClicked(todo)}/>
+        <label onClick={() => onCheckedClicked(todo)}>{todo.text}</label>
+        <button onClick={removeClick}>Remove</button>
+    </div>
+)
 
 
 export default ToDoElement
