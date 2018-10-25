@@ -3,45 +3,42 @@ import ToDoElement from './ToDoElement'
 
 class ToDo extends Component{
     state = {
-        toDoTitle: '',
-        toDos: [],
+        todoText: '',
+        todos: [],
         errorMessage: ''
     }
 
     handleChange = (event) => {
         this.setState({
-            toDoTitle: event.target.value
+            todoText: event.target.value
         })
     }
 
     handleAdd = (event) => {
         event.preventDefault()
 
-        if(this.state.toDoTitle === ''){
+        if(this.state.todoText === ''){
             this.setState({
                 errorMessage: 'Please enter the value!'
             })
         } else {
             this.setState({
-                toDos: [...this.state.toDos, this.state.toDoTitle],
-                errorMessage: ''
+                todos: [...this.state.todos, this.state.todoText],
+                errorMessage: '',
+                todoText: ''
             })
         }
     }
 
-    handleRemove = (todo) => {
-        const newToDos = this.state.toDos.filter((elems) => {
-            return elems !== todo
-        })
-
+    handleRemove = (todo, index) => {
         this.setState({
-            toDos: newToDos
+            todos: this.state.todos.filter((elements, indexElements) => indexElements !== index)
         })
     }
 
     handleClear = () => {
         this.setState({
-            toDos: []
+            todos: []
         })
     }
 
@@ -50,7 +47,7 @@ class ToDo extends Component{
             <div className="wrapper">
                 <button onClick={event => this.handleClear(event)}>Clear</button>
                 <form onSubmit={event => this.handleAdd(event)}>
-                    <input type="text" value={this.state.toDoTitle} onChange={this.handleChange}/>
+                    <input type="text" value={this.state.todoText} onChange={this.handleChange}/>
                     <button type="submit">enter</button>
                 </form>
 
@@ -58,12 +55,9 @@ class ToDo extends Component{
                 <label style={{color: 'red'}}>{this.state.errorMessage}</label>
 
                 <div className="outputList">
-                    {this.state.toDos.map((todo, index) => {
+                    {this.state.todos.map((todo, index) => {
                         return (
-                            <div key={index}>
-                                <ToDoElement element={todo} />
-                                <button onClick={event => this.handleRemove(todo)}>Remove</button>
-                            </div>
+                            <ToDoElement key={index} element={todo} removeClick={() => this.handleRemove(todo, index)}/>
                         )
                     })}
                 </div>
