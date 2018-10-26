@@ -1,5 +1,7 @@
 import React, {Component} from "react"
+import AddTodo from './AddTodo'
 import ToDoElement from './ToDoElement'
+
 
 class ToDo extends Component{
     state = {
@@ -65,13 +67,10 @@ class ToDo extends Component{
         return(
             <div className="wrapper">
                 <button onClick={event => this.handleClear(event)}>Clear</button>
-                <form onSubmit={event => this.handleAdd(event)}>
-                    <input type="text" value={this.state.todoText} onChange={this.handleChange}/>
-                    <button type="submit">Add</button>
-                </form>
 
-                {/*Error message*/}
-                <label style={{color: 'red'}}>{this.state.errorMessage}</label>
+                <AddTodo value={this.state.todoText} onChange={this.handleChange} onSubmit={event => this.handleAdd(event)}/>
+
+                <label style={{color: 'red'}}>{this.state.errorMessage}</label> {/*error message*/}
 
                 <div className="outputList">
                     {this.state.todos.map((todo, index) => {
