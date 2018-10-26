@@ -1,10 +1,10 @@
-import React, {Component} from "react"
-import ToDo from './Components/ToDo'
+import React, {Component} from 'react'
+import Todo from './Todo'
 
 class App extends Component {
     render(){
         return(
-            <ToDo />
+            <Todo />
         )
     }
 }
