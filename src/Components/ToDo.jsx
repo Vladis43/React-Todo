@@ -49,7 +49,7 @@ class ToDo extends Component{
 
         if(this.state.todoText === ''){
             this.setState({
-                errorMessage: 'Please enter the value!'
+                errorMessage: 'Text field is required!'
             })
         } else {
             this.setState({
