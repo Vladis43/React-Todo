@@ -7,21 +7,36 @@ class ToDo extends Component{
     state = {
         todoText: '',
         todos: [
-            {
-                text: 'Bread',
-                onChecked: false
-            },
-            {
-                text: 'Kolbasa',
-                onChecked: false
-            },
-            {
-                text: 'M`yaso',
-                onChecked: false
-            }
+            // {
+            //     text: 'Bread',
+            //     onChecked: false
+            // },
+            // {
+            //     text: 'Kolbasa',
+            //     onChecked: false
+            // },
+            // {
+            //     text: 'M`yaso',
+            //     onChecked: false
+            // }
         ],
         errorMessage: ''
     }
+
+    componentDidUpdate() {
+        localStorage.setItem('todos', JSON.stringify(this.state.todos))
+    }
+
+    componentWillMount() {
+        const getItem = JSON.parse(localStorage.getItem('todos'))
+
+        if(localStorage.todos){
+            this.setState({
+                todos: getItem
+            })
+        }
+    }
+
 
     handleChange = (event) => {
         this.setState({
@@ -61,7 +76,6 @@ class ToDo extends Component{
         const todos = this.state.todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, onChecked: !todoItem.onChecked} : todoItem)
         this.setState({todos});
     }
-
 
     render(){
         return(
