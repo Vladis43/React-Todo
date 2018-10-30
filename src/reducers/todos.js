@@ -4,7 +4,7 @@ export const todos = (state = [], action) => {
             return [
                 ...state,
                 {
-                    text: 'some text'
+                    text: action.payload
                 }
             ]
         default:

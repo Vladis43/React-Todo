@@ -4,10 +4,10 @@ export const ADD_TODO = 'ADD_TODO'
 
 //action creators
 
-export const addTodo = (text) => {
+export const addTodo = (todo) => {
     return {
         type: ADD_TODO,
-        text
+        payload: todo
     }
 }
 
