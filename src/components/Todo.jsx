@@ -2,32 +2,32 @@ import React, {Component} from 'react'
 import AddTodo from './AddTodo'
 import TodoElement from './TodoElement'
 
+import {connect} from 'react-redux'
+
+// import {addTodo} from 'actions'
+import {changeTodo} from "actions"
+
 
 class Todo extends Component{
-    state = {
-        todoText: '',
-        todos: [],
-        errorMessage: ''
-    }
-
-    componentDidUpdate() {
-        localStorage.setItem('todos', JSON.stringify(this.state.todos))
-    }
-
-    componentDidMount() {
-        if(localStorage.todos){
-            this.setState({
-                todos: JSON.parse(localStorage.getItem('todos'))
-            })
-        }
-    }
+    //
+    // componentDidUpdate() {
+    //     localStorage.setItem('todos', JSON.stringify(this.props.todos))
+    // }
+    //
+    // componentDidMount() {
+    //     if(localStorage.todos){
+    //         this.setState({
+    //             todos: JSON.parse(localStorage.getItem('todos'))
+    //         })
+    //     }
+    // }
 
 
-    handleChange = (event) => {
-        this.setState({
-            todoText: event.target.value
-        })
-    }
+    // handleChange = (event) => {
+    //     this.setState({
+    //         todoText: event.target.value
+    //     })
+    // }
 
     handleAdd = (event) => {
         event.preventDefault()
@@ -38,7 +38,7 @@ class Todo extends Component{
             })
         } else {
             this.setState({
-                todos: [...this.state.todos, {text: this.state.todoText, completed: false}],
+                todos: [...this.props.todos, {text: this.props.todoText, completed: false}],
                 errorMessage: '',
                 todoText: ''
             })
@@ -47,7 +47,7 @@ class Todo extends Component{
 
     handleRemove = (index) => {
         this.setState({
-            todos: this.state.todos.filter((callback, indexItem) => indexItem !== index)
+            todos: this.props.todos.filter((callback, indexItem) => indexItem !== index)
         })
     }
 
@@ -58,23 +58,33 @@ class Todo extends Component{
     }
 
     handleChecked = (index) => {
-        const todos = this.state.todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem)
+        const todos = this.props.todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem)
         this.setState({todos});
     }
 
     render(){
+        console.log(this.props.todoText)
         return(
             <div>
                 <button onClick={this.handleClear}>Clear</button>
 
-                <AddTodo value={this.state.todoText} onChange={this.handleChange} onSubmit={this.handleAdd}/>
+                <AddTodo
+                    value={this.props.todoText}
+                    onChange={(event) => {this.props.changeTodo(event)}}
+                    onSubmit={this.handleAdd}
+                />
 
-                <label style={{color: 'red'}}>{this.state.errorMessage}</label>
+                <label style={{color: 'red'}}>{this.props.errorMessage}</label>
 
                 <div>
-                    {this.state.todos.map((todo, index) => {
+                    {this.props.todos.map((todo, index) => {
                         return (
-                            <TodoElement key={index} todo={todo} checkedClick={() => this.handleChecked(index)} removeClick={() => this.handleRemove(index)} />
+                            <TodoElement
+                                key={index}
+                                todo={todo}
+                                checkedClick={() => this.handleChecked(index)}
+                                removeClick={() => this.handleRemove(index)}
+                            />
                         )
                     })}
                 </div>
@@ -83,4 +93,20 @@ class Todo extends Component{
     }
 }
 
-export default Todo
+const MapStateToProps = (state) => {
+    return {
+        todoText: state.todoText,
+        todos: state.todos.todos,
+        errorMessage: state.errorMessage
+    }
+}
+
+const MapActionToProps = (dispatch) => {
+    return {
+        changeTodo: (event) => {
+            dispatch(changeTodo(event.target.value))
+        }
+    }
+}
+
+export default connect(MapStateToProps, MapActionToProps)(Todo)
