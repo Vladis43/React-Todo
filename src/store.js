@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-import AddTodoReducer from './reducers'
+import rootReducer from './reducers'
 
-export const store = createStore(AddTodoReducer, {}, applyMiddleware())
+export const store = createStore(rootReducer, {}, applyMiddleware())
 
