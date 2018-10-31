@@ -13,7 +13,7 @@ class TodoApp extends Component{
 
     render(){
 
-        const {todoText, todos, changeTodoText} = this.props
+        const {todoText, changeTodoText} = this.props
 
         return (
             <div>
