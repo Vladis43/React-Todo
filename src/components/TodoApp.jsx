@@ -4,8 +4,15 @@ import { connect } from 'react-redux'
 import { changeTodoText, addNewTodo } from 'actions'
 
 class TodoApp extends Component{
+    AddTodo = (event) => {
+        event.preventDefault();
+
+        this.props.addNewTodo(this.props.todoText)
+    }
+
+
     render(){
-        console.log()
+
         const {todoText, todos, changeTodoText} = this.props
 
         return (
@@ -13,7 +20,7 @@ class TodoApp extends Component{
                 <header>Todo App</header>
 
                 <div className="taskbar">
-                    <form onSubmit={(event) => addNewTodo(event.preventDefault())}>
+                    <form onSubmit={this.AddTodo}>
                         <input
                             type="text"
                             placeholder="Add new Todo"
@@ -27,7 +34,7 @@ class TodoApp extends Component{
                 </div>
 
                 <div className="tasklist">
-                    {todos.map((todo, index) => <h1 key={index}>{todo.text}</h1>)}
+
                 </div>
             </div>
         )

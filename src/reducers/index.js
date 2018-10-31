@@ -1,9 +1,6 @@
 const initialState = {
     todoText: '',
-    todos: [
-        {text: 'todo1', completed: false},
-        {text: 'todo2', completed: false}
-    ]
+    todos: ''
 }
 
 const rootReducers = (state = initialState, action) => {
