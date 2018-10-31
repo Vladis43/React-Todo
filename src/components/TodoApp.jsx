@@ -1,25 +1,25 @@
 import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeTodo } from 'actions'
+import { changeTodoText, addNewTodo } from 'actions'
 
 class TodoApp extends Component{
     render(){
-
-        const {todo, changeTodo} = this.props
+        console.log()
+        const {todoText, todos, changeTodoText} = this.props
 
         return (
             <div>
                 <header>Todo App</header>
 
                 <div className="taskbar">
-                    <form>
+                    <form onSubmit={(event) => addNewTodo(event.preventDefault())}>
                         <input
                             type="text"
                             placeholder="Add new Todo"
-                            value={todo}
+                            value={todoText}
                             onChange={(event) => {
-                                changeTodo(event.target.value)
+                                changeTodoText(event.target.value)
                             }}
                         />
                         <button type="submit">Add todo</button>
@@ -27,7 +27,7 @@ class TodoApp extends Component{
                 </div>
 
                 <div className="tasklist">
-                    {todo}
+                    {todos}
                 </div>
             </div>
         )
@@ -36,13 +36,15 @@ class TodoApp extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        todo: state.todo
+        todoText: state.todoText,
+        todos: state.todos
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeTodo: bindActionCreators(changeTodo, dispatch)
+        changeTodoText: bindActionCreators(changeTodoText, dispatch),
+        addNewTodo: bindActionCreators(addNewTodo, dispatch)
     }
 }
 

@@ -1,14 +1,18 @@
 const initialState = {
-    todo: 'first todo'
+    todoText: '',
+    todos: []
 }
 
 const rootReducers = (state = initialState, action) => {
     switch (action.type) {
-        case 'CHANGE_TODO':
+        case 'CHANGE_TODO_TEXT':
             return {
-                ...state, todo: action.payload
+                ...state, todoText: action.payload
             }
-            break
+        case 'ADD_NEW_TODO':
+            return {
+                ...state, todos: action.payload
+            }
         default: return state
     }
 }
