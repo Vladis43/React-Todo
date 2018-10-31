@@ -7,7 +7,7 @@ class TodoApp extends Component{
     AddTodo = (event) => {
         event.preventDefault();
 
-        this.props.addNewTodo(this.props.todoText)
+        this.props.addNewTodo([...this.props.todos, {text: this.props.todoText, completed: false}])
     }
 
 

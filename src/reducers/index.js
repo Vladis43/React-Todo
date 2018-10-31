@@ -11,7 +11,7 @@ const rootReducers = (state = initialState, action) => {
             }
         case 'ADD_NEW_TODO':
             return {
-                ...state, todos: {text: action.payload, completed: false}
+                ...state, todos: action.payload
             }
         default: return state
     }
