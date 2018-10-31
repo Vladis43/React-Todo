@@ -22,4 +22,3 @@ export const changeErrorMessage = (newMessage) => {
         payload: newMessage
     }
 }
-

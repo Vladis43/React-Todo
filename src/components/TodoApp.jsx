@@ -7,13 +7,15 @@ class TodoApp extends Component{
     AddTodo = (event) => {
         event.preventDefault();
 
-        const {todoText, todos, addNewTodo, changeErrorMessage} = this.props
+        const {todoText, todos, addNewTodo, changeErrorMessage, changeTodoText} = this.props
 
         if(todoText === ''){
             console.log('Text field is required!')
             changeErrorMessage('Text field is required!')
         } else {
             addNewTodo([...todos, {text: todoText, completed: false}])
+            changeTodoText('')
+            changeErrorMessage('')
         }
     }
 
