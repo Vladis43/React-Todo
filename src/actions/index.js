@@ -1,13 +1,18 @@
-//action types
+export const CHANGE_TODO_TEXT = 'CHANGE_TODO_TEXT'
+export const ADD_NEW_TODO = 'ADD_NEW_TODO'
 
-export const ADD_TODO = 'ADD_TODO'
-
-//action creators
-
-export const addTodo = (text) => {
+export const changeTodoText = (newTodo) => {
     return {
-        type: ADD_TODO,
-        text
+        type: CHANGE_TODO_TEXT,
+        payload: newTodo
+    }
+}
+
+export const addNewTodo = (newTodo) => {
+    console.log('Btn clicked!', newTodo)
+    return {
+        type: ADD_NEW_TODO,
+        payload: newTodo
     }
 }
 

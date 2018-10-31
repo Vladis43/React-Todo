@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 
+//Redux
 import { Provider } from 'react-redux'
-import { store } from './../store'
+import store  from 'store'
 
-import Todo from './Todo'
-
+//Component
+import TodoApp from './TodoApp'
 
 class App extends Component {
     render(){
         return(
             <Provider store={store}>
-                <Todo />
+                <TodoApp />
             </Provider>
         )
     }
