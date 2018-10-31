@@ -1,6 +1,6 @@
 const initialState = {
     todoText: '',
-    todos: ''
+    todos: []
 }
 
 const rootReducers = (state = initialState, action) => {

@@ -13,8 +13,8 @@ class TodoApp extends Component{
 
     render(){
 
-        const {todoText, changeTodoText} = this.props
-
+        const {todoText, todos, changeTodoText} = this.props
+        console.log(todos)
         return (
             <div>
                 <header>Todo App</header>
@@ -34,7 +34,9 @@ class TodoApp extends Component{
                 </div>
 
                 <div className="tasklist">
-
+                    {todos.map((todo, index) => {
+                        return <h1 key={index}>{todo.text}</h1>
+                    })}
                 </div>
             </div>
         )
