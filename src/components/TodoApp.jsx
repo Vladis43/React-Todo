@@ -1,22 +1,39 @@
 import React, {Component} from 'react'
+import uuidv4 from 'uuid'
+
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeTodoText, addNewTodo, changeErrorMessage } from 'actions'
+
+import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, changeErrorMessage } from 'actions'
 
 class TodoApp extends Component{
-    AddTodo = (event) => {
+    handleAddTodo = (event) => {
         event.preventDefault();
 
         const {todoText, todos, addNewTodo, changeErrorMessage, changeTodoText} = this.props
+        const idItem = uuidv4()
 
         if(todoText === ''){
             console.log('Text field is required!')
             changeErrorMessage('Text field is required!')
         } else {
-            addNewTodo([...todos, {text: todoText, completed: false}])
+            addNewTodo([...todos, {text: todoText, id: idItem, completed: false}])
             changeTodoText('')
             changeErrorMessage('')
         }
+    }
+
+    handleRemoveTodo = (index) => {
+        const {todos, deleteTodo} = this.props
+
+        deleteTodo(todos.filter((callback, indexItem) => indexItem !== index))
+
+    }
+
+    handleToggleTodo = (index) => {
+        const {todos, toggleTodo} = this.props
+
+        toggleTodo(todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem))
     }
 
 
@@ -30,7 +47,7 @@ class TodoApp extends Component{
                 <header>Todo App</header>
 
                 <div className="taskbar">
-                    <form onSubmit={this.AddTodo}>
+                    <form onSubmit={this.handleAddTodo}>
                         <input
                             type="text"
                             placeholder="Add new Todo"
@@ -47,7 +64,13 @@ class TodoApp extends Component{
 
                 <div className="tasklist">
                     {todos.map((todo, index) => {
-                        return <h1 key={index}>{todo.text}</h1>
+                        return (
+                            <div key={index}>
+                                <input type="checkbox" checked={todo.completed} onChange={() => this.handleToggleTodo(index)}/>
+                                <label onClick={() => this.handleToggleTodo(index)}>{todo.text}</label>
+                                <button onClick={() => this.handleRemoveTodo(index)}>Remove Todo</button>
+                            </div>
+                        )
                     })}
                 </div>
             </div>
@@ -67,6 +90,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         changeTodoText: bindActionCreators(changeTodoText, dispatch),
         addNewTodo: bindActionCreators(addNewTodo, dispatch),
+        toggleTodo: bindActionCreators(toggleTodo, dispatch),
+        deleteTodo: bindActionCreators(deleteTodo, dispatch),
         changeErrorMessage: bindActionCreators(changeErrorMessage, dispatch)
     }
 }
