@@ -1,6 +1,9 @@
 const initialState = {
     todoText: '',
-    todos: []
+    todos: [
+        {text: 'todo1', completed: false},
+        {text: 'todo2', completed: false}
+    ]
 }
 
 const rootReducers = (state = initialState, action) => {
@@ -11,7 +14,7 @@ const rootReducers = (state = initialState, action) => {
             }
         case 'ADD_NEW_TODO':
             return {
-                ...state, todos: action.payload
+                ...state, todos: {text: action.payload, completed: false}
             }
         default: return state
     }

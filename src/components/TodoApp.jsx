@@ -27,7 +27,7 @@ class TodoApp extends Component{
                 </div>
 
                 <div className="tasklist">
-                    {todos}
+                    {todos.map((todo, index) => <h1 key={index}>{todo.text}</h1>)}
                 </div>
             </div>
         )
