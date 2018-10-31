@@ -29,41 +29,40 @@ class Todo extends Component{
     //     })
     // }
 
-    handleAdd = (event) => {
-        event.preventDefault()
-
-        if(this.state.todoText === ''){
-            this.setState({
-                errorMessage: 'Text field is required!'
-            })
-        } else {
-            this.setState({
-                todos: [...this.props.todos, {text: this.props.todoText, completed: false}],
-                errorMessage: '',
-                todoText: ''
-            })
-        }
-    }
-
-    handleRemove = (index) => {
-        this.setState({
-            todos: this.props.todos.filter((callback, indexItem) => indexItem !== index)
-        })
-    }
-
-    handleClear = () => {
-        this.setState({
-            todos: []
-        })
-    }
-
-    handleChecked = (index) => {
-        const todos = this.props.todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem)
-        this.setState({todos});
-    }
+    // handleAdd = (event) => {
+    //     event.preventDefault()
+    //
+    //     if(this.state.todoText === ''){
+    //         this.setState({
+    //             errorMessage: 'Text field is required!'
+    //         })
+    //     } else {
+    //         this.setState({
+    //             todos: [...this.props.todos, {text: this.props.todoText, completed: false}],
+    //             errorMessage: '',
+    //             todoText: ''
+    //         })
+    //     }
+    // }
+    //
+    // handleRemove = (index) => {
+    //     this.setState({
+    //         todos: this.props.todos.filter((callback, indexItem) => indexItem !== index)
+    //     })
+    // }
+    //
+    // handleClear = () => {
+    //     this.setState({
+    //         todos: []
+    //     })
+    // }
+    //
+    // handleChecked = (index) => {
+    //     const todos = this.props.todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem)
+    //     this.setState({todos});
+    // }
 
     render(){
-        console.log(this.props.todoText)
         return(
             <div>
                 <button onClick={this.handleClear}>Clear</button>
@@ -95,18 +94,10 @@ class Todo extends Component{
 
 const MapStateToProps = (state) => {
     return {
-        todoText: state.todoText,
+        todoText: state.todos.todoText,
         todos: state.todos.todos,
-        errorMessage: state.errorMessage
+        // errorMessage: state.errorMessage
     }
 }
 
-const MapActionToProps = (dispatch) => {
-    return {
-        changeTodo: (event) => {
-            dispatch(changeTodo(event.target.value))
-        }
-    }
-}
-
-export default connect(MapStateToProps, MapActionToProps)(Todo)
+export default connect(MapStateToProps)(Todo)
