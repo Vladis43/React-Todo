@@ -1,20 +1,28 @@
 import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeTodoText, addNewTodo } from 'actions'
+import { changeTodoText, addNewTodo, changeErrorMessage } from 'actions'
 
 class TodoApp extends Component{
     AddTodo = (event) => {
         event.preventDefault();
 
-        this.props.addNewTodo([...this.props.todos, {text: this.props.todoText, completed: false}])
+        const {todoText, todos, addNewTodo, changeErrorMessage} = this.props
+
+        if(todoText === ''){
+            console.log('Text field is required!')
+            changeErrorMessage('Text field is required!')
+        } else {
+            addNewTodo([...todos, {text: todoText, completed: false}])
+        }
     }
+
 
 
     render(){
 
-        const {todoText, todos, changeTodoText} = this.props
-        console.log(todos)
+        const {todoText, todos, errorMessage, changeTodoText} = this.props
+
         return (
             <div>
                 <header>Todo App</header>
@@ -33,6 +41,8 @@ class TodoApp extends Component{
                     </form>
                 </div>
 
+                <label style={{color: 'red'}}>{errorMessage}</label>
+
                 <div className="tasklist">
                     {todos.map((todo, index) => {
                         return <h1 key={index}>{todo.text}</h1>
@@ -46,14 +56,16 @@ class TodoApp extends Component{
 const mapStateToProps = (state) => {
     return {
         todoText: state.todoText,
-        todos: state.todos
+        todos: state.todos,
+        errorMessage: state.errorMessage
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         changeTodoText: bindActionCreators(changeTodoText, dispatch),
-        addNewTodo: bindActionCreators(addNewTodo, dispatch)
+        addNewTodo: bindActionCreators(addNewTodo, dispatch),
+        changeErrorMessage: bindActionCreators(changeErrorMessage, dispatch)
     }
 }
 

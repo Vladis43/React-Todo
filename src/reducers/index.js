@@ -1,6 +1,7 @@
 const initialState = {
     todoText: '',
-    todos: []
+    todos: [],
+    errorMessage: ''
 }
 
 const rootReducers = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const rootReducers = (state = initialState, action) => {
             return {
                 ...state, todos: action.payload
             }
+        case 'CHANGE_ERROR_MESSAGE':
+            return {
+                ...state, errorMessage: action.payload
+            }
+
         default: return state
     }
 }
