@@ -2,6 +2,7 @@ export const CHANGE_TODO_TEXT = 'CHANGE_TODO_TEXT'
 export const ADD_NEW_TODO = 'ADD_NEW_TODO'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const DELETE_TODO = 'DELETE_TODO'
+export const CLEAR_ALL = 'CLEAR_ALL'
 export const CHANGE_ERROR_MESSAGE = 'CHANGE_ERROR_MESSAGE'
 export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE'
 
@@ -29,6 +30,13 @@ export const toggleTodo = (todo) => {
 export const deleteTodo = (todo) => {
     return {
         type: DELETE_TODO,
+        payload: todo
+    }
+}
+
+export const clearAll = (todo) => {
+    return {
+        type: CLEAR_ALL,
         payload: todo
     }
 }

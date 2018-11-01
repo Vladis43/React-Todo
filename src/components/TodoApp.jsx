@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import uuidv4 from 'uuid'
+import List from '@material-ui/core/List';
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, changeErrorMessage, getLocalStorage } from 'actions'
+import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, clearAll, changeErrorMessage, getLocalStorage } from 'actions'
 
 import HeaderComponent from "./HeaderComponent"
 import TaskBar from "./TaskBar"
@@ -50,13 +51,22 @@ class TodoApp extends Component{
         toggleTodo(todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem))
     }
 
+    handleClearAll = () => {
+        const {clearAll} = this.props
+
+        clearAll([])
+    }
+
     render(){
 
         const {todoText, todos, errorMessage, changeTodoText} = this.props
 
         return (
             <div>
-                <HeaderComponent />
+                <HeaderComponent
+                    onClick={this.handleClearAll}
+                    style={todos.length === 0 ? {display: 'none'} : {display: 'block'}}
+                />
                 <TaskBar
                     onSubmit={this.handleAddTodo}
                     value={todoText}
@@ -65,7 +75,7 @@ class TodoApp extends Component{
                     }}
                     errorMessage={errorMessage}
                 />
-                <div>
+                <List component="nav">
                     {todos.map((todo, index) => {
                         return (
                             <TodoItem
@@ -78,7 +88,7 @@ class TodoApp extends Component{
                             />
                         )
                     })}
-                </div>
+                </List>
             </div>
         )
     }
@@ -98,6 +108,7 @@ const mapActionToProps = (dispatch) => {
         addNewTodo: bindActionCreators(addNewTodo, dispatch),
         toggleTodo: bindActionCreators(toggleTodo, dispatch),
         deleteTodo: bindActionCreators(deleteTodo, dispatch),
+        clearAll: bindActionCreators(clearAll, dispatch),
         changeErrorMessage: bindActionCreators(changeErrorMessage, dispatch),
         getLocalStorage: bindActionCreators(getLocalStorage, dispatch)
     }

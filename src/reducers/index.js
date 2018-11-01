@@ -22,6 +22,10 @@ const rootReducers = (state = initialState, action) => {
             return {
                 ...state, todos: action.payload
             }
+        case 'CLEAR_ALL':
+            return {
+                ...state, todos: action.payload
+            }
         case 'CHANGE_ERROR_MESSAGE':
             return {
                 ...state, errorMessage: action.payload
