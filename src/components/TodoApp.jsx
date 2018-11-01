@@ -52,9 +52,10 @@ class TodoApp extends Component{
     }
 
     handleClearAll = () => {
-        const {clearAll} = this.props
+        const {clearAll, changeErrorMessage} = this.props
 
         clearAll([])
+        changeErrorMessage('')
     }
 
     render(){
@@ -84,6 +85,7 @@ class TodoApp extends Component{
                                 onChange={() => this.handleToggleTodo(index)}
                                 onClickLabel={() => this.handleToggleTodo(index)}
                                 onClickButton={() => this.handleRemoveTodo(index)}
+                                style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
                                 todo={todo.text}
                             />
                         )

@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
-const TodoItem = ({checked, onChange, onClickLabel, onClickButton, todo}) => (
+const TodoItem = ({checked, onChange, onClickLabel, onClickButton, style, todo}) => (
     <div className="todo-item-container">
         <Checkbox
             color="primary"
@@ -16,7 +16,7 @@ const TodoItem = ({checked, onChange, onClickLabel, onClickButton, todo}) => (
             onChange={onChange}
         />
         <ListItem button onClick={onClickLabel}>
-                <ListItemText primary={todo} />
+                <ListItemText primary={todo} style={style} />
         </ListItem>
         <Button
             mini
