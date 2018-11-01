@@ -3,13 +3,23 @@ import uuidv4 from 'uuid'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, changeErrorMessage } from 'actions'
+import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, changeErrorMessage, getLocalStorage } from 'actions'
 
 import Header from "./Header"
 import TaskBar from "./TaskBar"
 import TodoItem from "./TodoItem"
 
 class TodoApp extends Component{
+    componentDidUpdate() {
+        localStorage.setItem('local-todos', JSON.stringify(this.props.todos))
+    }
+
+    componentDidMount() {
+        if(localStorage.getItem('local-todos')){
+            this.props.getLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
+        }
+    }
+
     handleAddTodo = (event) => {
         event.preventDefault();
 
@@ -54,7 +64,7 @@ class TodoApp extends Component{
                     }}
                     errorMessage={errorMessage}
                 />
-                <div className="tasklist">
+                <div>
                     {todos.map((todo, index) => {
                         return (
                             <TodoItem
@@ -87,7 +97,8 @@ const mapActionToProps = (dispatch) => {
         addNewTodo: bindActionCreators(addNewTodo, dispatch),
         toggleTodo: bindActionCreators(toggleTodo, dispatch),
         deleteTodo: bindActionCreators(deleteTodo, dispatch),
-        changeErrorMessage: bindActionCreators(changeErrorMessage, dispatch)
+        changeErrorMessage: bindActionCreators(changeErrorMessage, dispatch),
+        getLocalStorage: bindActionCreators(getLocalStorage, dispatch)
     }
 }
 

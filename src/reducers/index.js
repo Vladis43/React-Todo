@@ -26,6 +26,10 @@ const rootReducers = (state = initialState, action) => {
             return {
                 ...state, errorMessage: action.payload
             }
+        case 'GET_LOCAL_STORAGE':
+            return{
+                ...state, todos: action.payload
+            }
 
         default: return state
     }
