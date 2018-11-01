@@ -1,9 +1,9 @@
 import React from 'react'
 import './TaskBar.css'
 
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import AddIcon from '@material-ui/icons/Add'
 
 
 const TaskBar = ({onSubmit, value, onChange, errorMessage}) => {

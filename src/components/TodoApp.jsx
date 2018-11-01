@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import uuidv4 from 'uuid'
-import List from '@material-ui/core/List';
+import List from '@material-ui/core/List'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, clearAll, changeErrorMessage, getLocalStorage } from 'actions'
 
-import HeaderComponent from "./HeaderComponent"
-import TaskBar from "./TaskBar"
-import TodoItem from "./TodoItem"
+import HeaderComponent from './HeaderComponent'
+import TaskBar from './TaskBar'
+import TodoItem from './TodoItem'
 
 
 class TodoApp extends Component{
