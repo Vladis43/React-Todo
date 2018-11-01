@@ -1,0 +1,8 @@
+.taskbar-form{
+    display: flex;
+    padding: 15px 10px;
+}
+
+.input-field{
+    width: 100%;
+}

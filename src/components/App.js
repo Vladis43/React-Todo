@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 
-//Redux
 import { Provider } from 'react-redux'
 import store  from 'store'
 
-//Component
 import TodoApp from './TodoApp'
 
 class App extends Component {

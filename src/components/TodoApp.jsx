@@ -5,9 +5,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, changeErrorMessage, getLocalStorage } from 'actions'
 
-import Header from "./Header"
+import HeaderComponent from "./HeaderComponent"
 import TaskBar from "./TaskBar"
 import TodoItem from "./TodoItem"
+
 
 class TodoApp extends Component{
     componentDidUpdate() {
@@ -55,7 +56,7 @@ class TodoApp extends Component{
 
         return (
             <div>
-                <Header />
+                <HeaderComponent />
                 <TaskBar
                     onSubmit={this.handleAddTodo}
                     value={todoText}
