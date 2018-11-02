@@ -22,7 +22,7 @@ const styles = {
 };
 
 
-const HeaderComponent = (props) => {
+const Header = (props) => {
     const {style, onClick, classes} = props
     return (
         <div className={classes.root}>
@@ -44,8 +44,8 @@ const HeaderComponent = (props) => {
     )
 }
 
-HeaderComponent.propTypes = {
+Header.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(HeaderComponent)
+export default withStyles(styles)(Header)

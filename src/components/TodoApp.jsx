@@ -6,9 +6,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, clearAll, changeErrorMessage, getLocalStorage } from 'actions'
 
-import HeaderComponent from './HeaderComponent'
+import Header from './Header'
 import TaskBar from './TaskBar'
 import TodoItem from './TodoItem'
+import Footer from './Footer'
 
 
 class TodoApp extends Component{
@@ -40,24 +41,15 @@ class TodoApp extends Component{
         }
     }
 
-    handleClearAll = () => {
-        const {clearAll, errorMessage, changeErrorMessage} = this.props
-
-        clearAll([])
-        if (errorMessage !== '') {
-            changeErrorMessage('')
-        }
-    }
-
 
     render(){
 
-        const {todoText, todos, errorMessage, toggleTodo, deleteTodo, changeTodoText} = this.props
+        const {todoText, todos, errorMessage, toggleTodo, deleteTodo, clearAll, changeTodoText} = this.props
 
         return (
             <div>
-                <HeaderComponent
-                    onClick={this.handleClearAll}
+                <Header
+                    onClick={clearAll}
                     style={todos.length === 0 ? {display: 'none'} : {display: 'block'}}
                 />
                 <TaskBar
@@ -68,7 +60,7 @@ class TodoApp extends Component{
                     }}
                     errorMessage={errorMessage}
                 />
-                <List component="nav">
+                <List component="nav" style={{marginBottom: 50}}>
                     {todos.map((todo) => {
                         return (
                             <TodoItem
@@ -83,6 +75,7 @@ class TodoApp extends Component{
                         )
                     })}
                 </List>
+                <Footer />
             </div>
         )
     }

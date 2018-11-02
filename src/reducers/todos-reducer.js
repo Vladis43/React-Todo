@@ -5,10 +5,6 @@ const initialState = {
 }
 
 const todosReducers = (state = initialState, action) => {
-
-    const toggleTodo = state.todos.map((todoItem) => action.payload === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem)
-    const deleteTodo = state.todos.filter((todo) => todo.id !== action.payload)
-
     switch (action.type) {
         case 'CHANGE_TODO_TEXT':
             return {
@@ -19,16 +15,25 @@ const todosReducers = (state = initialState, action) => {
                 ...state, todos: action.payload
             }
         case 'TOGGLE_TODO':
+            const toggleTodo = state.todos.map((todoItem) =>
+                action.payload === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
+            )
             return {
                 ...state, todos: toggleTodo
             }
         case 'DELETE_TODO':
+            const deleteTodo = state.todos.filter((todo) =>
+                todo.id !== action.payload
+            )
             return {
                 ...state, todos: deleteTodo
             }
         case 'CLEAR_ALL':
+            if (state.errorMessage !== '') {
+                state.errorMessage = ''
+            }
             return {
-                ...state, todos: action.payload
+                ...state, todos: []
             }
         case 'CHANGE_ERROR_MESSAGE':
             return {
@@ -36,6 +41,19 @@ const todosReducers = (state = initialState, action) => {
             }
         case 'GET_LOCAL_STORAGE':
             return{
+                ...state, todos: action.payload
+            }
+
+        case 'SHOW_ALL':
+            return {
+                ...state, todos: action.payload
+            }
+        case 'SHOW_CHECKED':
+            return {
+                ...state, todos: action.payload
+            }
+        case 'SHOW_UNCHECKED':
+            return {
                 ...state, todos: action.payload
             }
 
