@@ -32,23 +32,23 @@ class TodoApp extends Component{
             console.log('Text field is required!')
             changeErrorMessage('Text field is required!')
         } else {
-            addNewTodo([...todos, {text: todoText, id: idItem, completed: false}])
+            addNewTodo([...todos, {id: idItem, completed: false, text: todoText}])
             changeTodoText('')
             changeErrorMessage('')
         }
     }
 
-    handleRemoveTodo = (index) => {
+    handleRemoveTodo = (id) => {
         const {todos, deleteTodo} = this.props
 
-        deleteTodo(todos.filter((callback, indexItem) => indexItem !== index))
+        deleteTodo(todos.filter((todo) => todo.id !== id))
 
     }
 
-    handleToggleTodo = (index) => {
+    handleToggleTodo = (id) => {
         const {todos, toggleTodo} = this.props
 
-        toggleTodo(todos.map((todoItem, indexItem) => index === indexItem ? {...todoItem, completed: !todoItem.completed} : todoItem))
+        toggleTodo(todos.map((todoItem) => id === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem))
     }
 
     handleClearAll = () => {
@@ -77,14 +77,14 @@ class TodoApp extends Component{
                     errorMessage={errorMessage}
                 />
                 <List component="nav">
-                    {todos.map((todo, index) => {
+                    {todos.map((todo) => {
                         return (
                             <TodoItem
-                                key={index}
+                                key={todo.id}
                                 checked={todo.completed}
-                                onChange={() => this.handleToggleTodo(index)}
-                                onClickLabel={() => this.handleToggleTodo(index)}
-                                onClickButton={() => this.handleRemoveTodo(index)}
+                                onChange={() => this.handleToggleTodo(todo.id)}
+                                onClickLabel={() => this.handleToggleTodo(todo.id)}
+                                onClickButton={() => this.handleRemoveTodo(todo.id)}
                                 style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
                                 todo={todo.text}
                             />
