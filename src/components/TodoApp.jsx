@@ -25,7 +25,7 @@ class TodoApp extends Component{
     handleAddTodo = (event) => {
         event.preventDefault();
 
-        const {todoText, todos, addNewTodo, changeErrorMessage, changeTodoText} = this.props
+        const {todoText, todos, errorMessage, addNewTodo, changeErrorMessage, changeTodoText} = this.props
         const idItem = uuidv4()
 
         if(todoText === ''){
@@ -34,33 +34,25 @@ class TodoApp extends Component{
         } else {
             addNewTodo([...todos, {id: idItem, completed: false, text: todoText}])
             changeTodoText('')
+            if (errorMessage !== '') {
+                changeErrorMessage('')
+            }
+        }
+    }
+
+    handleClearAll = () => {
+        const {clearAll, errorMessage, changeErrorMessage} = this.props
+
+        clearAll([])
+        if (errorMessage !== '') {
             changeErrorMessage('')
         }
     }
 
-    handleRemoveTodo = (id) => {
-        const {todos, deleteTodo} = this.props
-
-        deleteTodo(todos.filter((todo) => todo.id !== id))
-
-    }
-
-    handleToggleTodo = (id) => {
-        const {todos, toggleTodo} = this.props
-
-        toggleTodo(todos.map((todoItem) => id === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem))
-    }
-
-    handleClearAll = () => {
-        const {clearAll, changeErrorMessage} = this.props
-
-        clearAll([])
-        changeErrorMessage('')
-    }
 
     render(){
 
-        const {todoText, todos, errorMessage, changeTodoText} = this.props
+        const {todoText, todos, errorMessage, toggleTodo, deleteTodo, changeTodoText} = this.props
 
         return (
             <div>
@@ -82,9 +74,9 @@ class TodoApp extends Component{
                             <TodoItem
                                 key={todo.id}
                                 checked={todo.completed}
-                                onChange={() => this.handleToggleTodo(todo.id)}
-                                onClickLabel={() => this.handleToggleTodo(todo.id)}
-                                onClickButton={() => this.handleRemoveTodo(todo.id)}
+                                onChange={() => toggleTodo(todo.id)}
+                                onClickLabel={() => toggleTodo(todo.id)}
+                                onClickButton={() => deleteTodo(todo.id)}
                                 style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
                                 todo={todo.text}
                             />
@@ -98,9 +90,9 @@ class TodoApp extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        todoText: state.todoText,
-        todos: state.todos,
-        errorMessage: state.errorMessage
+        todoText: state.todos.todoText,
+        todos: state.todos.todos,
+        errorMessage: state.todos.errorMessage
     }
 }
 
