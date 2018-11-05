@@ -16,7 +16,7 @@ const todosReducers = (state = initialState, action) => {
             }
         case 'TOGGLE_TODO':
             const toggleTodo = state.todos.map((todoItem) =>
-                action.payload === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
+                action.payload === todoItem.id ? {...todoItem, complete: !todoItem.complete} : todoItem
             )
             return {
                 ...state, todos: toggleTodo
@@ -41,19 +41,6 @@ const todosReducers = (state = initialState, action) => {
             }
         case 'GET_LOCAL_STORAGE':
             return{
-                ...state, todos: action.payload
-            }
-
-        case 'SHOW_ALL':
-            return {
-                ...state, todos: action.payload
-            }
-        case 'SHOW_CHECKED':
-            return {
-                ...state, todos: action.payload
-            }
-        case 'SHOW_UNCHECKED':
-            return {
                 ...state, todos: action.payload
             }
 

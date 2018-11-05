@@ -9,11 +9,6 @@ export const CLEAR_ALL = 'CLEAR_ALL'
 export const CHANGE_ERROR_MESSAGE = 'CHANGE_ERROR_MESSAGE'
 export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE'
 
-//Footer
-export const SHOW_ALL = 'SHOW_ALL'
-export const SHOW_CHECKED = 'SHOW_CHECKED'
-export const SHOW_UNCHECKED = 'SHOW_UNCHECKED'
-
 
 //Action creators
 
@@ -63,27 +58,5 @@ export const getLocalStorage = (data) => {
     return {
         type: GET_LOCAL_STORAGE,
         payload: data
-    }
-}
-
-//Footer
-export const showAll = (todo) => {
-    return {
-        type: SHOW_ALL,
-        payload: todo
-    }
-}
-
-export const showChecked = (todo) => {
-    return {
-        type: SHOW_CHECKED,
-        payload: todo
-    }
-}
-
-export const showUnchecked = (todo) => {
-    return {
-        type: SHOW_UNCHECKED,
-        payload: todo
     }
 }

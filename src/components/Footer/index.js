@@ -1,8 +1,4 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
-import { showAll, showChecked, showUnchecked } from 'actions'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -34,26 +30,6 @@ class Footer extends React.Component {
         this.setState({value});
     }
 
-    getVisibleAll = () => {
-        const {todos, showAll} = this.props
-
-        showAll(todos)
-    }
-
-    getVisibleChecked = () => {
-        const {todos, showChecked} = this.props
-
-        showChecked(todos.filter(todo => todo.completed))
-    }
-
-    getVisibleUnchecked = () => {
-        const {todos, showUnchecked} = this.props
-
-        showUnchecked(todos.filter(todo => !todo.completed))
-    }
-
-
-
     render() {
 
         const {classes} = this.props
@@ -68,9 +44,9 @@ class Footer extends React.Component {
                     className={classes.root}
                     position="fixed"
                 >
-                    <BottomNavigationAction onClick={this.getVisibleAll} label="All" icon={<ListAlt/>}/>
-                    <BottomNavigationAction onClick={this.getVisibleChecked} label="Checked" icon={<CheckBox/>}/>
-                    <BottomNavigationAction onClick={this.getVisibleUnchecked} label="Unchecked" icon={<CheckBoxOutlineBlank/>}/>
+                    <BottomNavigationAction label="All" icon={<ListAlt/>}/>
+                    <BottomNavigationAction label="Checked" icon={<CheckBox/>}/>
+                    <BottomNavigationAction label="Unchecked" icon={<CheckBoxOutlineBlank/>}/>
                 </BottomNavigation>
             </AppBar>
         )
@@ -82,20 +58,4 @@ Footer.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
-    return {
-        todos: state.todos.todos
-    }
-}
-
-const mapActionToProps = (dispatch) => {
-    return {
-        showAll: bindActionCreators(showAll, dispatch),
-        showChecked: bindActionCreators(showChecked, dispatch),
-        showUnchecked: bindActionCreators(showUnchecked, dispatch),
-    }
-}
-
-const witthStyles = withStyles(styles)(Footer)
-
-export default connect(mapStateToProps, mapActionToProps)(witthStyles)
+export default withStyles(styles)(Footer)

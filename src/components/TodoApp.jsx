@@ -30,10 +30,9 @@ class TodoApp extends Component{
         const idItem = uuidv4()
 
         if(todoText === ''){
-            console.log('Text field is required!')
             changeErrorMessage('Text field is required!')
         } else {
-            addNewTodo([...todos, {id: idItem, completed: false, text: todoText}])
+            addNewTodo([...todos, {id: idItem, complete: false, text: todoText}])
             changeTodoText('')
             if (errorMessage !== '') {
                 changeErrorMessage('')
@@ -65,11 +64,11 @@ class TodoApp extends Component{
                         return (
                             <TodoItem
                                 key={todo.id}
-                                checked={todo.completed}
+                                checked={todo.complete}
                                 onChange={() => toggleTodo(todo.id)}
                                 onClickLabel={() => toggleTodo(todo.id)}
                                 onClickButton={() => deleteTodo(todo.id)}
-                                style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
+                                style={todo.complete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
                                 todo={todo.text}
                             />
                         )
