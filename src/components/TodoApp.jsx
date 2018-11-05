@@ -1,18 +1,24 @@
 import React, {Component} from 'react'
 import uuidv4 from 'uuid'
+
 import List from '@material-ui/core/List'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeTodoText, addNewTodo, toggleTodo, deleteTodo, clearAll, changeErrorMessage, getLocalStorage } from 'actions'
+import * as actions from 'actions'
 
-import Header from './Header'
-import TaskBar from './TaskBar'
-import TodoItem from './TodoItem'
-import Footer from './Footer'
+import Header from './Header/Header'
+import TaskBar from './TaskBar/TaskBar'
+import TodoItem from './TodoItem/TodoItem'
+import Footer from './Footer/Footer'
 
 
 class TodoApp extends Component{
+    state = {
+        todoText: '',
+        errorMessage: ''
+    }
+
     componentDidUpdate() {
         localStorage.setItem('local-todos', JSON.stringify(this.props.todos))
     }
@@ -21,18 +27,22 @@ class TodoApp extends Component{
         if(localStorage.getItem('local-todos')){
             this.props.getLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
         }
+
+
+        // fetch('http://jsonplaceholder.typicode.com/todos/')
+        //     .then((response) => response.json())
+        //     .then((json) => this.props.getTodo(json))
     }
 
     handleAddTodo = (event) => {
         event.preventDefault();
 
         const {todoText, todos, errorMessage, addNewTodo, changeErrorMessage, changeTodoText} = this.props
-        const idItem = uuidv4()
 
         if(todoText === ''){
             changeErrorMessage('Text field is required!')
         } else {
-            addNewTodo([...todos, {id: idItem, complete: false, text: todoText}])
+            addNewTodo([...todos, {id: uuidv4(), completed: false, title: todoText}])
             changeTodoText('')
             if (errorMessage !== '') {
                 changeErrorMessage('')
@@ -64,12 +74,12 @@ class TodoApp extends Component{
                         return (
                             <TodoItem
                                 key={todo.id}
-                                checked={todo.complete}
+                                checked={todo.completed}
                                 onChange={() => toggleTodo(todo.id)}
                                 onClickLabel={() => toggleTodo(todo.id)}
                                 onClickButton={() => deleteTodo(todo.id)}
-                                style={todo.complete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
-                                todo={todo.text}
+                                style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
+                                todo={todo.title}
                             />
                         )
                     })}
@@ -82,22 +92,12 @@ class TodoApp extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        todoText: state.todos.todoText,
-        todos: state.todos.todos,
-        errorMessage: state.todos.errorMessage
+        todos: state.todos.todos
     }
 }
 
 const mapActionToProps = (dispatch) => {
-    return {
-        changeTodoText: bindActionCreators(changeTodoText, dispatch),
-        addNewTodo: bindActionCreators(addNewTodo, dispatch),
-        toggleTodo: bindActionCreators(toggleTodo, dispatch),
-        deleteTodo: bindActionCreators(deleteTodo, dispatch),
-        clearAll: bindActionCreators(clearAll, dispatch),
-        changeErrorMessage: bindActionCreators(changeErrorMessage, dispatch),
-        getLocalStorage: bindActionCreators(getLocalStorage, dispatch)
-    }
+    return bindActionCreators(actions, dispatch)
 }
 
 export default connect(mapStateToProps, mapActionToProps)(TodoApp)

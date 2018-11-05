@@ -1,22 +1,16 @@
 const initialState = {
-    todoText: '',
-    todos: [],
-    errorMessage: ''
+    todos: []
 }
 
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
-        case 'CHANGE_TODO_TEXT':
-            return {
-                ...state, todoText: action.payload
-            }
         case 'ADD_NEW_TODO':
             return {
                 ...state, todos: action.payload
             }
         case 'TOGGLE_TODO':
             const toggleTodo = state.todos.map((todoItem) =>
-                action.payload === todoItem.id ? {...todoItem, complete: !todoItem.complete} : todoItem
+                action.payload === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
             )
             return {
                 ...state, todos: toggleTodo
@@ -27,21 +21,6 @@ const todosReducers = (state = initialState, action) => {
             )
             return {
                 ...state, todos: deleteTodo
-            }
-        case 'CLEAR_ALL':
-            if (state.errorMessage !== '') {
-                state.errorMessage = ''
-            }
-            return {
-                ...state, todos: []
-            }
-        case 'CHANGE_ERROR_MESSAGE':
-            return {
-                ...state, errorMessage: action.payload
-            }
-        case 'GET_LOCAL_STORAGE':
-            return{
-                ...state, todos: action.payload
             }
 
         default: return state
