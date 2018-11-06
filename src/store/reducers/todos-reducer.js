@@ -4,6 +4,7 @@ const initialState = {
 
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
+        case 'GET_TODO':
         case 'LOCAL_STORAGE':
         case 'ADD_NEW_TODO':
             return {

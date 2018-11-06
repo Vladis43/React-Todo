@@ -23,9 +23,13 @@ class TodoApp extends Component{
     }
 
     componentDidMount() {
+        const {getDataFromLocalStorage, getTodo} = this.props
+
         if (localStorage.getItem('local-todos')) {
-            this.props.getDataFromLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
+            getDataFromLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
         }
+
+        getTodo()
     }
 
     handleChange = (event) =>

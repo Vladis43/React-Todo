@@ -1,3 +1,15 @@
+import axios from 'axios'
+
+export const GET_TODO = 'GET_TODO'
+export const getTodo = () => async (dispatch) => {
+    const res = await axios.get('http://localhost:3000/todos')
+    const todos = await res.data
+    dispatch({
+        type: GET_TODO,
+        payload: todos
+    })
+}
+
 export const ADD_NEW_TODO = 'ADD_NEW_TODO'
 export const addNewTodo = (todo) => {
     return {
