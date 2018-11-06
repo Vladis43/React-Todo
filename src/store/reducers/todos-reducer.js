@@ -1,6 +1,5 @@
 const initialState = {
-    todos: [],
-    filter: false
+    todos: []
 }
 
 const todosReducers = (state = initialState, action) => {

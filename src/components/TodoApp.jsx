@@ -10,7 +10,6 @@ import * as actions from 'store/actions'
 import Header from './Header/Header'
 import TaskBar from './TaskBar/TaskBar'
 import TodoItem from './TodoItem/TodoItem'
-import Footer from './Footer/Footer'
 
 
 class TodoApp extends Component{
@@ -56,7 +55,7 @@ class TodoApp extends Component{
 
 
     render(){
-        const {todos, toggleTodo, deleteTodo, clearAll} = this.props
+        const {todos, clearAll} = this.props
         const {todoText, errorMessage} = this.state
 
         return (
@@ -74,19 +73,10 @@ class TodoApp extends Component{
                 <List component="nav" style={{marginBottom: 50}}>
                     {todos.map((todo) => {
                         return (
-                            <TodoItem
-                                key={todo.id}
-                                checked={todo.completed}
-                                onChange={() => toggleTodo(todo.id)}
-                                onClickLabel={() => toggleTodo(todo.id)}
-                                onClickButton={() => deleteTodo(todo.id)}
-                                style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
-                                todo={todo.title}
-                            />
+                            <TodoItem key={todo.id} todo={todo} />
                         )
                     })}
                 </List>
-                <Footer />
             </div>
         )
     }
