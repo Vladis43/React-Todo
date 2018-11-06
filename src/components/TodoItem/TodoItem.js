@@ -1,32 +1,26 @@
 import React from 'react'
 import './TodoItem.css'
 
-
-
-import Button from '@material-ui/core/Button'
+import * as md from '@material-ui/core/'
 import ClearIcon from '@material-ui/icons/Clear'
-
-import Checkbox from '@material-ui/core/Checkbox'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 
 const TodoItem = ({checked, onChange, onClickLabel, onClickButton, style, todo}) => (
     <div className="todo-item-container">
-        <Checkbox
+        <md.Checkbox
             color="primary"
             checked={checked}
             onChange={onChange}
         />
-        <ListItem button onClick={onClickLabel}>
-                <ListItemText primary={todo} style={style} />
-        </ListItem>
-        <Button
+        <md.ListItem button onClick={onClickLabel}>
+                <md.ListItemText primary={todo} style={style} />
+        </md.ListItem>
+        <md.Button
             mini
             color="secondary"
             onClick={onClickButton}
         >
             <ClearIcon />
-        </Button>
+        </md.Button>
     </div>
 )
 

@@ -1,8 +1,7 @@
 import React from 'react'
 import './TaskBar.css'
 
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
+import * as md from '@material-ui/core/'
 import AddIcon from '@material-ui/icons/Add'
 
 
@@ -10,7 +9,7 @@ const TaskBar = ({onSubmit, value, onChange, errorMessage}) => {
     return (
         <form className="taskbar-form" onSubmit={onSubmit}>
             <div className="input-field">
-                <TextField
+                <md.TextField
                     size="large"
                     type="text"
                     label="Add new Todo"
@@ -20,13 +19,13 @@ const TaskBar = ({onSubmit, value, onChange, errorMessage}) => {
                     onChange={onChange}
                 />
             </div>
-            <Button
+            <md.Button
                 color="primary"
                 mini
                 type="submit"
             >
                 <AddIcon />
-            </Button>
+            </md.Button>
         </form>
     )
 }

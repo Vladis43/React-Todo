@@ -24,36 +24,40 @@ class TodoApp extends Component{
     }
 
     componentDidMount() {
-        if(localStorage.getItem('local-todos')){
-            this.props.getLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
+        if (localStorage.getItem('local-todos')) {
+            this.props.getDataFromLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
         }
-
-
-        // fetch('http://jsonplaceholder.typicode.com/todos/')
-        //     .then((response) => response.json())
-        //     .then((json) => this.props.getTodo(json))
     }
+
+    handleChange = (event) =>
+        this.setState({
+            todoText: event.target.value
+        }
+    )
 
     handleAddTodo = (event) => {
         event.preventDefault();
 
-        const {todoText, todos, errorMessage, addNewTodo, changeErrorMessage, changeTodoText} = this.props
+        const {todos, addNewTodo} = this.props
+        const {todoText} = this.state
 
         if(todoText === ''){
-            changeErrorMessage('Text field is required!')
+            this.setState({
+                errorMessage: 'Text field is require!'
+            })
         } else {
             addNewTodo([...todos, {id: uuidv4(), completed: false, title: todoText}])
-            changeTodoText('')
-            if (errorMessage !== '') {
-                changeErrorMessage('')
-            }
+            this.setState({
+                todoText: '',
+                errorMessage: ''
+            })
         }
     }
 
 
     render(){
-
-        const {todoText, todos, errorMessage, toggleTodo, deleteTodo, clearAll, changeTodoText} = this.props
+        const {todos, toggleTodo, deleteTodo, clearAll} = this.props
+        const {todoText, errorMessage} = this.state
 
         return (
             <div>
@@ -64,9 +68,7 @@ class TodoApp extends Component{
                 <TaskBar
                     onSubmit={this.handleAddTodo}
                     value={todoText}
-                    onChange={(event) => {
-                        changeTodoText(event.target.value)
-                    }}
+                    onChange={(event) => {this.handleChange(event)}}
                     errorMessage={errorMessage}
                 />
                 <List component="nav" style={{marginBottom: 50}}>

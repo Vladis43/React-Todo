@@ -3,7 +3,8 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from 'reducers'
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunk, logger),
-    window.devToolsExtension && window.devToolsExtension()))
+const reduxDevTools = window.devToolsExtension && window.devToolsExtension()
+
+const store = createStore(rootReducer, compose(applyMiddleware(thunk, logger), reduxDevTools))
 
 export default store

@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import * as md from '@material-ui/core/'
 import DeleteSweep from '@material-ui/icons/DeleteSweep'
-import Button from '@material-ui/core/Button/Button'
 
 const styles = {
     root: {
@@ -26,20 +22,20 @@ const Header = (props) => {
     const {style, onClick, classes} = props
     return (
         <div className={classes.root}>
-            <AppBar position="fixed" color="primary" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" color="inherit" className={classes.grow}>
+            <md.AppBar position="fixed" color="primary" className={classes.appBar}>
+                <md.Toolbar>
+                    <md.Typography variant="h6" color="inherit" className={classes.grow}>
                         Todo App
-                    </Typography>
-                    <Button
+                    </md.Typography>
+                    <md.Button
                         color="inherit"
                         style={style}
                         onClick={onClick}
                     >
                         <DeleteSweep />
-                    </Button>
-                </Toolbar>
-            </AppBar>
+                    </md.Button>
+                </md.Toolbar>
+            </md.AppBar>
         </div>
     )
 }
@@ -48,4 +44,4 @@ Header.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header)
+export default md.withStyles(styles)(Header)

@@ -21,3 +21,18 @@ export const deleteTodo = (todo) => {
         payload: todo
     }
 }
+
+export const CLEAR_ALL = 'CLEAR_ALL'
+export const clearAll = () => {
+    return {
+        type: CLEAR_ALL
+    }
+}
+
+export const LOCAL_STORAGE = 'LOCAL_STORAGE'
+export const getDataFromLocalStorage = (data) => {
+    return {
+        type: LOCAL_STORAGE,
+        payload: data
+    }
+}

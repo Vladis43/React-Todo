@@ -1,13 +1,8 @@
 import React from 'react'
-
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar'
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import ListAlt from '@material-ui/icons/ListAlt';
-import CheckBox from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
+
+import * as md from '@material-ui/core/'
+import * as mdicon from '@material-ui/icons/'
 
 const styles = {
     root: {
@@ -36,19 +31,19 @@ class Footer extends React.Component {
         const {value} = this.state
 
         return (
-            <AppBar position="fixed" color="inherit" className={classes.appBar}>
-                <BottomNavigation
+            <md.AppBar position="fixed" color="inherit" className={classes.appBar}>
+                <md.BottomNavigation
                     value={value}
                     onChange={this.handleChange}
                     showLabels
                     className={classes.root}
                     position="fixed"
                 >
-                    <BottomNavigationAction label="All" icon={<ListAlt/>}/>
-                    <BottomNavigationAction label="Checked" icon={<CheckBox/>}/>
-                    <BottomNavigationAction label="Unchecked" icon={<CheckBoxOutlineBlank/>}/>
-                </BottomNavigation>
-            </AppBar>
+                    <md.BottomNavigationAction label="All" icon={<mdicon.ListAlt/>}/>
+                    <md.BottomNavigationAction label="Checked" icon={<mdicon.CheckBox/>}/>
+                    <md.BottomNavigationAction label="Unchecked" icon={<mdicon.CheckBoxOutlineBlank/>}/>
+                </md.BottomNavigation>
+            </md.AppBar>
         )
     }
 }
@@ -58,4 +53,4 @@ Footer.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Footer)
+export default md.withStyles(styles)(Footer)
