@@ -30,7 +30,7 @@ const todosReducers = (state = initialState, action) => {
             }
 
         case 'CLEAR_ALL':
-            console.log('Clear All worked only on the client...')
+            console.log('Clear All worked only client...')
             return {
                 ...state, todos: []
             }
