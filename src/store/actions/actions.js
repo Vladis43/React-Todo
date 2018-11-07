@@ -23,7 +23,7 @@ export const addNewTodo = (todo) => async (dispatch) => {
             type: ADD_NEW_TODO,
             payload: todo
         })
-        console.log(`'Response: ' ${res.status} ${res.statusText}`)
+        console.log(`Response: ${res.status} ${res.statusText}`)
     } catch (err) {
         console.error('ERROR', err)
     }
@@ -39,7 +39,7 @@ export const toggleTodo = (id, completed) => async (dispatch) => {
             type: TOGGLE_TODO,
             payload: id
         })
-        console.log(`'Response: ' ${res.status} ${res.statusText}`)
+        console.log(`Response: ${res.status} ${res.statusText}`)
     } catch (err) {
         console.error('ERROR', err)
     }
@@ -53,7 +53,7 @@ export const deleteTodo = (id) => async (dispatch) => {
             type: DELETE_TODO,
             payload: id
         })
-        console.log(`'Response: ' ${res.status} ${res.statusText}`)
+        console.log(`Response: ${res.status} ${res.statusText}`)
     } catch (err) {
         console.error('ERROR', err)
     }
