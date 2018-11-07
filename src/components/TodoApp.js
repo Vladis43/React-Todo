@@ -18,16 +18,8 @@ class TodoApp extends Component{
         errorMessage: ''
     }
 
-    componentDidUpdate() {
-        localStorage.setItem('local-todos', JSON.stringify(this.props.todos))
-    }
-
     componentDidMount() {
-        const {getDataFromLocalStorage, getTodo} = this.props
-
-        if (localStorage.getItem('local-todos')) {
-            getDataFromLocalStorage(JSON.parse(localStorage.getItem('local-todos')))
-        }
+        const {getTodo} = this.props
 
         getTodo()
     }
@@ -41,7 +33,7 @@ class TodoApp extends Component{
     handleAddTodo = (event) => {
         event.preventDefault();
 
-        const {todos, addNewTodo} = this.props
+        const {addNewTodo} = this.props
         const {todoText} = this.state
 
         if(todoText === ''){
@@ -49,7 +41,7 @@ class TodoApp extends Component{
                 errorMessage: 'Text field is require!'
             })
         } else {
-            addNewTodo([...todos, {id: uuidv4(), completed: false, title: todoText}])
+            addNewTodo({id: uuidv4(), completed: false, title: todoText})
             this.setState({
                 todoText: '',
                 errorMessage: ''

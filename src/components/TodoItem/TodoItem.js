@@ -16,9 +16,9 @@ const TodoItem = (props) => {
             <md.Checkbox
                 color="primary"
                 checked={todo.completed}
-                onChange={() => toggleTodo(todo.id)}
+                onChange={() => toggleTodo(todo.id, todo.completed)}
             />
-            <md.ListItem button onClick={() => toggleTodo(todo.id)}>
+            <md.ListItem button onClick={() => toggleTodo(todo.id, todo.completed)}>
                     <md.ListItemText primary={todo.title}  style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} />
             </md.ListItem>
             <md.Button

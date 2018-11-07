@@ -5,10 +5,12 @@ const initialState = {
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
         case 'GET_TODO':
-        case 'LOCAL_STORAGE':
-        case 'ADD_NEW_TODO':
             return {
                 ...state, todos: action.payload
+            }
+        case 'ADD_NEW_TODO':
+            return {
+                ...state, todos: [...state.todos, action.payload]
             }
 
         case 'TOGGLE_TODO':
@@ -28,6 +30,7 @@ const todosReducers = (state = initialState, action) => {
             }
 
         case 'CLEAR_ALL':
+            console.log('Clear All worked only on the client...')
             return {
                 ...state, todos: []
             }
