@@ -2,7 +2,7 @@ import React from 'react'
 import './TodoItem.css'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from 'store/actions'
+import * as actions from 'store/actions/actions'
 
 import * as md from '@material-ui/core/'
 import ClearIcon from '@material-ui/icons/Clear'

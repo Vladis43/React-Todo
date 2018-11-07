@@ -5,7 +5,7 @@ import List from '@material-ui/core/List'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from 'store/actions'
+import * as actions from 'store/actions/actions'
 
 import Header from './Header/Header'
 import TaskBar from './TaskBar/TaskBar'
