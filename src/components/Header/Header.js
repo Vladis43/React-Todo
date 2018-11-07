@@ -1,30 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import * as md from '@material-ui/core/'
 import DeleteSweep from '@material-ui/icons/DeleteSweep'
 
-const styles = {
-    root: {
-        flexGrow: 1,
-    },
-    grow: {
-        flexGrow: 1,
-    },
-    appBar: {
-        top: 0,
-        bottom: 'auto',
-    },
-};
-
 
 const Header = (props) => {
-    const {style, onClick, classes} = props
+    const {style, onClick} = props
     return (
-        <div className={classes.root}>
-            <md.AppBar position="fixed" color="primary" className={classes.appBar}>
+        <div style={{flexGrow: 1}}>
+            <md.AppBar position="fixed" color="primary" style={{top: 0, bottom: 'auto'}}>
                 <md.Toolbar>
-                    <md.Typography variant="h6" color="inherit" className={classes.grow}>
+                    <md.Typography variant="h6" color="inherit" style={{flexGrow: 1}}>
                         Todo App
                     </md.Typography>
                     <md.Button
@@ -40,8 +26,4 @@ const Header = (props) => {
     )
 }
 
-Header.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default md.withStyles(styles)(Header)
+export default Header

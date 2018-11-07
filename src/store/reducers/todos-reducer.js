@@ -1,38 +1,37 @@
 const initialState = {
-    todos: []
+    items: []
 }
 
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
         case 'GET_TODO':
             return {
-                ...state, todos: action.payload
+                ...state, items: action.payload
             }
         case 'ADD_NEW_TODO':
             return {
-                ...state, todos: [...state.todos, action.payload]
+                ...state, items: [...state.items, action.payload]
             }
 
         case 'TOGGLE_TODO':
-            const toggleTodo = state.todos.map((todoItem) =>
+            const toggledTodo = state.items.map((todoItem) =>
                 action.payload === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
             )
             return {
-                ...state, todos: toggleTodo
+                ...state, items: toggledTodo
             }
 
         case 'DELETE_TODO':
-            const deleteTodo = state.todos.filter((todo) =>
+            const deletedTodo = state.items.filter((todo) =>
                 todo.id !== action.payload
             )
             return {
-                ...state, todos: deleteTodo
+                ...state, items: deletedTodo
             }
 
         case 'CLEAR_ALL':
-            console.log('Clear All worked only client...')
             return {
-                ...state, todos: []
+                ...state, items: []
             }
 
         default: return state

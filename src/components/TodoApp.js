@@ -66,7 +66,7 @@ class TodoApp extends Component{
                     onChange={(event) => {this.handleChange(event)}}
                     errorMessage={errorMessage}
                 />
-                <List component="nav" style={{marginBottom: 50}}>
+                <List component="nav">
                     {todos.map((todo) => {
                         return (
                             <TodoItem key={todo.id} todo={todo} />
@@ -80,7 +80,7 @@ class TodoApp extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        todos: state.todos.todos
+        todos: state.todos.items
     }
 }
 

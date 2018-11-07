@@ -1,5 +1,5 @@
 import React from 'react'
-import './TodoItem.css'
+import { Container } from './TodoItemStyle'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from 'store/actions/actions'
@@ -12,7 +12,7 @@ import ClearIcon from '@material-ui/icons/Clear'
 const TodoItem = (props) => {
     const {todo, toggleTodo, deleteTodo} = props
     return (
-        <div className="todo-item-container">
+        <Container>
             <md.Checkbox
                 color="primary"
                 checked={todo.completed}
@@ -28,7 +28,7 @@ const TodoItem = (props) => {
             >
                 <ClearIcon />
             </md.Button>
-        </div>
+        </Container>
     )
 }
 
