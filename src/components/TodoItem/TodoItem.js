@@ -8,7 +8,6 @@ import * as md from '@material-ui/core/'
 import ClearIcon from '@material-ui/icons/Clear'
 
 
-
 const TodoItem = (props) => {
     const {todo, toggleTodo, deleteTodo} = props
     return (
