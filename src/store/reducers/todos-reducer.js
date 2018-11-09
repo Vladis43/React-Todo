@@ -9,6 +9,7 @@ const initialState = {
 
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
+        //GetTodo
         case 'GET_TODO':
             return {...state, isFetching: true}
 
@@ -27,6 +28,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
+        //AddTodo
         case 'ADD_NEW_TODO':
             return {...state, isFetching: true}
 
@@ -45,12 +47,13 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
+        //ToggleTodo
         case 'TOGGLE_TODO':
             return {...state, isFetching: true}
 
         case success('TOGGLE_TODO'):
             const toggledTodo = state.items.map((todoItem) =>
-                action.payload.data === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
+                action.meta.id === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
             )
             return {
                 ...state,
@@ -66,6 +69,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
+        //DeleteTodo
         case 'DELETE_TODO':
             return {...state, isFetching: true}
 
@@ -87,6 +91,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
+        //ClearAll
         case 'CLEAR_ALL':
             return {
                 ...state, items: []

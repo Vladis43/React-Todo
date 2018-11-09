@@ -32,6 +32,9 @@ export const toggleTodo = (id, completed) => ({
             method: 'PATCH',
             data: {completed: !completed}
         }
+    },
+    meta: {
+        id
     }
 })
 
@@ -42,10 +45,10 @@ export const deleteTodo = (id) => ({
         request: {
             url: `${URL}todos/${id}`,
             method: 'DELETE'
-        },
-        meta: {
-            id
         }
+    },
+    meta: {
+        id
     }
 })
 
