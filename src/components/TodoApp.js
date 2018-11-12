@@ -5,7 +5,7 @@ import List from '@material-ui/core/List'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from 'store/actions/actions'
+import * as actions from 'store/todos/actions'
 
 import Header from './Header/Header'
 import TaskBar from './TaskBar/TaskBar'
@@ -47,9 +47,8 @@ class TodoApp extends Component{
         }
     }
 
-
-    render(){
-        const {todos, clearAll} = this.props
+    render() {
+        const {todos, toggleTodo, deleteTodo, clearAll} = this.props
         const {todoText, errorMessage} = this.state
 
         return (
@@ -59,15 +58,20 @@ class TodoApp extends Component{
                     style={todos.length === 0 ? {display: 'none'} : {display: 'block'}}
                 />
                 <TaskBar
-                    onSubmit={this.handleAddTodo}
-                    value={todoText}
+                    AddTodoSubmit={this.handleAddTodo}
+                    todoValue={todoText}
                     onChange={(event) => {this.handleChange(event)}}
                     errorMessage={errorMessage}
                 />
                 <List component="nav">
                     {todos.map((todo) => {
                         return (
-                            <TodoItem key={todo.id} todo={todo} />
+                            <TodoItem
+                                key={todo.id}
+                                todo={todo}
+                                toggleTodoAction={toggleTodo}
+                                deleteTodoAction={deleteTodo}
+                            />
                         )
                     })}
                 </List>

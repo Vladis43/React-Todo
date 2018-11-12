@@ -1,38 +1,34 @@
 import React from 'react'
-import { Container } from './TodoItemStyle'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as actions from 'store/actions/actions'
+import styled from "styled-components"
 
 import * as md from '@material-ui/core/'
 import ClearIcon from '@material-ui/icons/Clear'
 
+const TodoListContainer = styled.div`
+  display: flex;
+`;
 
 const TodoItem = (props) => {
-    const {todo, toggleTodo, deleteTodo} = props
+    const {todo, toggleTodoAction, deleteTodoAction} = props
     return (
-        <Container>
+        <TodoListContainer>
             <md.Checkbox
                 color="primary"
                 checked={todo.completed}
-                onChange={() => toggleTodo(todo.id, todo.completed)}
+                onChange={() => toggleTodoAction(todo.id, todo.completed)}
             />
-            <md.ListItem button onClick={() => toggleTodo(todo.id, todo.completed)}>
+            <md.ListItem button onClick={() => toggleTodoAction(todo.id, todo.completed)}>
                     <md.ListItemText primary={todo.title}  style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} />
             </md.ListItem>
             <md.Button
                 mini
                 color="secondary"
-                onClick={() => deleteTodo(todo.id)}
+                onClick={() => deleteTodoAction(todo.id)}
             >
                 <ClearIcon />
             </md.Button>
-        </Container>
+        </TodoListContainer>
     )
 }
 
-const mapActionToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch)
-}
-
-export default connect(null, mapActionToProps)(TodoItem)
+export default TodoItem

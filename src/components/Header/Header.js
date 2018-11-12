@@ -3,8 +3,6 @@ import React from 'react'
 import * as md from '@material-ui/core/'
 import DeleteSweep from '@material-ui/icons/DeleteSweep'
 
-
-
 const Header = (props) => {
     const {style, onClick} = props
     return (
