@@ -19,7 +19,7 @@ class TodoApp extends Component{
     }
 
     componentDidMount() {
-        this.props.getTodo()
+        this.props.fetchTodos()
     }
 
     handleChange = (event) =>

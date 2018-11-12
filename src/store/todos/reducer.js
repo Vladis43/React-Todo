@@ -10,10 +10,10 @@ const initialState = {
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
         //GetTodo
-        case 'GET_TODO':
+        case 'FETCH_TODOS':
             return {...state, isFetching: true}
 
-        case success('GET_TODO'):
+        case success('FETCH_TODOS'):
             return {
                 ...state,
                 isFetching: false,
@@ -21,7 +21,7 @@ const todosReducers = (state = initialState, action) => {
                 items: action.payload.data
             }
 
-        case error('GET_TODO'):
+        case error('FETCH_TODOS'):
             return {
                 ...state,
                 isError: true,

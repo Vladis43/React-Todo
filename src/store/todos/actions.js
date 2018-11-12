@@ -1,8 +1,8 @@
 import { URL } from 'config'
 
-export const GET_TODO = 'GET_TODO'
-export const getTodo = () => ({
-    type: GET_TODO,
+export const FETCH_TODOS = 'FETCH_TODOS'
+export const fetchTodos = () => ({
+    type: FETCH_TODOS,
     payload: {
         request: {
             url: `${URL}todos`,
