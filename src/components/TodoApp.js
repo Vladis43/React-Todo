@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import uuidv4 from 'uuid'
 
 import List from '@material-ui/core/List'
 
@@ -32,7 +31,6 @@ class TodoApp extends Component{
     handleAddTodo = (event) => {
         event.preventDefault();
 
-        const {addNewTodo} = this.props
         const {todoText} = this.state
 
         if(todoText === ''){
@@ -40,7 +38,7 @@ class TodoApp extends Component{
                 errorMessage: 'Text field is require!'
             })
         } else {
-            addNewTodo({id: uuidv4(), completed: false, title: todoText})
+            this.props.addNewTodo(todoText)
             this.setState({
                 todoText: '',
                 errorMessage: ''

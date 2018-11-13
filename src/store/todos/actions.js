@@ -1,4 +1,5 @@
 import { URL } from 'config'
+import uuidv4 from 'uuid'
 
 export const FETCH_TODOS = 'FETCH_TODOS'
 export const fetchTodos = () => ({
@@ -12,13 +13,17 @@ export const fetchTodos = () => ({
 })
 
 export const ADD_NEW_TODO = 'ADD_NEW_TODO'
-export const addNewTodo = (todo) => ({
+export const addNewTodo = (todoText) => ({
     type: ADD_NEW_TODO,
     payload: {
         request: {
             url: `${URL}todos`,
             method: 'POST',
-            data: todo
+            data: {
+                id: uuidv4(),
+                title: todoText,
+                completed: false
+            }
         }
     }
 })
