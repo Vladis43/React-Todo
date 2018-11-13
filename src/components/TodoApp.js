@@ -7,9 +7,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from 'store/todos/actions'
 
-import Header from './Header/Header'
-import TaskBar from './TaskBar/TaskBar'
-import TodoItem from './TodoItem/TodoItem'
+import Header from './header/Header'
+import Preloader from './preloader/Preloader'
+import TaskBar from './taskbar/TaskBar'
+import TodoItem from './todoitem/TodoItem'
 
 
 class TodoApp extends Component{
@@ -48,7 +49,7 @@ class TodoApp extends Component{
     }
 
     render() {
-        const {todos, toggleTodo, deleteTodo, clearAll} = this.props
+        const {todos, isLoading, toggleTodo, deleteTodo, clearAll} = this.props
         const {todoText, errorMessage} = this.state
 
         return (
@@ -63,18 +64,21 @@ class TodoApp extends Component{
                     onChange={(event) => {this.handleChange(event)}}
                     errorMessage={errorMessage}
                 />
-                <List component="nav">
-                    {todos.map((todo) => {
-                        return (
-                            <TodoItem
-                                key={todo.id}
-                                todo={todo}
-                                toggleTodoAction={toggleTodo}
-                                deleteTodoAction={deleteTodo}
-                            />
-                        )
-                    })}
-                </List>
+                {isLoading ?
+                    <Preloader/> :
+                    <List component="nav">
+                        {todos.map((todo) => {
+                            return (
+                                <TodoItem
+                                    key={todo.id}
+                                    todo={todo}
+                                    toggleTodoAction={toggleTodo}
+                                    deleteTodoAction={deleteTodo}
+                                />
+                            )
+                        })}
+                    </List>
+                }
             </div>
         )
     }
@@ -82,7 +86,8 @@ class TodoApp extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        todos: state.todos.items
+        todos: state.todos.items,
+        isLoading: state.todos.isFetching
     }
 }
 

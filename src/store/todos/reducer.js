@@ -29,13 +29,9 @@ const todosReducers = (state = initialState, action) => {
             }
 
         //AddTodo
-        case 'ADD_NEW_TODO':
-            return {...state, isFetching: true}
-
         case success('ADD_NEW_TODO'):
             return {
                 ...state,
-                isFetching: false,
                 isError: false,
                 items: [...state.items, action.payload.data]
             }
@@ -48,16 +44,12 @@ const todosReducers = (state = initialState, action) => {
             }
 
         //ToggleTodo
-        case 'TOGGLE_TODO':
-            return {...state, isFetching: true}
-
         case success('TOGGLE_TODO'):
             const toggledTodo = state.items.map((todoItem) =>
                 action.meta.id === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
             )
             return {
                 ...state,
-                isFetching: false,
                 isError: false,
                 items: toggledTodo
             }
@@ -70,16 +62,12 @@ const todosReducers = (state = initialState, action) => {
             }
 
         //DeleteTodo
-        case 'DELETE_TODO':
-            return {...state, isFetching: true}
-
         case success('DELETE_TODO'):
             const deletedTodo = state.items.filter((todo) =>
                 todo.id !== action.meta.id
             )
             return {
                 ...state,
-                isFetching: false,
                 isError: false,
                 items: deletedTodo
             }
