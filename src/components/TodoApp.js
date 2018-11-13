@@ -55,8 +55,8 @@ class TodoApp extends Component{
         return (
             <div>
                 <Header
-                    onClick={clearAll}
-                    style={todos.length === 0 ? {display: 'none'} : {display: 'block'}}
+                    clearAll={clearAll}
+                    showClearButton={todos.length === 0 ? {display: 'none'} : {display: 'block'}}
                 />
                 <TaskBar
                     AddTodoSubmit={this.handleAddTodo}

@@ -1,27 +1,41 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import * as md from '@material-ui/core/'
 import DeleteSweep from '@material-ui/icons/DeleteSweep'
 
+const AppBar = styled(md.AppBar)`
+  top: 0;
+  bottom: auto;
+`;
+
+const Root = styled.div`
+  flex-grow: 1;
+`;
+
+const Typography = styled(md.Typography)`
+  flex-grow: 1;
+`;
+
 const Header = (props) => {
-    const {style, onClick} = props
+    const {showClearButton, clearAll} = props
     return (
-        <div style={{flexGrow: 1}}>
-            <md.AppBar position="fixed" color="primary" style={{top: 0, bottom: 'auto'}}>
+        <Root>
+            <AppBar position="fixed" color="primary">
                 <md.Toolbar>
-                    <md.Typography variant="h6" color="inherit" style={{flexGrow: 1}}>
+                    <Typography variant="h6" color="inherit">
                         Todo App
-                    </md.Typography>
+                    </Typography>
                     <md.Button
                         color="inherit"
-                        style={style}
-                        onClick={onClick}
+                        style={showClearButton}
+                        onClick={clearAll}
                     >
                         <DeleteSweep />
                     </md.Button>
                 </md.Toolbar>
-            </md.AppBar>
-        </div>
+            </AppBar>
+        </Root>
     )
 }
 
