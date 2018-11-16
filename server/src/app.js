@@ -2,20 +2,15 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
+import todosRouter from './routes/todosRouter'
+
 const app = express()
 
 app.use(bodyParser.urlencoded({exception: true}))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/', (req, res) => {
-    res.send('Hello world Gaben!')
-})
+app.use('/todos', todosRouter)
 
-app.post('/todos', (req, res) => {
-    console.log(req.body)
-})
 
-app.listen(3001, () => {
-    console.log('Server is listening to port 3001')
-})
+module.exports = app
