@@ -46,7 +46,7 @@ const todosReducers = (state = initialState, action) => {
         //ToggleTodo
         case success('TOGGLE_TODO'):
             const toggledTodo = state.items.map((todoItem) =>
-                action.meta.id === todoItem.id ? {...todoItem, completed: !todoItem.completed} : todoItem
+                action.meta.id === todoItem._id ? {...todoItem, completed: !todoItem.completed} : todoItem
             )
             return {
                 ...state,
@@ -64,7 +64,7 @@ const todosReducers = (state = initialState, action) => {
         //DeleteTodo
         case success('DELETE_TODO'):
             const deletedTodo = state.items.filter((todo) =>
-                todo.id !== action.meta.id
+                todo._id !== action.meta.id
             )
             return {
                 ...state,

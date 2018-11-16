@@ -22,9 +22,13 @@ route.post('/', (req, res) => {
     })
 })
 
+route.patch('/:id', (req, res) => {
+
+})
+
 route.delete('/:id', (req, res) => {
     //delete the requested item from mongodb
-    Todo.findByIdAndRemove({_id: req.params.id}, (err, data) => {
+    Todo.findByIdAndRemove(req.params.id, (err, data) => {
         if (err) throw err
         res.json(data)
     })
