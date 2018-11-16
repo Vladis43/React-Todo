@@ -4,6 +4,6 @@ app.get('/', (req, res) => {
     res.send('Server is running...')
 })
 
-app.listen(3001, () => {
-    console.log('Server is listening to port 3001')
+app.listen(8080, () => {
+    console.log('Server is listening to port 8080')
 })
