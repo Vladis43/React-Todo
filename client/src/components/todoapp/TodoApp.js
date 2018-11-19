@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from 'store/todos/actions'
 
-import Header from './header/Header'
+import Header from '../header/Header'
 import Preloader from './preloader/Preloader'
 import TaskBar from './taskbar/TaskBar'
 import TodoItem from './todoitem/TodoItem'
@@ -47,15 +47,12 @@ class TodoApp extends Component{
     }
 
     render() {
-        const {todos, isLoading, toggleTodo, deleteTodo, clearAll} = this.props
+        const {todos, isLoading, toggleTodo, deleteTodo} = this.props
         const {todoText, errorMessage} = this.state
 
         return (
             <div>
-                <Header
-                    clearAll={clearAll}
-                    showClearButton={todos.length === 0 ? {display: 'none'} : {display: 'block'}}
-                />
+                <Header/>
                 <TaskBar
                     AddTodoSubmit={this.handleAddTodo}
                     todoValue={todoText}

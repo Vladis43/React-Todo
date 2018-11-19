@@ -9,7 +9,7 @@ const initialState = {
 
 const todosReducers = (state = initialState, action) => {
     switch (action.type) {
-        //GetTodo
+//GetTodo===============================================================================================================
         case 'FETCH_TODOS':
             return {...state, isFetching: true}
 
@@ -28,7 +28,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-        //AddTodo
+//AddTodo===============================================================================================================
         case success('ADD_NEW_TODO'):
             return {
                 ...state,
@@ -43,7 +43,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-        //ToggleTodo
+//ToggleTodo============================================================================================================
         case success('TOGGLE_TODO'):
             const toggledTodo = state.items.map((todoItem) =>
                 action.meta.id === todoItem._id ? {...todoItem, completed: !todoItem.completed} : todoItem
@@ -61,7 +61,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-        //DeleteTodo
+//DeleteTodo============================================================================================================
         case success('DELETE_TODO'):
             const deletedTodo = state.items.filter((todo) =>
                 todo._id !== action.meta.id
@@ -79,12 +79,7 @@ const todosReducers = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-        //ClearAll
-        case 'CLEAR_ALL':
-            return {
-                ...state, items: []
-            }
-
+//======================================================================================================================
         default: return state
     }
 }

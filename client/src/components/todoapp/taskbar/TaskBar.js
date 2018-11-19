@@ -7,7 +7,6 @@ import AddIcon from '@material-ui/icons/Add'
 const AddTodoForm = styled.form`
     display: flex;
     padding-top: 70px;
-    padding-bottom: 15px;
     padding-right: 0;
     padding-left: 48px;
 `;
