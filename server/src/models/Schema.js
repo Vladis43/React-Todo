@@ -3,8 +3,14 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const todosSchema = new Schema({
-    title: String,
-    completed: Boolean
+    title: {
+        type: String,
+        required: true
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    }
 },
     {versionKey: false})
 

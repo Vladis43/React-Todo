@@ -7,7 +7,6 @@ mongoose.connect('mongodb://localhost:27017/todo_db')
 const route = Router()
 
 route.get('/', (req, res) => {
-    //get data from mongodb and pass it to view
     Todo.find({}, (err, data) => {
         if (err) throw err
         res.json(data)
@@ -15,20 +14,28 @@ route.get('/', (req, res) => {
 })
 
 route.post('/', (req, res) => {
-    //get data from the view and add it to mongodb
-    const newTodo = Todo(req.body).save((err, data) => {
+    const todoTitle = req.body.title
+
+    Todo({title: todoTitle}).save((err, data) => {
         if (err) throw err
         res.json(data)
     })
 })
 
 route.patch('/:id', (req, res) => {
+    const id = req.params.id
+    const completed = req.body.completed
 
+    Todo.findByIdAndUpdate(id, { completed: completed }, (err, data) => {
+        if (err) throw err
+        res.json(data)
+    })
 })
 
 route.delete('/:id', (req, res) => {
-    //delete the requested item from mongodb
-    Todo.findByIdAndRemove(req.params.id, (err, data) => {
+    const id = req.params.id
+
+    Todo.findByIdAndRemove(id, (err, data) => {
         if (err) throw err
         res.json(data)
     })

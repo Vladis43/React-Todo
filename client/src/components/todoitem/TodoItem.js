@@ -15,15 +15,15 @@ const TodoItem = (props) => {
             <md.Checkbox
                 color="primary"
                 checked={todo.completed}
-                onChange={() => toggleTodoAction(todo.id, todo.completed)}
+                onChange={() => toggleTodoAction(todo._id, todo.completed)}
             />
-            <md.ListItem button onClick={() => toggleTodoAction(todo.id, todo.completed)}>
+            <md.ListItem button onClick={() => toggleTodoAction(todo._id, todo.completed)}>
                     <md.ListItemText primary={todo.title}  style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} />
             </md.ListItem>
             <md.Button
                 mini
                 color="secondary"
-                onClick={() => deleteTodoAction(todo.id)}
+                onClick={() => deleteTodoAction(todo._id)}
             >
                 <ClearIcon />
             </md.Button>

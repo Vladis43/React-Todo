@@ -68,7 +68,7 @@ class TodoApp extends Component{
                         {todos.map((todo) => {
                             return (
                                 <TodoItem
-                                    key={todo.id}
+                                    key={todo._id}
                                     todo={todo}
                                     toggleTodoAction={toggleTodo}
                                     deleteTodoAction={deleteTodo}
