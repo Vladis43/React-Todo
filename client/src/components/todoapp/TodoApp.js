@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from 'store/todos/actions'
 
-import Header from '../header/Header'
+import Header from './header/Header'
 import Preloader from './preloader/Preloader'
 import TaskBar from './taskbar/TaskBar'
 import TodoItem from './todoitem/TodoItem'

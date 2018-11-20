@@ -659,12 +659,12 @@ Here is an example:
 
 ```js
 import React from 'react';
-import logo from './logo.png'; // Tell Webpack this JS file uses this image
+import logo from './logo.png'; assets
 
 console.log(logo); // /logo.84287d09.png
 
 function Header() {
-  // Import result is the URL of your image
+  assets
   return <img src={logo} alt="Logo" />;
 }
 
@@ -2099,7 +2099,7 @@ By default, Create React App produces a build assuming your app is hosted at the
 To override this, specify the `homepage` in your `package.json`, for example:
 
 ```js
-  "homepage": "http://mywebsite.com/relativepath",
+  authorization: "http://mywebsite.com/relativepath",
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
@@ -2257,7 +2257,7 @@ or for a GitHub user page:
 or for a custom domain page:
 
 ```json
-  "homepage": "https://mywebsite.com",
+  authorization: "https://mywebsite.com",
 ```
 
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
