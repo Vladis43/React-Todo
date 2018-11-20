@@ -49,6 +49,9 @@ const PasswordInput = styled(md.TextField)``;
 const SignInField = styled(md.CardActions)`
   display: flex;
   justify-content: flex-end;
+  @media screen and (max-device-width: 400px) {
+    justify-content: center;
+  }
 `;
 const ConfirmButton = styled(md.Button)``;
 const RegistrationField = styled(md.CardActions)`
@@ -97,9 +100,11 @@ class Authorization extends Component{
                     <md.Divider />
 
                     <RegistrationField>
-                        <RegistrationButton>
-                            <Link to={'/reg'} style={{textDecoration: "none", color: "#34409b"}}>Create an account</Link>
-                        </RegistrationButton>
+                            <Link to={'/reg'} style={{textDecoration: "none"}}>
+                                <RegistrationButton style={{color: "#34409b"}}>
+                                    Create an account
+                                </RegistrationButton>
+                            </Link>
                     </RegistrationField>
                 </Card>
             </Wrapper>

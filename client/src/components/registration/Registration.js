@@ -20,8 +20,20 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Card = styled(md.Card)``;
-const CardHeader = styled(md.CardContent)`font-size: 28px;`;
+const Card = styled(md.Card)`
+  @media screen and (max-device-width: 455px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
+  }
+`;
+const CardHeader = styled(md.CardContent)`
+  font-size: 28px;
+`;
 const DetailsTitle = styled(md.Typography)``;
 const GeneralInputsField = styled(md.CardContent)`
   display: flex;
@@ -30,7 +42,15 @@ const GeneralInputsField = styled(md.CardContent)`
 const UsernameInput = styled(md.TextField)``;
 const EmailInput = styled(md.TextField)``;
 const PasswordInput = styled(md.TextField)``;
-const DetailsInputsField = styled(md.CardContent)``;
+const DetailsInputsField = styled(md.CardContent)`
+  @media screen and (max-device-width: 455px) {
+    display: flex;
+    flex-direction: column;
+    div {
+      display: flex;
+    }
+  }
+`;
 const AgeInput = styled(md.TextField)``;
 const SexInput = styled(md.TextField)``;
 const CountryInput = styled(md.TextField)``;
@@ -38,6 +58,9 @@ const CityInput = styled(md.TextField)``;
 const ConfirmField = styled(md.CardActions)`
   display: flex;
   justify-content: flex-end;
+  @media screen and (max-device-width: 455px) {
+    justify-content: center;
+  }
 `;
 const ConfirmButton = styled(md.Button)``;
 const AuthorizationField = styled(md.CardActions)`
@@ -81,9 +104,11 @@ class Registration extends Component{
 
                     <AuthorizationField>
                         <AuthorizationTitle>Already have an account?</AuthorizationTitle>
-                        <AuthorizationButton>
-                            <Link to={'/auth'} style={{textDecoration: "none", color: "#34409b"}}>Sign in</Link>
-                        </AuthorizationButton>
+                            <Link to={'/auth'} style={{textDecoration: "none"}}>
+                                <AuthorizationButton style={{color: "#34409b"}}>
+                                    Sign in
+                                </AuthorizationButton>
+                            </Link>
                     </AuthorizationField>
                 </Card>
             </Wrapper>
