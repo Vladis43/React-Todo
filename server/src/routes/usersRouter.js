@@ -1,25 +1,62 @@
 import { Router } from 'express'
-import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt-nodejs'
+import emailValidator from 'email-validator'
+import User from '../models/usersSchema'
 
 
 const route = Router()
 
-route.get('/', (req, res) => {
-    res.json({
-        message: "Get request is working.."
-    })
-})
+route.post('/register', (req, res) => {
+    const username = req.body.username
+    const email = req.body.email
+    const password = req.body.password
+    const age = req.body.age
+    const sex = req.body.sex
+    const country = req.body.country
+    const city = req.body.city
 
-route.post('/', (req, res) => {
-    const user = {
-        id: 1,
-        username: 'Brad',
-        email: 'brad@gmail.com'
+    if (!username || !email || !password || !age || !sex || !country || !city) {
+        res.json({
+            ok: false,
+            error: 'All field must be required!',
+            fields: ['username', 'email', 'password', 'age', 'sex', 'country', 'city']
+        })
+    } else if (username.length < 3 || username.length > 16) {
+        res.json({
+            ok: false,
+            error: 'username length must be from 3 to 6 characters',
+            fields: ['username']
+        })
+    } else if (!emailValidator.validate(email)) {
+        res.json({
+            ok: false,
+            error: 'Email entered incorrectly',
+            fields: ['email']
+        })
+    } else {
+        bcrypt.hash(password, null, null, (err, hash) => {
+            User.create({
+                username,
+                email,
+                password: hash,
+                age,
+                sex,
+                country,
+                city
+            }).then(user => {
+                console.log(user)
+                res.json({
+                    ok: true
+                })
+            }).catch(err => {
+                console.log(err)
+                res.json({
+                    ok: false,
+                    error: 'Error!, something wrong'
+                })
+            })
+        })
     }
-
-    jwt.sign({ user }, 'secretkey', (err, token) => {
-        res.json({ token })
-    })
 })
 
 module.exports = route

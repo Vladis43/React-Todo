@@ -1,9 +1,12 @@
 import express from 'express'
+import mongoose from "mongoose"
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import todosRouter from './routes/todosRouter'
 import usersRouter from './routes/usersRouter'
+
+mongoose.connect('mongodb://localhost:27017/todo_db')
 
 const app = express()
 

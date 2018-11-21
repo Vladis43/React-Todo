@@ -1,8 +1,6 @@
 import { Router } from 'express'
-import mongoose from 'mongoose'
-import Todo from '../models/Schema'
+import Todo from '../models/todosSchema'
 
-mongoose.connect('mongodb://localhost:27017/todo_db')
 
 const route = Router()
 
