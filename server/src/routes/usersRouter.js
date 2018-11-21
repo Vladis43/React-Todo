@@ -41,28 +41,48 @@ route.post('/register', (req, res) => {
             fields: ['email']
         })
     } else {
-        bcrypt.hash(password, null, null, (err, hash) => {
-            User.create({
-                username,
-                email,
-                password: hash,
-                age,
-                sex,
-                country,
-                city
-            }).then(user => {
-                console.log(user)
-                res.json({
-                    ok: true
+
+        User.findOne({
+            email
+        }).then(email => {
+            if(!email) {
+                bcrypt.hash(password, null, null, (err, hash) => {
+                    User.create({
+                        username,
+                        email,
+                        password: hash,
+                        age,
+                        sex,
+                        country,
+                        city
+                    }).then(user => {
+                        console.log(user)
+                        res.json({
+                            ok: true
+                        })
+                    }).catch(err => {
+                        console.log(err)
+                        res.json({
+                            ok: false,
+                            error: 'Error!, something wrong'
+                        })
+                    })
                 })
-            }).catch(err => {
-                console.log(err)
+            } else {
                 res.json({
                     ok: false,
-                    error: 'Error!, something wrong'
+                    error: 'this email or email is already taken',
+                    fields: ['email']
                 })
+            }
+        }).catch(err => {
+            console.log(err)
+            res.json({
+                ok: false,
+                error: 'Error!, something wrong'
             })
         })
+
     }
 })
 
