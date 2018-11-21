@@ -42,6 +42,7 @@ const GeneralInputsField = styled(md.CardContent)`
 const UsernameInput = styled(md.TextField)``;
 const EmailInput = styled(md.TextField)``;
 const PasswordInput = styled(md.TextField)``;
+const PasswordConfirmInput = styled(md.TextField)``;
 const DetailsInputsField = styled(md.CardContent)`
   @media screen and (max-device-width: 455px) {
     display: flex;
@@ -81,13 +82,16 @@ class Registration extends Component{
                     <GeneralInputsField>
                         <UsernameInput size="large" type="text" label="Username" style={{marginBottom: 10}}/>
                         <EmailInput size="large" type="text" label="Email" style={{marginBottom: 10}}/>
-                        <PasswordInput size="large" type="password" label="Password" style={{marginBottom: 10}}/>
+                        <div>
+                            <PasswordInput size="large" type="password" label="Password"/>
+                            <PasswordConfirmInput size="large" type="password" label="Confirm password" style={{marginLeft: 20}}/>
+                        </div>
                     </GeneralInputsField>
 
                     <DetailsInputsField>
                         <DetailsTitle>Details</DetailsTitle>
                         <div style={{marginBottom: 10}}>
-                            <AgeInput size="large" type="text" label="Age" style={{marginRight: 20}}/>
+                            <AgeInput error={false} size="large" type="text" label="Age" style={{marginRight: 20}}/>
                             <SexInput size="large" type="text" label="Sex"/>
                         </div>
                         <div>

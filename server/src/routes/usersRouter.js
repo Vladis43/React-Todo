@@ -25,27 +25,39 @@ route.post('/register', (req, res) => {
     } else if (username.length < 3 || username.length > 16) {
         res.json({
             ok: false,
-            error: 'username length must be from 3 to 6 characters',
+            error: 'Username length must be from 3 to 6 characters!',
+            fields: ['username']
+        })
+    } else if(!/^[a-zA-Z0-9]+$/.test(username)) {
+        res.json({
+            ok: false,
+            error: 'Only latin letters!',
             fields: ['username']
         })
     } else if (passwordConfirm !== password) {
         res.json({
             ok: false,
-            error: 'Passwords do not match',
+            error: 'Passwords do not match!',
+            fields: ['password', 'passwordConfirm']
+        })
+    } else if (password.length < 8) {
+        res.json({
+            ok: false,
+            error: 'The minimum password length is 8 characters!',
             fields: ['password', 'passwordConfirm']
         })
     } else if (!emailValidator.validate(email)) {
         res.json({
             ok: false,
-            error: 'Email entered incorrectly',
+            error: 'Email entered incorrectly!',
             fields: ['email']
         })
     } else {
 
         User.findOne({
             email
-        }).then(email => {
-            if(!email) {
+        }).then(mail => {
+            if(!mail) {
                 bcrypt.hash(password, null, null, (err, hash) => {
                     User.create({
                         username,
@@ -71,7 +83,7 @@ route.post('/register', (req, res) => {
             } else {
                 res.json({
                     ok: false,
-                    error: 'this email or email is already taken',
+                    error: 'this email is already taken',
                     fields: ['email']
                 })
             }
