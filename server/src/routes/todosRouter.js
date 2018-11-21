@@ -1,42 +1,50 @@
 import { Router } from 'express'
-import Todo from '../models/todosSchema'
-
+import Todo from '../models/Todo'
 
 const route = Router()
 
-route.get('/', async (req, res) => {
-    await Todo.find({}, (err, data) => {
-        if (err) throw err
-        res.json(data)
-    })
+route.get('/', async (request, response) => {
+    try {
+        const todo = await Todo.find({})
+        response.status(200).json(todo)
+    } catch (err) {
+        response.status(404).json(err)
+    }
 })
 
-route.post('/', async (req, res) => {
-    const todoTitle = req.body.title
+route.post('/', async (request, response) => {
+    const todoTitle = request.body.title
 
-    await Todo({title: todoTitle}).save((err, data) => {
-        if (err) throw err
-        res.json(data)
-    })
+    try {
+        const todo = await Todo({title: todoTitle}).save()
+
+        response.status(200).json(todo)
+    } catch (err) {
+        response.status(404).json(err)
+    }
 })
 
-route.patch('/:id', async (req, res) => {
-    const id = req.params.id
-    const completed = req.body.completed
+route.patch('/:id', async (request, response) => {
+    const id = request.params.id
+    const completed = request.body.completed
 
-    await Todo.findByIdAndUpdate(id, { completed: completed }, (err, data) => {
-        if (err) throw err
-        res.json(data)
-    })
+    try {
+        const todo = await Todo.findByIdAndUpdate(id, {completed: completed})
+        response.status(200).json(todo)
+    } catch (err) {
+        response.status(404).json(err)
+    }
 })
 
-route.delete('/:id', async (req, res) => {
-    const id = req.params.id
+route.delete('/:id', async (request, response) => {
+    const id = request.params.id
 
-    await Todo.findByIdAndRemove(id, (err, data) => {
-        if (err) throw err
-        res.json(data)
-    })
+    try {
+        const todo = await Todo.findByIdAndDelete(id)
+        response.status(200).json(todo)
+    } catch (err) {
+        response.status(404).json(err)
+    }
 })
 
-module.exports = route
+export default route
