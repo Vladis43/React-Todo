@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import * as actions from 'store/auth/actions'
 
 import styled from 'styled-components'
 import * as md from '@material-ui/core/'
@@ -9,53 +12,107 @@ import backgroundImageNight from 'assets/todo-background-night.png'
 
 
 class Authorization extends Component{
+    state = {
+        email: '',
+        password: ''
+    }
+
+    setEmail = (event) => {
+        this.setState({
+            email: event.target.value
+        })
+    }
+
+    setPassword = (event) => {
+        this.setState({
+            password: event.target.value
+        })
+    }
+
+    signIn = (event) => {
+        event.preventDefault()
+        const {email, password} = this.state
+
+        this.props.signIn({email, password})
+    }
+
+    componentWillReceiveProps(nextProps) {
+        window.localStorage.setItem('token', nextProps.token)
+        window.localStorage.setItem('id', nextProps.id)
+
+        if (nextProps.success) {
+            nextProps.history.push('/')
+        }
+    }
+
     render() {
+        const {email, password} = this.state
+
         return (
             <Wrapper>
                 <Card>
-                    <CardHeader>
-                        <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
-                        <CardHeaderTitle variant="display1">Sign in to your account</CardHeaderTitle>
-                    </CardHeader>
+                    <form method="POST" onSubmit={(event) => this.signIn(event)}>
+                        <CardHeader>
+                            <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
+                            <CardHeaderTitle variant="display1">Sign in to your account</CardHeaderTitle>
+                        </CardHeader>
 
-                    <InputsField>
-                        <EmailInput
-                            size="large"
-                            type="text"
-                            label="Email"
-                            style={{margin: 10}}
-                        />
-                        <PasswordInput
-                            size="large"
-                            type="password"
-                            label="Password"
-                            style={{margin: 10}}
-                        />
-                    </InputsField>
+                        <InputsField>
+                            <EmailInput
+                                size="large"
+                                type="text"
+                                label="Email"
+                                style={{margin: 10}}
+                                value={email}
+                                onChange={(event) => this.setEmail(event)}
+                            />
+                            <PasswordInput
+                                size="large"
+                                type="password"
+                                label="Password"
+                                style={{margin: 10}}
+                                value={password}
+                                onChange={(event) => this.setPassword(event)}
+                            />
+                        </InputsField>
 
-                    <SignInField>
-                        <ConfirmButton
-                            variant="contained"
-                            size="large"
-                            color="primary"
-                        >
-                            Sign In
-                        </ConfirmButton>
-                    </SignInField>
+                        <SignInField>
+                            <ConfirmButton
+                                variant="contained"
+                                size="large"
+                                color="primary"
+                                type="submit"
+                            >
+                                Sign In
+                            </ConfirmButton>
+                        </SignInField>
 
-                    <md.Divider />
+                        <md.Divider />
 
-                    <RegistrationField>
-                            <Link to={'/reg'} style={{textDecoration: "none"}}>
-                                <RegistrationButton style={{color: "#34409b"}}>
-                                    Create an account
-                                </RegistrationButton>
-                            </Link>
-                    </RegistrationField>
+                        <RegistrationField>
+                                <Link to={'/reg'} style={{textDecoration: "none"}}>
+                                    <RegistrationButton style={{color: "#34409b"}}>
+                                        Create an account
+                                    </RegistrationButton>
+                                </Link>
+                        </RegistrationField>
+                    </form>
                 </Card>
             </Wrapper>
         )
     }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.auth.users.token,
+        success: state.auth.users.success,
+        id: state.auth.users.id
+    }
+}
+
+const mapActionToProps = (dispatch) => {
+    return bindActionCreators(actions, dispatch)
 }
 
 
@@ -112,4 +169,4 @@ const RegistrationButton = styled(md.Button)``;
 //======================================================================================================================
 
 
-export default Authorization
+export default connect(mapStateToProps, mapActionToProps)(Authorization)

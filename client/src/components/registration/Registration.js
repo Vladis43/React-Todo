@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from 'store/authorization/actions'
+import * as actions from 'store/auth/actions'
 
 import styled from 'styled-components'
 import * as md from "@material-ui/core/"
@@ -209,7 +209,8 @@ class Registration extends Component{
 const mapStateToProps = (state) => {
     return {
         token: state.auth.users.token,
-        success: state.auth.users.success
+        success: state.auth.users.success,
+        id: state.auth.users.id
     }
 }
 

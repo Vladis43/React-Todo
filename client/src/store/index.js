@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import logger from './middleware/logger'
 import { combineReducers } from 'redux'
 import todosReducer from './todos/reducer'
-import authReducer from './authorization/reducer'
+import authReducer from './auth/reducer'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './saga'
 

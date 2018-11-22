@@ -50,7 +50,7 @@ module.exports = {
             const validPassword = bcrypt.compareSync(password, account.password)
 
             if (!validPassword) {
-                response.status(500).json({
+                response.status(401).json({
                     message: 'Wrong password!',
                     success: false
                 })
