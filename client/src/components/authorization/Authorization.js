@@ -8,9 +8,59 @@ import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
 
 
-const time = new Date().getHours()
+class Authorization extends Component{
+    render() {
+        return (
+            <Wrapper>
+                <Card>
+                    <CardHeader>
+                        <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
+                        <CardHeaderTitle variant="display1">Sign in to your account</CardHeaderTitle>
+                    </CardHeader>
+
+                    <InputsField>
+                        <EmailInput
+                            size="large"
+                            type="text"
+                            label="Email"
+                            style={{margin: 10}}
+                        />
+                        <PasswordInput
+                            size="large"
+                            type="password"
+                            label="Password"
+                            style={{margin: 10}}
+                        />
+                    </InputsField>
+
+                    <SignInField>
+                        <ConfirmButton
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                        >
+                            Sign In
+                        </ConfirmButton>
+                    </SignInField>
+
+                    <md.Divider />
+
+                    <RegistrationField>
+                            <Link to={'/reg'} style={{textDecoration: "none"}}>
+                                <RegistrationButton style={{color: "#34409b"}}>
+                                    Create an account
+                                </RegistrationButton>
+                            </Link>
+                    </RegistrationField>
+                </Card>
+            </Wrapper>
+        )
+    }
+}
+
 
 //Styled Components=====================================================================================================
+const time = new Date().getHours()
 const Wrapper = styled.div`
   background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
 
@@ -61,55 +111,5 @@ const RegistrationField = styled(md.CardActions)`
 const RegistrationButton = styled(md.Button)``;
 //======================================================================================================================
 
-
-class Authorization extends Component{
-    render() {
-        return (
-            <Wrapper>
-                <Card>
-                    <CardHeader>
-                        <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
-                        <CardHeaderTitle variant="display1">Sign in to your account</CardHeaderTitle>
-                    </CardHeader>
-
-                    <InputsField>
-                        <EmailInput
-                            size="large"
-                            type="text"
-                            label="Email"
-                            style={{margin: 10}}
-                        />
-                        <PasswordInput
-                            size="large"
-                            type="password"
-                            label="Password"
-                            style={{margin: 10}}
-                        />
-                    </InputsField>
-
-                    <SignInField>
-                        <ConfirmButton
-                            variant="contained"
-                            size="large"
-                            color="primary"
-                        >
-                            Sign In
-                        </ConfirmButton>
-                    </SignInField>
-
-                    <md.Divider />
-
-                    <RegistrationField>
-                            <Link to={'/reg'} style={{textDecoration: "none"}}>
-                                <RegistrationButton style={{color: "#34409b"}}>
-                                    Create an account
-                                </RegistrationButton>
-                            </Link>
-                    </RegistrationField>
-                </Card>
-            </Wrapper>
-        )
-    }
-}
 
 export default Authorization

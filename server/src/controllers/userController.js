@@ -15,7 +15,7 @@ module.exports = {
                         password: bcrypt.hashSync(request.body.password),
                     }, (error, user) => {
                         if (error) {
-                            response.status(512).json({error: error})
+                            response.status(409).json({error: error})
                         } else {
                             console.log(user)
                             jwt.sign({id: user._id}, config.secret, (error, token) => {
@@ -31,7 +31,7 @@ module.exports = {
                         }
                     })
                 } else {
-                    response.status(500).json({
+                    response.status(409).json({
                         error: 'This email is already taken!'
                     })
                 }
