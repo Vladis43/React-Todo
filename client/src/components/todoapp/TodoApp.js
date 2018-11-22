@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-
-import List from '@material-ui/core/List'
-
+import { Redirect } from "react-router-dom"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from 'store/todos/actions'
+
+import List from '@material-ui/core/List'
 
 import Header from './header/Header'
 import Preloader from './preloader/Preloader'
@@ -46,13 +46,26 @@ class TodoApp extends Component{
         }
     }
 
+    handleLogOut = () => {
+        window.localStorage.removeItem('token')
+        window.localStorage.removeItem('id')
+
+        this.props.history.push('/auth')
+    }
+
     render() {
         const {todos, isLoading, toggleTodo, deleteTodo} = this.props
         const {todoText, errorMessage} = this.state
 
         return (
+            window.localStorage.getItem('token') &&
+            window.localStorage.getItem('token') !== null &&
+            window.localStorage.getItem('token') !== 'undefined' ?
+
             <div>
-                <Header/>
+                <Header
+                    logOut={this.handleLogOut}
+                />
                 <TaskBar
                     AddTodoSubmit={this.handleAddTodo}
                     todoValue={todoText}
@@ -74,7 +87,7 @@ class TodoApp extends Component{
                         })}
                     </List>
                 }
-            </div>
+            </div> : <Redirect to="/auth" />
         )
     }
 }

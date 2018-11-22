@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import * as md from '@material-ui/core/'
+import * as icon from '@material-ui/icons'
 
 const AppBar = styled(md.AppBar)`
   top: 0;
@@ -16,17 +17,23 @@ const Typography = styled(md.Typography)`
   flex-grow: 1;
 `;
 
-const Header = () => {
+const Header = ({logOut}) => {
     return (
         <Root>
             <AppBar position="fixed" color="primary">
                 <md.Toolbar>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant="title" color="inherit">
                         Todo App
                     </Typography>
-                    <md.Button color="inherit">
-                        Login
-                    </md.Button>
+                    <md.Tooltip title="Log out">
+                        <md.Button
+                            color="inherit"
+                            aria-label="Log out"
+                            onClick={logOut}
+                        >
+                            <icon.Input />
+                        </md.Button>
+                    </md.Tooltip>
                 </md.Toolbar>
             </AppBar>
         </Root>
