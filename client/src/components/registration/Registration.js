@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {Link} from 'react-router-dom'
 import * as actions from 'store/auth/actions'
 
 import styled from 'styled-components'
 import * as md from "@material-ui/core/"
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
-import {Link} from "react-router-dom"
+
+import GeneralInputs from './generalInputs/GeneralInputs'
+import DetailsInputs from './detailsInputs/DetailsInputs'
 
 
 class Registration extends Component{
@@ -97,86 +100,34 @@ class Registration extends Component{
     }
 
     render() {
-        const {username, email, password, passwordConfirm, age, sex, country, city} = this.state
+        const { username, email, password, passwordConfirm, age, sex, country, city } = this.state
 
         return (
             <Wrapper>
                 <Card>
                     <form method="POST" onSubmit={(event) => this.signUp(event)}>
                         <CardHeader>Create your account</CardHeader>
-                        <GeneralInputsField>
-                            <UsernameInput
-                                size="large"
-                                type="text"
-                                label="Username"
-                                style={{marginBottom: 10}}
-                                value={username}
-                                onChange={(event) => this.setUsername(event)}
-                            />
-                            <EmailInput
-                                size="large"
-                                type="text"
-                                label="Email"
-                                style={{marginBottom: 10}}
-                                value={email}
-                                onChange={(event) => this.setEmail(event)}
-                            />
-                            <div>
-                                <PasswordInput
-                                    size="large"
-                                    type="password"
-                                    label="Password"
-                                    value={password}
-                                    onChange={(event) => this.setPassword(event)}
-                                />
-                                <PasswordConfirmInput
-                                    size="large"
-                                    type="password"
-                                    label="Confirm password"
-                                    style={{marginLeft: 20}}
-                                    value={passwordConfirm}
-                                    onChange={(event) => this.setPasswordConfirm(event)}
-                                />
-                            </div>
-                        </GeneralInputsField>
+                        <GeneralInputs
+                            usernameValue={username}
+                            emailValue={email}
+                            passwordValue={password}
+                            passwordConfirmValue={passwordConfirm}
+                            setUsername={(event) => this.setUsername(event)}
+                            setEmail={(event) => this.setEmail(event)}
+                            setPassword={(event) => this.setPassword(event)}
+                            setPasswordConfirm={(event) => this.setPasswordConfirm(event)}
+                        />
 
-                        <DetailsInputsField>
-                            <DetailsTitle>Details</DetailsTitle>
-                            <div style={{marginBottom: 10}}>
-                                <AgeInput
-                                    size="large"
-                                    type="text"
-                                    label="Age"
-                                    style={{marginRight: 20}}
-                                    value={age}
-                                    onChange={(event) => this.setAge(event)}
-                                />
-                                <SexInput
-                                    size="large"
-                                    type="text"
-                                    label="Sex"
-                                    value={sex}
-                                    onChange={(event) => this.setSex(event)}
-                                />
-                            </div>
-                            <div>
-                                <CountryInput
-                                    size="large"
-                                    type="text"
-                                    label="Coutry"
-                                    style={{marginRight: 20}}
-                                    value={country}
-                                    onChange={(event) => this.setCountry(event)}
-                                />
-                                <CityInput
-                                    size="large"
-                                    type="text"
-                                    label="City"
-                                    value={city}
-                                    onChange={(event) => this.setCity(event)}
-                                />
-                            </div>
-                        </DetailsInputsField>
+                        <DetailsInputs
+                            ageValue={age}
+                            sexValue={sex}
+                            countryValue={country}
+                            cityValue={city}
+                            setAge={(event) => this.setAge(event)}
+                            setSex={(event) => this.setSex(event)}
+                            setCountry={(event) => this.setCountry(event)}
+                            setCity={(event) => this.setCity(event)}
+                        />
 
                         <ConfirmField>
                             <ConfirmButton
@@ -246,28 +197,6 @@ const Card = styled(md.Card)`
 const CardHeader = styled(md.CardContent)`
   font-size: 28px;
 `;
-const DetailsTitle = styled(md.Typography)``;
-const GeneralInputsField = styled(md.CardContent)`
-  display: flex;
-  flex-direction: column;
-`;
-const UsernameInput = styled(md.TextField)``;
-const EmailInput = styled(md.TextField)``;
-const PasswordInput = styled(md.TextField)``;
-const PasswordConfirmInput = styled(md.TextField)``;
-const DetailsInputsField = styled(md.CardContent)`
-  @media screen and (max-device-width: 455px) {
-    display: flex;
-    flex-direction: column;
-    div {
-      display: flex;
-    }
-  }
-`;
-const AgeInput = styled(md.TextField)``;
-const SexInput = styled(md.TextField)``;
-const CountryInput = styled(md.TextField)``;
-const CityInput = styled(md.TextField)``;
 const ConfirmField = styled(md.CardActions)`
   display: flex;
   justify-content: flex-end;
