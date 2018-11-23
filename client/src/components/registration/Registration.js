@@ -9,8 +9,8 @@ import * as md from "@material-ui/core/"
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
 
-import GeneralInputs from './generalInputs/GeneralInputs'
-import DetailsInputs from './detailsInputs/DetailsInputs'
+import GeneralInputs from './generalinputs/GeneralInputs'
+import DetailsInputs from './detailsinputs/DetailsInputs'
 
 
 class Registration extends Component{
@@ -22,8 +22,7 @@ class Registration extends Component{
         age: '',
         sex: '',
         country: '',
-        city: '',
-        token: null
+        city: ''
     }
 
     setUsername = (event) => {
@@ -107,6 +106,11 @@ class Registration extends Component{
                 <Card>
                     <form method="POST" onSubmit={(event) => this.signUp(event)}>
                         <CardHeader>Create your account</CardHeader>
+                        <ErrorMessage
+                            style={!this.props.error ? {display: 'none'} : {display: 'block'}}
+                        >
+                            {this.props.error}
+                        </ErrorMessage>
                         <GeneralInputs
                             usernameValue={username}
                             emailValue={email}
@@ -161,7 +165,8 @@ const mapStateToProps = (state) => {
     return {
         token: state.auth.users.token,
         success: state.auth.users.success,
-        id: state.auth.users.id
+        id: state.auth.users.id,
+        error: state.auth.errorMessage
     }
 }
 
@@ -196,6 +201,9 @@ const Card = styled(md.Card)`
 `;
 const CardHeader = styled(md.CardContent)`
   font-size: 28px;
+`;
+const ErrorMessage = styled(md.CardContent)`
+  color: #d84940;
 `;
 const ConfirmField = styled(md.CardActions)`
   display: flex;

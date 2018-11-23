@@ -19,7 +19,7 @@ const PasswordField = styled.div`
         }
         //material-ui class
         .fIhGog {
-          margin-left: 0px !important;
+          margin-left: 0 !important;
         }
     }
 `;

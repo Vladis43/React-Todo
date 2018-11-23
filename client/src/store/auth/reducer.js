@@ -2,7 +2,8 @@ import { success, error } from 'redux-saga-requests'
 
 const initialState = {
     isError: false,
-    users: []
+    users: [],
+    errorMessage: ''
 }
 
 const authReducer = (state = initialState, action) => {
@@ -24,7 +25,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.message
+                errorMessage: action.payload.response.data.errors[0].msg
             }
 
         case 'SIGN_IN':

@@ -5,7 +5,7 @@ const route = Router()
 route.use('/', (request, response, next) => {
     request.checkBody('username', 'Username is required!').notEmpty()
     request.checkBody('username', 'Username must be at least 3 characters!').len({min: 3})
-    request.checkBody('username', 'Only latin characters!').isAlpha()
+    request.checkBody('username', 'Only latin characters!').isAlphanumeric()
     request.checkBody('email', 'Email is required!').notEmpty()
     request.checkBody('email', 'Email is not valid!').isEmail()
     request.checkBody('password', 'Password is required!').notEmpty()
