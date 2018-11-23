@@ -6,36 +6,42 @@ import User from '../models/User'
 module.exports = {
     async SignUp(request, response) {
         const {email} = request.body
+        const errors = request.validationErrors()
 
         try {
-            await User.findOne({email}, (error, user) => {
-                if (!user) {
-                    User.create({
-                        ...request.body,
-                        password: bcrypt.hashSync(request.body.password),
-                    }, (error, user) => {
-                        if (error) {
-                            response.status(409).json({error: error})
-                        } else {
-                            console.log(user)
-                            jwt.sign({id: user._id}, config.secret, (error, token) => {
-                                response.status(200).json({
-                                    message: 'Sing Up is successful',
-                                    success: true,
-                                    payload: {
-                                        token,
-                                        id: user._id
-                                    }
+
+            if (errors) {
+                response.status(422).json({errors: errors})
+            } else {
+                await User.findOne({email}, (error, user) => {
+                    if (!user) {
+                        User.create({
+                            ...request.body,
+                            password: bcrypt.hashSync(request.body.password),
+                        }, (error, user) => {
+                            if (error) {
+                                response.status(409).json({error: error})
+                            } else {
+                                console.log(user)
+                                jwt.sign({id: user._id}, config.secret, (error, token) => {
+                                    response.status(201).json({
+                                        message: 'Sing Up is successful',
+                                        success: true,
+                                        payload: {
+                                            token,
+                                            id: user._id
+                                        }
+                                    })
                                 })
-                            })
-                        }
-                    })
-                } else {
-                    response.status(409).json({
-                        error: 'This email is already taken!'
-                    })
-                }
-            })
+                            }
+                        })
+                    } else {
+                        response.status(409).json({
+                            error: 'This email is already taken!'
+                        })
+                    }
+                })
+            }
         } catch (error) {
             response.status(500).json({error: error})
         }

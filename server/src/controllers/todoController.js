@@ -16,7 +16,7 @@ module.exports = {
         try {
             const todo = await Todo({title: todoTitle}).save()
 
-            response.status(200).json(todo)
+            response.status(201).json(todo)
         } catch (err) {
             response.status(404).json(err)
         }
