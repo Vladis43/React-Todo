@@ -10,6 +10,7 @@ route.use('/', (request, response, next) => {
     request.checkBody('email', 'Email is not valid!').isEmail()
     request.checkBody('password', 'Password is required!').notEmpty()
     request.checkBody('password', 'Password must be at least 8 characters!').len({min: 8})
+    request.checkBody('passwordConfirm', 'Password do not match!').notEmpty()
     request.checkBody('passwordConfirm', 'Password do not match!').equals(request.body.password)
     request.checkBody('age', 'Age is required!').notEmpty()
     request.checkBody('age', 'Age must be a number!').isNumeric()

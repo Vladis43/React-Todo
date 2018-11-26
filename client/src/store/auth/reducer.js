@@ -3,7 +3,7 @@ import { success, error } from 'redux-saga-requests'
 const initialState = {
     isError: false,
     users: [],
-    errorMessage: ''
+    errorMessage: []
 }
 
 const authReducer = (state = initialState, action) => {
@@ -11,13 +11,15 @@ const authReducer = (state = initialState, action) => {
         case 'SIGN_UP':
             return {
                 ...state,
-                isError: false
+                isError: false,
+                errorMessage: []
             }
 
         case success('SIGN_UP'):
             return {
                 ...state,
                 isError: false,
+                errorMessage: [],
                 users: {...action.payload.data, ...action.payload.data.payload}
             }
 
@@ -25,19 +27,21 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.response.data.errors[0].msg
+                errorMessage: action.payload.response.data.errors
             }
 
         case 'SIGN_IN':
             return {
                 ...state,
-                isError: false
+                isError: false,
+                errorMessage: []
             }
 
         case success('SIGN_IN'):
             return {
                 ...state,
                 isError: false,
+                errorMessage: [],
                 users: {...action.payload.data, ...action.payload.data.payload}
             }
 
@@ -45,7 +49,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.message
+                errorMessage: action.payload.response.data.errors
             }
 
         default:

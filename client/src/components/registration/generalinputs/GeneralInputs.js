@@ -29,10 +29,10 @@ const PasswordConfirmInput = styled(md.TextField)``;
 
 
 const GeneralInputs = (props) => {
-    const {
-        usernameValue, emailValue, passwordValue, passwordConfirmValue,
-        setUsername, setEmail, setPassword, setPasswordConfirm
-    } = props
+    const { usernameValue, emailValue, passwordValue, passwordConfirmValue,
+            setUsername, setEmail, setPassword, setPasswordConfirm,
+            usernameError, emailError, passwordError, passwordConfirmError } = props
+
     return (
         <GeneralInputsField>
             <UsernameInput
@@ -42,6 +42,8 @@ const GeneralInputs = (props) => {
                 style={{marginBottom: 10}}
                 value={usernameValue}
                 onChange={setUsername}
+                helperText={usernameError}
+                error={usernameError ? true : false}
             />
             <EmailInput
                 size="large"
@@ -50,6 +52,8 @@ const GeneralInputs = (props) => {
                 style={{marginBottom: 10}}
                 value={emailValue}
                 onChange={setEmail}
+                helperText={emailError}
+                error={emailError ? true : false}
             />
             <PasswordField>
                 <PasswordInput
@@ -58,6 +62,8 @@ const GeneralInputs = (props) => {
                     label="Password"
                     value={passwordValue}
                     onChange={setPassword}
+                    helperText={passwordError}
+                    error={passwordError ? true : false}
                 />
                 <PasswordConfirmInput
                     size="large"
@@ -66,6 +72,8 @@ const GeneralInputs = (props) => {
                     style={{marginLeft: 20}}
                     value={passwordConfirmValue}
                     onChange={setPasswordConfirm}
+                    helperText={passwordConfirmError}
+                    error={passwordConfirmError ? true : false}
                 />
             </PasswordField>
         </GeneralInputsField>

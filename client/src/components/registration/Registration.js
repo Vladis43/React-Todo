@@ -100,17 +100,24 @@ class Registration extends Component{
 
     render() {
         const { username, email, password, passwordConfirm, age, sex, country, city } = this.state
+        const {error} = this.props
+
+        const errorMessages = {
+            username: error.filter(error => error.param === 'username').map(error => error.msg)[0],
+            email: error.filter(error => error.param === 'email').map(error => error.msg)[0],
+            password: error.filter(error => error.param === 'password').map(error => error.msg)[0],
+            passwordConfirm: error.filter(error => error.param === 'passwordConfirm').map(error => error.msg)[0],
+            age: error.filter(error => error.param === 'age').map(error => error.msg)[0],
+            sex: error.filter(error => error.param === 'sex').map(error => error.msg)[0],
+            country: error.filter(error => error.param === 'country').map(error => error.msg)[0],
+            city: error.filter(error => error.param === 'city').map(error => error.msg)[0]
+        }
 
         return (
             <Wrapper>
                 <Card>
                     <form method="POST" onSubmit={(event) => this.signUp(event)}>
                         <CardHeader>Create your account</CardHeader>
-                        <ErrorMessage
-                            style={!this.props.error ? {display: 'none'} : {display: 'block'}}
-                        >
-                            {this.props.error}
-                        </ErrorMessage>
                         <GeneralInputs
                             usernameValue={username}
                             emailValue={email}
@@ -120,6 +127,10 @@ class Registration extends Component{
                             setEmail={(event) => this.setEmail(event)}
                             setPassword={(event) => this.setPassword(event)}
                             setPasswordConfirm={(event) => this.setPasswordConfirm(event)}
+                            usernameError={errorMessages.username}
+                            emailError={errorMessages.email}
+                            passwordError={errorMessages.password}
+                            passwordConfirmError={errorMessages.passwordConfirm}
                         />
 
                         <DetailsInputs
@@ -131,6 +142,10 @@ class Registration extends Component{
                             setSex={(event) => this.setSex(event)}
                             setCountry={(event) => this.setCountry(event)}
                             setCity={(event) => this.setCity(event)}
+                            ageError={errorMessages.age}
+                            sexError={errorMessages.sex}
+                            countryError={errorMessages.country}
+                            cityError={errorMessages.city}
                         />
 
                         <ConfirmField>
@@ -201,9 +216,6 @@ const Card = styled(md.Card)`
 `;
 const CardHeader = styled(md.CardContent)`
   font-size: 28px;
-`;
-const ErrorMessage = styled(md.CardContent)`
-  color: #d84940;
 `;
 const ConfirmField = styled(md.CardActions)`
   display: flex;

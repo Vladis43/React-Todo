@@ -47,6 +47,12 @@ class Authorization extends Component{
 
     render() {
         const {email, password} = this.state
+        const {error} = this.props
+
+        const errorMessages = {
+            email: error.filter(error => error.param === 'email').map(error => error.msg)[0],
+            password: error.filter(error => error.param === 'password').map(error => error.msg)[0]
+        }
 
         return (
             <Wrapper>
@@ -65,6 +71,8 @@ class Authorization extends Component{
                                 style={{margin: 10}}
                                 value={email}
                                 onChange={(event) => this.setEmail(event)}
+                                helperText={errorMessages.email}
+                                error={errorMessages.email ? true : false}
                             />
                             <PasswordInput
                                 size="large"
@@ -73,6 +81,8 @@ class Authorization extends Component{
                                 style={{margin: 10}}
                                 value={password}
                                 onChange={(event) => this.setPassword(event)}
+                                helperText={errorMessages.password}
+                                error={errorMessages.password ? true : false}
                             />
                         </InputsField>
 
@@ -107,7 +117,8 @@ const mapStateToProps = (state) => {
     return {
         token: state.auth.users.token,
         success: state.auth.users.success,
-        id: state.auth.users.id
+        id: state.auth.users.id,
+        error: state.auth.errorMessage
     }
 }
 

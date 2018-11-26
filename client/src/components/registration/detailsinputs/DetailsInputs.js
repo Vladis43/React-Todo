@@ -22,7 +22,9 @@ const CityInput = styled(md.TextField)``;
 
 
 const DetailsInputs = (props) => {
-    const { ageValue, sexValue, countryValue, cityValue, setAge, setSex, setCountry, setCity } = props
+    const { ageValue, sexValue, countryValue, cityValue, setAge, setSex, setCountry, setCity,
+            ageError, sexError, countryError, cityError } = props
+
     return (
         <DetailsInputsField>
             <DetailsTitle>Details</DetailsTitle>
@@ -34,6 +36,8 @@ const DetailsInputs = (props) => {
                     style={{marginRight: 20}}
                     value={ageValue}
                     onChange={setAge}
+                    helperText={ageError}
+                    error={ageError ? true : false}
                 />
                 <SexInput
                     size="large"
@@ -41,6 +45,8 @@ const DetailsInputs = (props) => {
                     label="Sex"
                     value={sexValue}
                     onChange={setSex}
+                    helperText={sexError}
+                    error={sexError ? true : false}
                 />
             </div>
             <div>
@@ -51,6 +57,8 @@ const DetailsInputs = (props) => {
                     style={{marginRight: 20}}
                     value={countryValue}
                     onChange={setCountry}
+                    helperText={countryError}
+                    error={countryError ? true : false}
                 />
                 <CityInput
                     size="large"
@@ -58,6 +66,8 @@ const DetailsInputs = (props) => {
                     label="City"
                     value={cityValue}
                     onChange={setCity}
+                    helperText={cityError}
+                    error={cityError ? true : false}
                 />
             </div>
         </DetailsInputsField>

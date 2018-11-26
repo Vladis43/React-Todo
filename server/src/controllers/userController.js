@@ -37,7 +37,13 @@ module.exports = {
                         })
                     } else {
                         response.status(409).json({
-                            error: 'This email is already taken!'
+                            errors: [
+                                {
+                                    param: 'email',
+                                    msg: 'This email is already taken!'
+                                }
+                            ],
+                            success: false
                         })
                     }
                 })
@@ -49,37 +55,58 @@ module.exports = {
 
     async SingIn(request, response) {
         const {email, password} = request.body
+        const errors = request.validationErrors()
+        const account = await User.findOne({email})
 
-        try {
-            const account = await User.findOne({email})
+        if (errors) {
+            response.status(422).json({errors: errors})
+        } else {
 
-            const validPassword = bcrypt.compareSync(password, account.password)
-
-            if (!validPassword) {
-                response.status(401).json({
-                    message: 'Wrong password!',
+            if (!account) {
+                response.status(404).json({
+                    errors: [{
+                        param: 'email',
+                        msg: 'User with such email not found!'
+                    }],
                     success: false
                 })
-            }
+            } else {
 
-            jwt.sign({...account}, config.secret, (error, token) => {
-                if (error) {
-                    response.status(403).json('Forbidden')
-                } else {
-                    console.log(account)
-                    response.status(200).json({
-                        message: 'Sing In is successful',
-                        success: true,
-                        payload: {
-                            token,
-                            id: account._id
-                        }
-                    })
+                try {
+                    const validPassword = bcrypt.compareSync(password, account.password)
+
+                    if (!validPassword) {
+                        response.status(401).json({
+                            errors: [{
+                                param: 'password',
+                                msg: 'Wrong password!'
+                            }],
+                            success: false
+                        })
+                    } else {
+
+                        jwt.sign({...account}, config.secret, (error, token) => {
+                            if (error) {
+                                response.status(403).json('Forbidden')
+                            } else {
+                                console.log(account)
+                                response.status(200).json({
+                                    message: 'Sing In is successful',
+                                    success: true,
+                                    payload: {
+                                        token,
+                                        id: account._id
+                                    }
+                                })
+                            }
+                        })
+
+                    }
+                } catch (error) {
+                    response.status(500).json({error: error})
                 }
-            })
-        }
-         catch (error) {
-            response.status(500).json({error: error})
+
+            }
         }
     }
 }
