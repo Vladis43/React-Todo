@@ -39,6 +39,7 @@ class Authorization extends Component{
     componentWillReceiveProps(nextProps) {
         window.localStorage.setItem('token', nextProps.token)
         window.localStorage.setItem('id', nextProps.id)
+        window.localStorage.setItem('user', nextProps.username)
 
         if (nextProps.success) {
             nextProps.history.push('/')
@@ -46,6 +47,9 @@ class Authorization extends Component{
     }
 
     render() {
+        //new version material ui typography
+        window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
+
         const {email, password} = this.state
         const {error} = this.props
 
@@ -60,7 +64,7 @@ class Authorization extends Component{
                     <form method="POST" onSubmit={(event) => this.signIn(event)}>
                         <CardHeader>
                             <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
-                            <CardHeaderTitle variant="display1">Sign in to your account</CardHeaderTitle>
+                            <CardHeaderTitle variant="h4">Sign in to your account</CardHeaderTitle>
                         </CardHeader>
 
                         <InputsField>
@@ -118,6 +122,7 @@ const mapStateToProps = (state) => {
         token: state.auth.users.token,
         success: state.auth.users.success,
         id: state.auth.users.id,
+        username: state.auth.users.username,
         error: state.auth.errorMessage
     }
 }

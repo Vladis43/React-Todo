@@ -27,6 +27,7 @@ const TaskBar = ({AddTodoSubmit, todoValue, onChange, errorMessage}) => {
                     helperText={errorMessage ? errorMessage : ''}
                     value={todoValue}
                     onChange={onChange}
+                    error={!!errorMessage}
                 />
             </InputField>
             <md.Button

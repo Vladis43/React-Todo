@@ -92,6 +92,7 @@ class Registration extends Component{
     componentWillReceiveProps(nextProps) {
         window.localStorage.setItem('token', nextProps.token)
         window.localStorage.setItem('id', nextProps.id)
+        window.localStorage.setItem('user', nextProps.username)
 
         if (nextProps.success) {
             nextProps.history.push('/')
@@ -181,6 +182,7 @@ const mapStateToProps = (state) => {
         token: state.auth.users.token,
         success: state.auth.users.success,
         id: state.auth.users.id,
+        username: state.auth.users.username,
         error: state.auth.errorMessage
     }
 }

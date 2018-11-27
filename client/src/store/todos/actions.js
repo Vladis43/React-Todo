@@ -1,27 +1,24 @@
 import { URL } from 'config'
 
 export const FETCH_TODOS = 'FETCH_TODOS'
-export const fetchTodos = () => ({
+export const fetchTodos = (userId) => ({
     type: FETCH_TODOS,
     payload: {
         request: {
-            url: `${URL}todos`,
+            url: `${URL}todos/${userId}`,
             method: 'GET'
         }
     }
 })
 
 export const ADD_NEW_TODO = 'ADD_NEW_TODO'
-export const addNewTodo = (todoText) => ({
+export const addNewTodo = (todo) => ({
     type: ADD_NEW_TODO,
     payload: {
         request: {
             url: `${URL}todos`,
             method: 'POST',
-            data: {
-                title: todoText,
-                completed: false
-            }
+            data: todo
         }
     }
 })

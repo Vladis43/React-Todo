@@ -12,13 +12,14 @@ mongoose.connect(config.database)
 
 const app = express()
 
+//Middleware
 app.use(bodyParser.urlencoded({exception: true}))
 app.use(bodyParser.json())
 app.use(cors())
 app.use(expressValidator())
 
+//Routes
 app.use('/todos', todosRouter)
 app.use('/users', usersRouter)
-
 
 export default app

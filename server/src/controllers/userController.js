@@ -29,7 +29,8 @@ module.exports = {
                                         success: true,
                                         payload: {
                                             token,
-                                            id: user._id
+                                            id: user._id,
+                                            username: user.username
                                         }
                                     })
                                 })
@@ -95,7 +96,8 @@ module.exports = {
                                     success: true,
                                     payload: {
                                         token,
-                                        id: account._id
+                                        id: account._id,
+                                        username: account.username
                                     }
                                 })
                             }

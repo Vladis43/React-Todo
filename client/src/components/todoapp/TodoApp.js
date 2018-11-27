@@ -19,7 +19,9 @@ class TodoApp extends Component{
     }
 
     componentDidMount() {
-        this.props.fetchTodos()
+        const userId = window.localStorage.getItem('id')
+
+        this.props.fetchTodos(userId)
     }
 
     handleChange = (event) =>
@@ -38,7 +40,14 @@ class TodoApp extends Component{
                 errorMessage: 'Text field is require!'
             })
         } else {
-            this.props.addNewTodo(todoText)
+            const todo = {
+                title: todoText,
+                completed: false,
+                userId: window.localStorage.getItem('id')
+            }
+
+            this.props.addNewTodo(todo)
+
             this.setState({
                 todoText: '',
                 errorMessage: ''
@@ -65,6 +74,7 @@ class TodoApp extends Component{
             <div>
                 <Header
                     logOut={this.handleLogOut}
+                    username={window.localStorage.getItem('user').toUpperCase()}
                 />
                 <TaskBar
                     AddTodoSubmit={this.handleAddTodo}

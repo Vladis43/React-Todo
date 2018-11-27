@@ -2,8 +2,12 @@ import Todo from '../models/Todo'
 
 module.exports = {
     async FetchTodos(request, response) {
+        const userId = request.params.userId
+
         try {
-            const todo = await Todo.find({})
+            const todo = await Todo.find({
+                userId
+            })
             response.status(200).json(todo)
         } catch (err) {
             response.status(404).json(err)
@@ -11,10 +15,8 @@ module.exports = {
     },
 
     async AddNewTodo(request, response) {
-        const todoTitle = request.body.title
-
         try {
-            const todo = await Todo({title: todoTitle}).save()
+            const todo = await Todo(request.body).save()
 
             response.status(201).json(todo)
         } catch (err) {

@@ -10,6 +10,10 @@ const todo = new Schema({
         completed: {
             type: Schema.Types.Boolean,
             default: false
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            required: true
         }
     })
 

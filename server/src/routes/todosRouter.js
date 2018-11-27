@@ -3,7 +3,7 @@ import { FetchTodos, AddNewTodo, ToggleTodo, DeleteTodo } from '../controllers/t
 
 const route = Router()
 
-route.get('/', FetchTodos)
+route.get('/:userId', FetchTodos)
 route.post('/', AddNewTodo)
 route.patch('/:id', ToggleTodo)
 route.delete('/:id', DeleteTodo)

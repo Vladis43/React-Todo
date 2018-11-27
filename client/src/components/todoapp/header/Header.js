@@ -17,13 +17,19 @@ const Typography = styled(md.Typography)`
   flex-grow: 1;
 `;
 
-const Header = ({logOut}) => {
+const Header = ({logOut, username}) => {
+    //new version material ui typography
+    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
+
     return (
         <Root>
             <AppBar position="fixed" color="primary">
                 <md.Toolbar>
-                    <Typography variant="title" color="inherit">
+                    <Typography variant="h6" color="inherit">
                         Todo App
+                    </Typography>
+                    <Typography color="inherit">
+                        {username}
                     </Typography>
                     <md.Tooltip title="Log out">
                         <md.Button
