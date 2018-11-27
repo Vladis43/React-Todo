@@ -37,7 +37,7 @@ const DetailsInputs = (props) => {
                     value={ageValue}
                     onChange={setAge}
                     helperText={ageError}
-                    error={ageError}
+                    error={ageError ? true : false}
                 />
                 <SexInput
                     size="large"
@@ -46,7 +46,7 @@ const DetailsInputs = (props) => {
                     value={sexValue}
                     onChange={setSex}
                     helperText={sexError}
-                    error={sexError}
+                    error={sexError ? true : false}
                 />
             </div>
             <div>
@@ -58,7 +58,7 @@ const DetailsInputs = (props) => {
                     value={countryValue}
                     onChange={setCountry}
                     helperText={countryError}
-                    error={countryError}
+                    error={countryError ? true : false}
                 />
                 <CityInput
                     size="large"
@@ -67,7 +67,7 @@ const DetailsInputs = (props) => {
                     value={cityValue}
                     onChange={setCity}
                     helperText={cityError}
-                    error={cityError}
+                    error={cityError ? true : false}
                 />
             </div>
         </DetailsInputsField>

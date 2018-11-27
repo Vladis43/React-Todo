@@ -12,7 +12,8 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: false,
-                errorMessage: []
+                errorMessage: [],
+                users: []
             }
 
         case success('SIGN_UP'):
@@ -34,7 +35,8 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: false,
-                errorMessage: []
+                errorMessage: [],
+                users: []
             }
 
         case success('SIGN_IN'):

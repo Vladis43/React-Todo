@@ -58,6 +58,7 @@ class TodoApp extends Component{
     handleLogOut = () => {
         window.localStorage.removeItem('token')
         window.localStorage.removeItem('id')
+        window.localStorage.removeItem('user')
 
         this.props.history.push('/auth')
     }

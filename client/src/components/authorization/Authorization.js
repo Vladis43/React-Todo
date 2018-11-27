@@ -76,7 +76,7 @@ class Authorization extends Component{
                                 value={email}
                                 onChange={(event) => this.setEmail(event)}
                                 helperText={errorMessages.email}
-                                error={errorMessages.email}
+                                error={errorMessages.email ? true : false}
                             />
                             <PasswordInput
                                 size="large"
@@ -86,7 +86,7 @@ class Authorization extends Component{
                                 value={password}
                                 onChange={(event) => this.setPassword(event)}
                                 helperText={errorMessages.password}
-                                error={errorMessages.password}
+                                error={errorMessages.password ? true : false}
                             />
                         </InputsField>
 

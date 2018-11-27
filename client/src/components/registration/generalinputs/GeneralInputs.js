@@ -43,7 +43,7 @@ const GeneralInputs = (props) => {
                 value={usernameValue}
                 onChange={setUsername}
                 helperText={usernameError}
-                error={usernameError}
+                error={usernameError ? true : false}
             />
             <EmailInput
                 size="large"
@@ -53,7 +53,7 @@ const GeneralInputs = (props) => {
                 value={emailValue}
                 onChange={setEmail}
                 helperText={emailError}
-                error={emailError}
+                error={emailError ? true : false}
             />
             <PasswordField>
                 <PasswordInput
@@ -63,7 +63,7 @@ const GeneralInputs = (props) => {
                     value={passwordValue}
                     onChange={setPassword}
                     helperText={passwordError}
-                    error={passwordError}
+                    error={passwordError ? true : false}
                 />
                 <PasswordConfirmInput
                     size="large"
@@ -73,7 +73,7 @@ const GeneralInputs = (props) => {
                     value={passwordConfirmValue}
                     onChange={setPasswordConfirm}
                     helperText={passwordConfirmError}
-                    error={passwordConfirmError}
+                    error={passwordConfirmError ? true : false}
                 />
             </PasswordField>
         </GeneralInputsField>
