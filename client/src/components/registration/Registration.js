@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import * as actions from 'store/auth/actions'
 
@@ -13,7 +13,7 @@ import GeneralInputs from './generalinputs/GeneralInputs'
 import DetailsInputs from './detailsinputs/DetailsInputs'
 
 
-class Registration extends Component{
+class Registration extends Component {
     state = {
         username: '',
         email: '',
@@ -100,7 +100,7 @@ class Registration extends Component{
     }
 
     render() {
-        const { username, email, password, passwordConfirm, age, sex, country, city } = this.state
+        const {username, email, password, passwordConfirm, age, sex, country, city} = this.state
         const {error} = this.props
 
         const errorMessages = {
@@ -160,15 +160,15 @@ class Registration extends Component{
                             </ConfirmButton>
                         </ConfirmField>
 
-                        <md.Divider />
+                        <md.Divider/>
 
                         <AuthorizationField>
                             <AuthorizationTitle>Already have an account?</AuthorizationTitle>
-                                <Link to={'/auth'} style={{textDecoration: "none"}}>
-                                    <AuthorizationButton style={{color: "#34409b"}}>
-                                        Sign in
-                                    </AuthorizationButton>
-                                </Link>
+                            <Link to={'/auth'} style={{textDecoration: "none"}}>
+                                <AuthorizationButton style={{color: "#34409b"}}>
+                                    Sign in
+                                </AuthorizationButton>
+                            </Link>
                         </AuthorizationField>
                     </form>
                 </Card>

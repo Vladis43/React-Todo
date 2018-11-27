@@ -18,14 +18,16 @@ const TodoItem = (props) => {
                 onChange={() => toggleTodoAction(todo._id, todo.completed)}
             />
             <md.ListItem button onClick={() => toggleTodoAction(todo._id, todo.completed)}>
-                    <md.ListItemText primary={todo.title}  style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} />
+                <md.ListItemText
+                    primary={todo.title}
+                    style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}/>
             </md.ListItem>
             <md.Button
                 mini
                 color="secondary"
                 onClick={() => deleteTodoAction(todo._id)}
             >
-                <ClearIcon />
+                <ClearIcon/>
             </md.Button>
         </TodoListContainer>
     )

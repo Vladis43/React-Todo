@@ -16,7 +16,7 @@ const CircularProgress = styled(md.CircularProgress)`
 
 const Preloader = () => (
     <PreloaderWrapper>
-        <CircularProgress size={48} />
+        <CircularProgress size={48}/>
     </PreloaderWrapper>
 )
 

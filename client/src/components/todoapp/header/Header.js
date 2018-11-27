@@ -37,7 +37,7 @@ const Header = ({logOut, username}) => {
                             aria-label="Log out"
                             onClick={logOut}
                         >
-                            <icon.Input />
+                            <icon.Input/>
                         </md.Button>
                     </md.Tooltip>
                 </md.Toolbar>

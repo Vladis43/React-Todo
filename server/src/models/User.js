@@ -31,6 +31,13 @@ const user = new Schema({
         city: {
             type: Schema.Types.String,
             required: true,
+        },
+        verificationCode: {
+            type: Schema.Types.String
+        },
+        active: {
+            type: Schema.Types.Boolean,
+            default: false
         }
     })
 

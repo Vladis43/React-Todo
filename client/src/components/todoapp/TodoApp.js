@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import { Redirect } from "react-router-dom"
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import {Redirect} from "react-router-dom"
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import * as actions from 'store/todos/actions'
 
 import List from '@material-ui/core/List'
@@ -12,7 +12,7 @@ import TaskBar from './taskbar/TaskBar'
 import TodoItem from './todoitem/TodoItem'
 
 
-class TodoApp extends Component{
+class TodoApp extends Component {
     state = {
         todoText: '',
         errorMessage: ''
@@ -26,16 +26,16 @@ class TodoApp extends Component{
 
     handleChange = (event) =>
         this.setState({
-            todoText: event.target.value
-        }
-    )
+                todoText: event.target.value
+            }
+        )
 
     handleAddTodo = (event) => {
         event.preventDefault();
 
         const {todoText} = this.state
 
-        if(todoText === ''){
+        if (todoText === '') {
             this.setState({
                 errorMessage: 'Text field is require!'
             })
@@ -72,33 +72,35 @@ class TodoApp extends Component{
             window.localStorage.getItem('token') !== null &&
             window.localStorage.getItem('token') !== 'undefined' ?
 
-            <div>
-                <Header
-                    logOut={this.handleLogOut}
-                    username={window.localStorage.getItem('user').toUpperCase()}
-                />
-                <TaskBar
-                    AddTodoSubmit={this.handleAddTodo}
-                    todoValue={todoText}
-                    onChange={(event) => {this.handleChange(event)}}
-                    errorMessage={errorMessage}
-                />
-                {isLoading ?
-                    <Preloader/> :
-                    <List component="nav">
-                        {todos.map((todo) => {
-                            return (
-                                <TodoItem
-                                    key={todo._id}
-                                    todo={todo}
-                                    toggleTodoAction={toggleTodo}
-                                    deleteTodoAction={deleteTodo}
-                                />
-                            )
-                        })}
-                    </List>
-                }
-            </div> : <Redirect to="/auth" />
+                <div>
+                    <Header
+                        logOut={this.handleLogOut}
+                        username={window.localStorage.getItem('user').toUpperCase()}
+                    />
+                    <TaskBar
+                        AddTodoSubmit={this.handleAddTodo}
+                        todoValue={todoText}
+                        onChange={(event) => {
+                            this.handleChange(event)
+                        }}
+                        errorMessage={errorMessage}
+                    />
+                    {isLoading ?
+                        <Preloader/> :
+                        <List component="nav">
+                            {todos.map((todo) => {
+                                return (
+                                    <TodoItem
+                                        key={todo._id}
+                                        todo={todo}
+                                        toggleTodoAction={toggleTodo}
+                                        deleteTodoAction={deleteTodo}
+                                    />
+                                )
+                            })}
+                        </List>
+                    }
+                </div> : <Redirect to="/auth"/>
         )
     }
 }

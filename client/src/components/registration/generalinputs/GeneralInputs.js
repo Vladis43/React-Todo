@@ -29,9 +29,11 @@ const PasswordConfirmInput = styled(md.TextField)``;
 
 
 const GeneralInputs = (props) => {
-    const { usernameValue, emailValue, passwordValue, passwordConfirmValue,
-            setUsername, setEmail, setPassword, setPasswordConfirm,
-            usernameError, emailError, passwordError, passwordConfirmError } = props
+    const {
+        usernameValue, emailValue, passwordValue, passwordConfirmValue,
+        setUsername, setEmail, setPassword, setPasswordConfirm,
+        usernameError, emailError, passwordError, passwordConfirmError
+    } = props
 
     return (
         <GeneralInputsField>

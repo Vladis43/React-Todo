@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
+import {Link} from 'react-router-dom'
+import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
 import * as actions from 'store/auth/actions'
 
 import styled from 'styled-components'
@@ -11,7 +11,7 @@ import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
 
 
-class Authorization extends Component{
+class Authorization extends Component {
     state = {
         email: '',
         password: ''
@@ -101,14 +101,14 @@ class Authorization extends Component{
                             </ConfirmButton>
                         </SignInField>
 
-                        <md.Divider />
+                        <md.Divider/>
 
                         <RegistrationField>
-                                <Link to={'/reg'} style={{textDecoration: "none"}}>
-                                    <RegistrationButton style={{color: "#34409b"}}>
-                                        Create an account
-                                    </RegistrationButton>
-                                </Link>
+                            <Link to={'/reg'} style={{textDecoration: "none"}}>
+                                <RegistrationButton style={{color: "#34409b"}}>
+                                    Create an account
+                                </RegistrationButton>
+                            </Link>
                         </RegistrationField>
                     </form>
                 </Card>

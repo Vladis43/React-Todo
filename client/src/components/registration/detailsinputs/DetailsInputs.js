@@ -22,8 +22,10 @@ const CityInput = styled(md.TextField)``;
 
 
 const DetailsInputs = (props) => {
-    const { ageValue, sexValue, countryValue, cityValue, setAge, setSex, setCountry, setCity,
-            ageError, sexError, countryError, cityError } = props
+    const {
+        ageValue, sexValue, countryValue, cityValue, setAge, setSex, setCountry, setCity,
+        ageError, sexError, countryError, cityError
+    } = props
 
     return (
         <DetailsInputsField>

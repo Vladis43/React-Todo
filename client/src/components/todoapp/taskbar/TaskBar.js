@@ -35,7 +35,7 @@ const TaskBar = ({AddTodoSubmit, todoValue, onChange, errorMessage}) => {
                 mini
                 type="submit"
             >
-                <AddIcon />
+                <AddIcon/>
             </md.Button>
         </AddTodoForm>
     )
