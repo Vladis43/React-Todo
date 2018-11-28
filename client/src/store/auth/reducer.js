@@ -31,6 +31,30 @@ const authReducer = (state = initialState, action) => {
                 errorMessage: action.payload.response.data.errors
             }
 
+        case 'VERIFICATION':
+            return {
+                ...state,
+                isError: false,
+                errorMessage: [],
+                users: []
+            }
+
+        case success('VERIFICATION'):
+            return {
+                ...state,
+                isError: false,
+                errorMessage: [],
+                users: {...action.payload.data}
+            }
+
+        case error('VERIFICATION'):
+            return {
+                ...state,
+                isError: true,
+                errorMessage: action.payload.response.data.errors,
+                users: {...action.payload.response.data}
+            }
+
         case 'SIGN_IN':
             return {
                 ...state,

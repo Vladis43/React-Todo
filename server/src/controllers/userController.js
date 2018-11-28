@@ -74,29 +74,30 @@ module.exports = {
     },
 
     async Verification(request, response) {
-        const {verificationCode} = request.body
-        const vCode = request.params.vCode
+        const verificationCode = request.params.vCode
 
-        if (vCode !== verificationCode) {
-            response.status(401).json({
-                errors: [
-                    {
-                        param: 'verificationCode',
-                        msg: 'Wrong verification code!'
-                    }
-                ],
-                success: false
-            })
-        } else {
-            try {
-                await User.findOneAndUpdate({verificationCode}, {active: true, verificationCode: ''})
+        try {
+            const user = await User.findOneAndUpdate({verificationCode}, {active: true, verificationCode: ''})
+
+            if (!user) {
+                response.status(404).json({
+                    errors: [
+                        {
+                            param: 'verificationCode',
+                            msg: 'Wrong verification code!'
+                        }
+                    ],
+                    success: false
+                })
+            } else {
+                await user.save()
                 response.status(201).json({
                     message: 'Email confirmed!',
                     success: true
                 })
-            } catch (error) {
-                response.status(500).json({error: error})
             }
+        } catch (error) {
+            response.status(500).json({error: error})
         }
     },
 
@@ -143,7 +144,8 @@ module.exports = {
                                     payload: {
                                         token,
                                         id: account._id,
-                                        username: account.username
+                                        username: account.username,
+                                        active: account.active
                                     }
                                 })
                             }

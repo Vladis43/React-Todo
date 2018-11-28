@@ -7,14 +7,57 @@ import styled from 'styled-components'
 import * as md from '@material-ui/core/'
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
+import {Link} from "react-router-dom"
 
 
 class Verification extends Component {
+    state = {
+        code: '',
+        errorMessage: ''
+    }
+
+    setCode = (event) => {
+        this.setState({
+            code: event.target.value
+        })
+    }
+
+    verification = (event) => {
+        event.preventDefault()
+        const {code} = this.state
+
+        if (code === '') {
+            this.setState({
+                errorMessage: 'Field is required!'
+            })
+        } else {
+            this.props.verification(code)
+        }
+    }
+
+    loginLink = () => {
+        window.localStorage.removeItem('token')
+        window.localStorage.removeItem('id')
+        window.localStorage.removeItem('user')
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.success) {
+            nextProps.history.push('/')
+        } else {
+            console.log(`Welcome user: ${window.localStorage.getItem('user')}`)
+        }
+    }
+
     render() {
+        const errorMessages = {
+            code: this.props.error.filter(error => error.param === 'verificationCode').map(error => error.msg)[0]
+        }
+
         return (
             <Wrapper>
                 <Card>
-                    <form method="POST" onSubmit={(event) => this.signIn(event)}>
+                    <form method="POST" onSubmit={(event) => this.verification(event)}>
                         <CardHeader>
                             <CardHeaderTitle variant="h4">Please, confirm your email!</CardHeaderTitle>
                         </CardHeader>
@@ -25,26 +68,48 @@ class Verification extends Component {
                             </md.Typography>
                         </TextField>
 
-                        <ConfirmField>
+                        <ConfirmField style={{marginBottom: 20}}>
                             <CodeInput
                                 fullWidth
                                 variant="outlined"
                                 label="Enter code"
                                 placeholder="Code..."
+                                value={this.state.code}
+                                onChange={(event) => this.setCode(event)}
+                                helperText={errorMessages.code || this.state.errorMessage}
+                                error={errorMessages.code || this.state.errorMessage ? true : false}
                             />
                             <ConfirmButton
                                 variant="contained"
                                 size="large"
                                 color="primary"
                                 type="submit"
+                                style={{marginTop: 10}}
                             >
                                 Confirm
                             </ConfirmButton>
                         </ConfirmField>
+
+                        <md.Divider/>
+
+                        <AuthorizationField>
+                            <Link to={'/auth'} style={{textDecoration: "none"}} onClick={this.loginLink}>
+                                <AuthorizationButton style={{color: "#34409b"}}>
+                                    Log In
+                                </AuthorizationButton>
+                            </Link>
+                        </AuthorizationField>
                     </form>
                 </Card>
             </Wrapper>
         )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        success: state.auth.users.success,
+        error: state.auth.errorMessage
     }
 }
 
@@ -86,13 +151,21 @@ const CardHeaderTitle = styled(md.Typography)``;
 const TextField = styled(md.CardContent)``;
 const ConfirmField = styled(md.CardActions)`
   display: flex;
+  flex-direction: column;
   @media screen and (max-device-width: 400px) {
     justify-content: center;
   }
 `;
 const CodeInput = styled(md.TextField)``;
-const ConfirmButton = styled(md.Button)``;
+const ConfirmButton = styled(md.Button)`
+  width: 100%;
+`;
+const AuthorizationField = styled(md.CardActions)`
+  display: flex;
+  justify-content: center;
+`;
+const AuthorizationButton = styled(md.Button)``;
 //======================================================================================================================
 
 
-export default connect(null, mapActionToProps)(Verification)
+export default connect(mapStateToProps, mapActionToProps)(Verification)

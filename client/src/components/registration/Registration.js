@@ -95,7 +95,7 @@ class Registration extends Component {
         window.localStorage.setItem('user', nextProps.username)
 
         if (nextProps.success) {
-            nextProps.history.push('/')
+            nextProps.history.push('/ver')
         }
     }
 

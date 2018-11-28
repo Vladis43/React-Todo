@@ -43,6 +43,9 @@ class Authorization extends Component {
 
         if (nextProps.success) {
             nextProps.history.push('/')
+            if (!nextProps.active) {
+                nextProps.history.push('/ver')
+            }
         }
     }
 
@@ -122,6 +125,7 @@ const mapStateToProps = (state) => {
         token: state.auth.users.token,
         success: state.auth.users.success,
         id: state.auth.users.id,
+        active: state.auth.users.active,
         username: state.auth.users.username,
         error: state.auth.errorMessage
     }
