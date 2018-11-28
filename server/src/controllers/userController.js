@@ -5,9 +5,12 @@ import config from '../config/database'
 import User from '../models/User'
 import mailer from '../misc/mailer'
 
+
+//Todo убрать все callbacks, сделать или if/else или then/catch
+
 module.exports = {
     async SignUp(request, response) {
-        const {email} = request.body
+        const {username, email} = request.body
         const errors = request.validationErrors()
         const verificationCode = randomstring.generate({length: 6, charset: 'numeric'})
 
@@ -16,33 +19,46 @@ module.exports = {
             if (errors) {
                 response.status(422).json({errors: errors})
             } else {
-                await User.findOne({email}, (error, user) => {
-                    if (!user) {
-                        User.create({
-                            ...request.body,
-                            password: bcrypt.hashSync(request.body.password),
-                            verificationCode
-                        }, (error, user) => {
-                            if (error) {
-                                response.status(409).json({error: error})
-                            } else {
-                                console.log(user)
-                                jwt.sign({id: user._id}, config.secret, (error, token) => {
-                                    response.status(201).json({
-                                        message: 'Sing Up is successful',
-                                        success: true,
-                                        payload: {
-                                            token,
-                                            id: user._id,
-                                            username: user.username
-                                        }
-                                    })
-                                })
+                const usernameValid = await User.findOne({username})
+                if (usernameValid) {
+                    response.status(409).json({
+                        errors: [
+                            {
+                                param: 'username',
+                                msg: 'This username is already taken!'
                             }
-                        })
+                        ],
+                        success: false
+                    })
+                } else {
 
-                        //Compose an email
-                        const html = `
+                    await User.findOne({email}, (error, user) => {
+                        if (!user) {
+                            User.create({
+                                ...request.body,
+                                password: bcrypt.hashSync(request.body.password),
+                                verificationCode
+                            }, (error, user) => {
+                                if (error) {
+                                    response.status(409).json({error: error})
+                                } else {
+                                    console.log(user)
+                                    jwt.sign({id: user._id}, config.secret, (error, token) => {
+                                        response.status(201).json({
+                                            message: 'Sing Up is successful',
+                                            success: true,
+                                            payload: {
+                                                token,
+                                                id: user._id,
+                                                username: user.username
+                                            }
+                                        })
+                                    })
+                                }
+                            })
+
+                            //Compose an email
+                            const html = `
                             Hi there,
                             <br/>
                             Thank you for registering in Todo application!
@@ -52,21 +68,22 @@ module.exports = {
                             Code: <b>${verificationCode}</b>
                         `;
 
-                        //Send the email
-                        mailer.sendEmail('admin@todoapp.com', email, 'Please, verify your email!', html)
+                            //Send the email
+                            mailer.sendEmail('admin@todoapp.com', email, 'Please, verify your email!', html)
 
-                    } else {
-                        response.status(409).json({
-                            errors: [
-                                {
-                                    param: 'email',
-                                    msg: 'This email is already taken!'
-                                }
-                            ],
-                            success: false
-                        })
-                    }
-                })
+                        } else {
+                            response.status(409).json({
+                                errors: [
+                                    {
+                                        param: 'email',
+                                        msg: 'This email is already taken!'
+                                    }
+                                ],
+                                success: false
+                            })
+                        }
+                    })
+                }
             }
         } catch (error) {
             response.status(500).json({error: error})
