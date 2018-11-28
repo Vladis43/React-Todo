@@ -45,7 +45,7 @@ module.exports = {
                         const html = `
                             Hi there,
                             <br/>
-                            Thank you for registering!
+                            Thank you for registering in Todo application!
                             <br/><br/>
                             Please verify your email:
                             <br/>
