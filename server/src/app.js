@@ -8,7 +8,7 @@ import config from './config/database'
 import todoRouter from './routes/todoRouter'
 import userRouter from './routes/userRouter'
 
-mongoose.connect(config.database)
+mongoose.connect(config.DATABASE)
 
 const app = express()
 

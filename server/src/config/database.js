@@ -1,4 +1,4 @@
 export default {
-    database: 'mongodb://localhost:27017/todo_db',
-    secret: 'secret-key'
+    DATABASE: 'mongodb://localhost:27017/todo_db',
+    SECRET_KEY: 'secret-key'
 }
