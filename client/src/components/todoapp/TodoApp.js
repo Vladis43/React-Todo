@@ -76,6 +76,7 @@ class TodoApp extends Component {
                     <Header
                         logOut={this.handleLogOut}
                         username={window.localStorage.getItem('user').toUpperCase()}
+                        amountTodo={todos.length}
                     />
                     <TaskBar
                         AddTodoSubmit={this.handleAddTodo}

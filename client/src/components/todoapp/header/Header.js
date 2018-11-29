@@ -10,6 +10,7 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
 const AppBar = styled(md.AppBar)`
   top: 0;
   bottom: auto;
+  position: fixed;
 `;
 
 const Root = styled.div`
@@ -20,16 +21,16 @@ const Typography = styled(md.Typography)`
   flex-grow: 1;
 `;
 
-const Header = ({logOut, username}) => {
+const Header = ({logOut, username, amountTodo}) => {
     return (
         <Root>
-            <AppBar position="fixed" color="primary">
+            <AppBar color="primary">
                 <md.Toolbar>
                     <Typography variant="h6" color="inherit">
                         Todo App
                     </Typography>
                     <Typography color="inherit">
-                        {username}
+                        {username} ( {amountTodo} )
                     </Typography>
                     <md.Tooltip title="Log out">
                         <md.Button
