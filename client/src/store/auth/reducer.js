@@ -1,4 +1,4 @@
-import { success, error } from 'redux-saga-requests'
+import {success, error} from 'redux-saga-requests'
 
 const initialState = {
     isError: false,
@@ -8,6 +8,7 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
+//SignUp================================================================================================================
         case 'SIGN_UP':
             return {
                 ...state,
@@ -31,6 +32,7 @@ const authReducer = (state = initialState, action) => {
                 errorMessage: action.payload.response.data.errors
             }
 
+//Verification==========================================================================================================
         case 'VERIFICATION':
             return {
                 ...state,
@@ -55,6 +57,7 @@ const authReducer = (state = initialState, action) => {
                 users: {...action.payload.response.data}
             }
 
+//SignIn================================================================================================================
         case 'SIGN_IN':
             return {
                 ...state,
@@ -78,6 +81,7 @@ const authReducer = (state = initialState, action) => {
                 errorMessage: action.payload.response.data.errors
             }
 
+//======================================================================================================================
         default:
             return state
     }

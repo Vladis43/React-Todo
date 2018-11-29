@@ -1,4 +1,4 @@
-import { success, error } from 'redux-saga-requests'
+import {success, error} from 'redux-saga-requests'
 
 const initialState = {
     isError: false,
@@ -80,7 +80,8 @@ const todosReducers = (state = initialState, action) => {
             }
 
 //======================================================================================================================
-        default: return state
+        default:
+            return state
     }
 }
 

@@ -1,4 +1,4 @@
-import { URL } from 'config'
+import {URL} from 'config/config'
 
 export const FETCH_TODOS = 'FETCH_TODOS'
 export const fetchTodos = (userId) => ({
