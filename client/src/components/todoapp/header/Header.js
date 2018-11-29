@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import * as md from '@material-ui/core/'
 import * as icon from '@material-ui/icons'
 
+//new version material ui typography
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
+
 const AppBar = styled(md.AppBar)`
   top: 0;
   bottom: auto;
@@ -18,9 +21,6 @@ const Typography = styled(md.Typography)`
 `;
 
 const Header = ({logOut, username}) => {
-    //new version material ui typography
-    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
-
     return (
         <Root>
             <AppBar position="fixed" color="primary">

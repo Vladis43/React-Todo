@@ -50,9 +50,6 @@ class Authorization extends Component {
     }
 
     render() {
-        //new version material ui typography
-        window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
-
         const {email, password} = this.state
         const {error} = this.props
 
