@@ -6,8 +6,6 @@ import User from '../models/User'
 import mailer from '../misc/mailer'
 
 
-//Todo убрать все callbacks, сделать или if/else или then/catch
-
 module.exports = {
     async SignUp(request, response) {
         const {username, email} = request.body
@@ -15,12 +13,12 @@ module.exports = {
         const verificationCode = randomstring.generate({length: 6, charset: 'numeric'})
 
         try {
-
             if (errors) {
-                response.status(422).json({errors: errors})
+                response.status(422).json({errors})
             } else {
-                const usernameValid = await User.findOne({username})
-                if (usernameValid) {
+                const usernameExist = await User.findOne({username})
+
+                if (usernameExist) {
                     response.status(409).json({
                         errors: [
                             {
@@ -31,34 +29,44 @@ module.exports = {
                         success: false
                     })
                 } else {
+                    const emailExist = await User.findOne({email})
 
-                    await User.findOne({email}, (error, user) => {
-                        if (!user) {
-                            User.create({
-                                ...request.body,
-                                password: bcrypt.hashSync(request.body.password),
-                                verificationCode
-                            }, (error, user) => {
-                                if (error) {
-                                    response.status(409).json({error: error})
-                                } else {
-                                    console.log(user)
-                                    jwt.sign({id: user._id}, config.secret, (error, token) => {
-                                        response.status(201).json({
-                                            message: 'Sing Up is successful',
-                                            success: true,
-                                            payload: {
-                                                token,
-                                                id: user._id,
-                                                username: user.username
-                                            }
-                                        })
-                                    })
+                    if (emailExist) {
+                        response.status(409).json({
+                            errors: [
+                                {
+                                    param: 'email',
+                                    msg: 'This email is already taken!'
                                 }
-                            })
+                            ],
+                            success: false
+                        })
+                    } else {
+                        User.create({
+                            ...request.body,
+                            password: bcrypt.hashSync(request.body.password),
+                            verificationCode
+                        }, (error, user) => {
+                            if (error) {
+                                response.status(409).json({error})
+                            } else {
+                                console.log(user)
+                                jwt.sign({id: user._id}, config.secret, (error, token) => {
+                                    response.status(201).json({
+                                        message: 'Sing Up is successful',
+                                        success: true,
+                                        payload: {
+                                            token,
+                                            id: user._id,
+                                            username: user.username
+                                        }
+                                    })
+                                })
+                            }
+                        })
 
-                            //Compose an email
-                            const html = `
+                        //Compose an email
+                        const html = `
                             Hi there,
                             <br/>
                             Thank you for registering in Todo application!
@@ -66,27 +74,15 @@ module.exports = {
                             Please verify your email:
                             <br/>
                             Code: <b>${verificationCode}</b>
-                        `;
+                            `;
 
-                            //Send the email
-                            mailer.sendEmail('admin@todoapp.com', email, 'Please, verify your email!', html)
-
-                        } else {
-                            response.status(409).json({
-                                errors: [
-                                    {
-                                        param: 'email',
-                                        msg: 'This email is already taken!'
-                                    }
-                                ],
-                                success: false
-                            })
-                        }
-                    })
+                        //Send the email
+                        mailer.sendEmail('admin@todoapp.com', email, 'Please, verify your email!', html)
+                    }
                 }
             }
         } catch (error) {
-            response.status(500).json({error: error})
+            response.status(500).json({error})
         }
     },
 
@@ -114,30 +110,29 @@ module.exports = {
                 })
             }
         } catch (error) {
-            response.status(500).json({error: error})
+            response.status(500).json({error})
         }
     },
 
     async SingIn(request, response) {
         const {email, password} = request.body
         const errors = request.validationErrors()
-        const account = await User.findOne({email})
 
         if (errors) {
-            response.status(422).json({errors: errors})
+            response.status(422).json({errors})
         } else {
+            try {
+                const account = await User.findOne({email})
 
-            if (!account) {
-                response.status(404).json({
-                    errors: [{
-                        param: 'email',
-                        msg: 'User with such email not found!'
-                    }],
-                    success: false
-                })
-            } else {
-
-                try {
+                if (!account) {
+                    response.status(404).json({
+                        errors: [{
+                            param: 'email',
+                            msg: 'User with such email not found!'
+                        }],
+                        success: false
+                    })
+                } else {
                     const validPassword = bcrypt.compareSync(password, account.password)
 
                     if (!validPassword) {
@@ -149,7 +144,6 @@ module.exports = {
                             success: false
                         })
                     } else {
-
                         jwt.sign({...account}, config.secret, (error, token) => {
                             if (error) {
                                 response.status(403).json('Forbidden')
@@ -167,12 +161,10 @@ module.exports = {
                                 })
                             }
                         })
-
                     }
-                } catch (error) {
-                    response.status(500).json({error: error})
                 }
-
+            } catch (error) {
+                response.status(500).json({error})
             }
         }
     }

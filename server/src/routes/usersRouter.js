@@ -1,5 +1,5 @@
-import { Router } from 'express'
-import { SignUp, Verification, SingIn } from '../controllers/userController'
+import {Router} from 'express'
+import {SignUp, Verification, SingIn} from '../controllers/userController'
 import SignUpValidation from '../validations/signUpValidation'
 import SignInValidation from '../validations/signInValidation'
 
