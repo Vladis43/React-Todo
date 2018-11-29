@@ -5,8 +5,8 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import config from './config/database'
 
-import todosRouter from './routes/todosRouter'
-import usersRouter from './routes/usersRouter'
+import todoRouter from './routes/todoRouter'
+import userRouter from './routes/userRouter'
 
 mongoose.connect(config.database)
 
@@ -19,7 +19,7 @@ app.use(cors())
 app.use(expressValidator())
 
 //Routes
-app.use('/todos', todosRouter)
-app.use('/users', usersRouter)
+app.use('/todos', todoRouter)
+app.use('/users', userRouter)
 
 export default app

@@ -5,12 +5,10 @@ module.exports = {
         const userId = request.params.userId
 
         try {
-            const todo = await Todo.find({
-                userId
-            })
+            const todo = await Todo.find({userId})
             response.status(200).json(todo)
-        } catch (err) {
-            response.status(404).json(err)
+        } catch (error) {
+            response.status(404).json(error)
         }
     },
 
@@ -19,8 +17,8 @@ module.exports = {
             const todo = await Todo(request.body).save()
 
             response.status(201).json(todo)
-        } catch (err) {
-            response.status(404).json(err)
+        } catch (error) {
+            response.status(404).json(error)
         }
     },
 
@@ -31,8 +29,8 @@ module.exports = {
         try {
             const todo = await Todo.findByIdAndUpdate(id, {completed: completed})
             response.status(200).json(todo)
-        } catch (err) {
-            response.status(404).json(err)
+        } catch (error) {
+            response.status(404).json(error)
         }
     },
 
@@ -42,8 +40,8 @@ module.exports = {
         try {
             const todo = await Todo.findByIdAndDelete(id)
             response.status(200).json(todo)
-        } catch (err) {
-            response.status(404).json(err)
+        } catch (error) {
+            response.status(404).json(error)
         }
     }
 }

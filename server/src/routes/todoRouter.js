@@ -1,5 +1,5 @@
-import { Router } from 'express'
-import { FetchTodos, AddNewTodo, ToggleTodo, DeleteTodo } from '../controllers/todoController'
+import {Router} from 'express'
+import {FetchTodos, AddNewTodo, ToggleTodo, DeleteTodo} from '../controllers/todoController'
 
 const route = Router()
 
