@@ -9,8 +9,9 @@ import * as md from '@material-ui/core'
 import Header from "./header/Header"
 import CardItem from './carditem/CardItem'
 import AddCard from './addcard/AddCard'
+import TodoModal from './todomodal/TodoModal'
 
-//Styled Components=====================================================================================================
+
 const CardWrapper = styled.div`  
   width: 100%;
   position: absolute;
@@ -24,11 +25,15 @@ const GridItem = styled(md.Grid)`
   display: flex;
   justify-content: center;
 `;
-//======================================================================================================================
+
 
 class Card extends Component {
     state = {
-        cards: []
+        open: false,
+        cards: [],
+        cardName: '',
+        cardNameActive: true,
+        errorMessage: ''
     }
 
     handleLogOut = () => {
@@ -43,16 +48,41 @@ class Card extends Component {
         event.preventDefault()
         this.state.cards.push(1)
 
-        this.setState({
-            cards: this.state.cards
-        })
+        this.setState({cards: this.state.cards})
 
+    }
+
+    handleOpen = () => {
+        this.setState({open: true})
+    }
+
+    handleClose = () => {
+        if (!this.state.cardNameActive) {
+            this.setState({open: false})
+        } else {
+            this.setState({errorMessage: 'Specify card name!'})
+        }
+    }
+
+    handleChangeName = (event) => {
+        this.setState({
+            cardName: event.target.value.toUpperCase(),
+            errorMessage: ''
+        })
+    }
+
+    handleChangeNameActive = (event) => {
+        event.preventDefault()
+
+        this.setState({
+            cardNameActive: !this.state.cardNameActive
+        })
     }
 
     render() {
         const {todos} = this.props
+        const {open, cards, cardName, cardNameActive, errorMessage} = this.state
 
-        console.log(this.state.cards)
         return (
             <div>
                 <Header
@@ -60,19 +90,27 @@ class Card extends Component {
                     username={window.localStorage.getItem('user').toUpperCase()}
                 />
                 <CardWrapper>
-                    <GridContainer container spacing={40} >
-                        {this.state.cards.map((card, index) => {
+                    <GridContainer container spacing={40}>
+                        {cards.map((card, index) => {
                             return (
                                 <GridItem item xs={3} key={index}>
-                                    <CardItem amountTodo={todos.length}/>
+                                    <CardItem
+                                        amountTodo={todos.length}
+                                        openModal={this.handleOpen}
+                                        cardName={cardName}
+                                    />
                                 </GridItem>
                             )
                         })}
-
-
-                        {/*<GridItem item xs={3}>*/}
-                            {/*<CardItem amountTodo={todos.length}/>*/}
-                        {/*</GridItem>*/}
+                        <TodoModal
+                            openModal={open}
+                            cardName={cardName}
+                            cardNameActive={cardNameActive}
+                            errorMessage={errorMessage}
+                            closeModal={this.handleClose}
+                            ChangeName={event => this.handleChangeName(event)}
+                            ChangeNameActive={event => this.handleChangeNameActive(event)}
+                        />
                         <GridItem item xs={3}>
                             <AddCard addNewCard={event => this.addCard(event)}/>
                         </GridItem>
