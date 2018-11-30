@@ -104,7 +104,7 @@ class Card extends Component {
                         })}
                         <TodoModal
                             openModal={open}
-                            cardName={cardName}
+GridI                       cardName={cardName}
                             cardNameActive={cardNameActive}
                             errorMessage={errorMessage}
                             closeModal={this.handleClose}

@@ -14,11 +14,15 @@ const CardContent = styled(md.CardContent)`
   height: 100%;
   display: flex;
   flex-direction: column;
-  color: #4251B1;
-  font-size: 24px;
 `;
-const CardName = styled.div``;
-const TodoCount = styled.div``;
+const CardName = styled.div`
+  color: #4251B1;
+  font-size: 22px;
+`;
+const TodoCount = styled.div`
+  color: #c6c6c6;
+  font-size: 16px;
+`;
 
 
 const CardItem = ({amountTodo, openModal, cardName}) => (
