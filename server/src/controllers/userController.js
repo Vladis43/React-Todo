@@ -77,7 +77,7 @@ module.exports = {
                             `;
 
                         //Send the email
-                        mailer.sendEmail('admin@todoapp.com', email, 'Please, verify your email!', html)
+                        mailer.sendEmail('admin@todo.com', email, 'Please, verify your email!', html)
                     }
                 }
             }

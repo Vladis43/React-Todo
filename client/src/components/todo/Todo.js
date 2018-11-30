@@ -6,13 +6,12 @@ import * as actions from 'store/todos/actions'
 
 import List from '@material-ui/core/List'
 
-import Header from './header/Header'
 import Preloader from './preloader/Preloader'
 import TaskBar from './taskbar/TaskBar'
 import TodoItem from './todoitem/TodoItem'
 
 
-class TodoApp extends Component {
+class Todo extends Component {
     state = {
         todoText: '',
         errorMessage: ''
@@ -55,14 +54,6 @@ class TodoApp extends Component {
         }
     }
 
-    handleLogOut = () => {
-        window.localStorage.removeItem('token')
-        window.localStorage.removeItem('id')
-        window.localStorage.removeItem('user')
-
-        this.props.history.push('/auth')
-    }
-
     render() {
         const {todos, isLoading, toggleTodo, deleteTodo} = this.props
         const {todoText, errorMessage} = this.state
@@ -73,11 +64,6 @@ class TodoApp extends Component {
             window.localStorage.getItem('token') !== 'undefined' ?
 
                 <div>
-                    <Header
-                        logOut={this.handleLogOut}
-                        username={window.localStorage.getItem('user').toUpperCase()}
-                        amountTodo={todos.length}
-                    />
                     <TaskBar
                         AddTodoSubmit={this.handleAddTodo}
                         todoValue={todoText}
@@ -117,4 +103,4 @@ const mapActionToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch)
 }
 
-export default connect(mapStateToProps, mapActionToProps)(TodoApp)
+export default connect(mapStateToProps, mapActionToProps)(Todo)
