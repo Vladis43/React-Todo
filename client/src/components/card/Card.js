@@ -44,8 +44,7 @@ class Card extends Component {
         this.props.history.push('/auth')
     }
 
-    addCard = (event) => {
-        event.preventDefault()
+    addCard = () => {
         this.state.cards.push(1)
 
         this.setState({cards: this.state.cards})
@@ -71,12 +70,14 @@ class Card extends Component {
         })
     }
 
-    handleChangeNameActive = (event) => {
-        event.preventDefault()
-
+    handleChangeNameActive = () => {
         this.setState({
             cardNameActive: !this.state.cardNameActive
         })
+    }
+
+    handleDeleteCard = () => {
+        console.log('delete')
     }
 
     render() {
@@ -98,21 +99,22 @@ class Card extends Component {
                                         amountTodo={todos.length}
                                         openModal={this.handleOpen}
                                         cardName={cardName}
+                                        deleteCard={this.handleDeleteCard}
                                     />
                                 </GridItem>
                             )
                         })}
                         <TodoModal
                             openModal={open}
-GridI                       cardName={cardName}
+                            cardName={cardName}
                             cardNameActive={cardNameActive}
                             errorMessage={errorMessage}
                             closeModal={this.handleClose}
                             ChangeName={event => this.handleChangeName(event)}
-                            ChangeNameActive={event => this.handleChangeNameActive(event)}
+                            ChangeNameActive={this.handleChangeNameActive}
                         />
                         <GridItem item xs={3}>
-                            <AddCard addNewCard={event => this.addCard(event)}/>
+                            <AddCard addNewCard={this.addCard}/>
                         </GridItem>
                     </GridContainer>
                 </CardWrapper>

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as md from '@material-ui/core'
+import * as icon from '@material-ui/icons'
 import styled from 'styled-components'
 
 const Card = styled(md.Card)`
@@ -8,7 +9,7 @@ const Card = styled(md.Card)`
   height: 200px;
 `;
 const CardActionArea = styled(md.CardActionArea)`
-  height: 100%;
+  height: 70%;
 `;
 const CardContent = styled(md.CardContent)`
   height: 100%;
@@ -23,9 +24,15 @@ const TodoCount = styled.div`
   color: #c6c6c6;
   font-size: 16px;
 `;
+const CardActions = styled(md.CardActions)`
+  display: flex;
+  justify-content: space-evenly;
+`;
+const DeleteButton = styled(md.IconButton)``;
+const CreateButton = styled(md.IconButton)``;
 
 
-const CardItem = ({amountTodo, openModal, cardName}) => (
+const CardItem = ({amountTodo, openModal, cardName, deleteCard}) => (
     <Card>
         <CardActionArea onClick={openModal}>
             <CardContent>
@@ -37,6 +44,14 @@ const CardItem = ({amountTodo, openModal, cardName}) => (
                 </TodoCount>
             </CardContent>
         </CardActionArea>
+        <CardActions>
+            <DeleteButton onClick={deleteCard}>
+                <icon.Delete/>
+            </DeleteButton>
+            <CreateButton onClick={openModal}>
+                <icon.Create/>
+            </CreateButton>
+        </CardActions>
     </Card>
 )
 
