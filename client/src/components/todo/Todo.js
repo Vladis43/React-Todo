@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Redirect} from "react-router-dom"
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as actions from 'store/todos/actions'
@@ -59,35 +58,31 @@ class Todo extends Component {
         const {todoText, errorMessage} = this.state
 
         return (
-            window.localStorage.getItem('token') &&
-            window.localStorage.getItem('token') !== null &&
-            window.localStorage.getItem('token') !== 'undefined' ?
-
-                <div>
-                    <TaskBar
-                        AddTodoSubmit={this.handleAddTodo}
-                        todoValue={todoText}
-                        onChange={(event) => {
-                            this.handleChange(event)
-                        }}
-                        errorMessage={errorMessage}
-                    />
-                    {isLoading ?
-                        <Preloader/> :
-                        <List component="nav">
-                            {todos.map((todo) => {
-                                return (
-                                    <TodoItem
-                                        key={todo._id}
-                                        todo={todo}
-                                        toggleTodoAction={toggleTodo}
-                                        deleteTodoAction={deleteTodo}
-                                    />
-                                )
-                            })}
-                        </List>
-                    }
-                </div> : <Redirect to="/auth"/>
+            <div>
+                <TaskBar
+                    AddTodoSubmit={this.handleAddTodo}
+                    todoValue={todoText}
+                    onChange={(event) => {
+                        this.handleChange(event)
+                    }}
+                    errorMessage={errorMessage}
+                />
+                {isLoading ?
+                    <Preloader/> :
+                    <List component="nav">
+                        {todos.map((todo) => {
+                            return (
+                                <TodoItem
+                                    key={todo._id}
+                                    todo={todo}
+                                    toggleTodoAction={toggleTodo}
+                                    deleteTodoAction={deleteTodo}
+                                />
+                            )
+                        })}
+                    </List>
+                }
+            </div>
         )
     }
 }

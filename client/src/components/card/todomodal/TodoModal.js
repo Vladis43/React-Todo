@@ -29,7 +29,7 @@ const TodoModal = (props) => {
             aria-labelledby="scroll-dialog-title"
         >
             <TodoModalTitle id="scroll-dialog-title">
-                {!cardNameActive ?
+                {cardNameActive ?
                     <md.Tooltip title="Double click to change name" placement="bottom-start">
                         <div onDoubleClick={ChangeNameActive}>
                             {cardName}

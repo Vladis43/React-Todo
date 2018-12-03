@@ -23,13 +23,15 @@ const CardContent = styled(md.CardContent)`
 
 const AddCard = ({addNewCard}) => {
     return (
-        <Card>
-            <CardActionArea onClick={addNewCard}>
-                <CardContent>
-                    +
-                </CardContent>
-            </CardActionArea>
-        </Card>
+        <form onSubmit={addNewCard}>
+            <Card>
+                <CardActionArea type="submit">
+                    <CardContent>
+                        +
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        </form>
     )
 }
 

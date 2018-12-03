@@ -3,12 +3,14 @@ import logger from './middleware/logger'
 import {combineReducers} from 'redux'
 import todosReducer from './todos/reducer'
 import authReducer from './auth/reducer'
+import cardsReducer from './cards/reducer'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './saga'
 
 const rootReducer = combineReducers({
     todos: todosReducer,
-    auth: authReducer
+    auth: authReducer,
+    cards: cardsReducer
 })
 
 const sagaMiddleware = createSagaMiddleware()

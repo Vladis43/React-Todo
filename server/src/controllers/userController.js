@@ -50,7 +50,6 @@ module.exports = {
                             if (error) {
                                 response.status(409).json({error})
                             } else {
-                                console.log(user)
                                 jwt.sign({id: user._id}, config.SECRET_KEY, (error, token) => {
                                     response.status(201).json({
                                         message: 'Sing Up is successful',
@@ -148,7 +147,6 @@ module.exports = {
                             if (error) {
                                 response.status(403).json('Forbidden')
                             } else {
-                                console.log(account)
                                 response.status(200).json({
                                     message: 'Sing In is successful',
                                     success: true,

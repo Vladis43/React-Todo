@@ -7,7 +7,7 @@ const initialState = {
     items: []
 }
 
-const todosReducers = (state = initialState, action) => {
+const todosReducer = (state = initialState, action) => {
     switch (action.type) {
 //GetTodo===============================================================================================================
         case 'FETCH_TODOS':
@@ -85,4 +85,4 @@ const todosReducers = (state = initialState, action) => {
     }
 }
 
-export default todosReducers
+export default todosReducer

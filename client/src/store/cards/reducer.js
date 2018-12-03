@@ -2,11 +2,12 @@ import {error, success} from "redux-saga-requests"
 
 const initialState = {
     isError: false,
+    isFetching: false,
     errorMessage: null,
     items: []
 }
 
-const cardsReducers = (state = initialState, action) => {
+const cardsReducer = (state = initialState, action) => {
     switch (action.type) {
 //GetCards===============================================================================================================
         case 'FETCH_CARDS':
@@ -15,7 +16,6 @@ const cardsReducers = (state = initialState, action) => {
         case success('FETCH_CARDS'):
             return {
                 ...state,
-                isFetching: false,
                 isError: false,
                 items: action.payload.data
             }
@@ -44,8 +44,8 @@ const cardsReducers = (state = initialState, action) => {
 
 //DeleteCard============================================================================================================
         case success('DELETE_CARD'):
-            const deletedTodo = state.items.filter((todo) =>
-                todo._id !== action.meta.id
+            const deletedTodo = state.items.filter((card) =>
+                card._id !== action.meta.id
             )
             return {
                 ...state,
@@ -66,4 +66,4 @@ const cardsReducers = (state = initialState, action) => {
     }
 }
 
-export default cardsReducers
+export default cardsReducer

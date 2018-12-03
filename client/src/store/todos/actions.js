@@ -1,11 +1,11 @@
 import {URL} from 'config/config'
 
 export const FETCH_TODOS = 'FETCH_TODOS'
-export const fetchTodos = (userId) => ({
+export const fetchTodos = (cardId) => ({
     type: FETCH_TODOS,
     payload: {
         request: {
-            url: `${URL}todos/${userId}`,
+            url: `${URL}todos/${cardId}`,
             method: 'GET'
         }
     }

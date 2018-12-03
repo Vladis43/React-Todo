@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {Redirect} from "react-router-dom"
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as actions from 'store/todos/actions'
+import * as actions from 'store/cards/actions'
 
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
@@ -27,10 +28,15 @@ const GridItem = styled(md.Grid)`
 class Card extends Component {
     state = {
         open: false,
-        cards: [],
         cardName: '',
-        cardNameActive: true,
+        cardNameActive: false,
         errorMessage: ''
+    }
+
+    componentDidMount() {
+        const userId = window.localStorage.getItem('id')
+
+        this.props.fetchCards(userId)
     }
 
     handleLogOut = () => {
@@ -41,18 +47,10 @@ class Card extends Component {
         this.props.history.push('/auth')
     }
 
-    addCard = () => {
-        this.state.cards.push(1)
+    addCard = (event) => {
+        event.preventDefault()
 
-        this.setState({cards: this.state.cards})
-
-        const card = {
-            title: this.state.cardName,
-            userId: window.localStorage.getItem('id')
-        }
-
-        // this.props.addNewCard(card)
-        console.log(card)
+        this.setState({open: true})
     }
 
     handleOpen = () => {
@@ -60,7 +58,7 @@ class Card extends Component {
     }
 
     handleClose = () => {
-        if (!this.state.cardNameActive) {
+        if (this.state.cardNameActive) {
             this.setState({open: false})
         } else {
             this.setState({errorMessage: 'Specify card name!'})
@@ -78,58 +76,70 @@ class Card extends Component {
         this.setState({
             cardNameActive: !this.state.cardNameActive
         })
-    }
+        const card = {
+            title: this.state.cardName,
+            userId: window.localStorage.getItem('id')
+        }
+        this.props.addNewCard(card)
 
-    handleDeleteCard = () => {
-        console.log('delete')
+        this.setState({
+            cardName: '',
+            errorMessage: ''
+        })
     }
 
     render() {
-        const {todos} = this.props
-        const {open, cards, cardName, cardNameActive, errorMessage} = this.state
+        const {todos, cards, deleteCard} = this.props
+        const {open, cardName, cardNameActive, errorMessage} = this.state
 
+        console.log(this.state)
         return (
-            <div>
-                <Header
-                    logOut={this.handleLogOut}
-                    username={window.localStorage.getItem('user').toUpperCase()}
-                />
-                <CardWrapper>
-                    <GridContainer container spacing={40}>
-                        {cards.map((card, index) => {
-                            return (
-                                <GridItem item xs={3} key={index}>
-                                    <CardItem
-                                        amountTodo={todos.length}
-                                        openModal={this.handleOpen}
-                                        cardName={cardName}
-                                        deleteCard={this.handleDeleteCard}
-                                    />
-                                </GridItem>
-                            )
-                        })}
-                        <TodoModal
-                            openModal={open}
-                            cardName={cardName}
-                            cardNameActive={cardNameActive}
-                            errorMessage={errorMessage}
-                            closeModal={this.handleClose}
-                            ChangeName={event => this.handleChangeName(event)}
-                            ChangeNameActive={this.handleChangeNameActive}
-                        />
-                        <GridItem item xs={3}>
-                            <AddCard addNewCard={this.addCard}/>
-                        </GridItem>
-                    </GridContainer>
-                </CardWrapper>
-            </div>
+            window.localStorage.getItem('token') &&
+            window.localStorage.getItem('token') !== null &&
+            window.localStorage.getItem('token') !== 'undefined' ?
+
+                <div>
+                    <Header
+                        logOut={this.handleLogOut}
+                        username={window.localStorage.getItem('user').toUpperCase()}
+                    />
+                    <CardWrapper>
+                        <GridContainer container spacing={40}>
+                            {cards.map(card => {
+                                return (
+                                    <GridItem item xs={3} key={card._id}>
+                                        <CardItem
+                                            amountTodo={todos.length}
+                                            openModal={this.handleOpen}
+                                            cardName={card.title}
+                                            deleteCard={deleteCard}
+                                        />
+                                    </GridItem>
+                                )
+                            })}
+                            <TodoModal
+                                openModal={open}
+                                cardName={cardName}
+                                cardNameActive={cardNameActive}
+                                errorMessage={errorMessage}
+                                closeModal={this.handleClose}
+                                ChangeName={event => this.handleChangeName(event)}
+                                ChangeNameActive={this.handleChangeNameActive}
+                            />
+                            <GridItem item xs={3}>
+                                <AddCard addNewCard={event => this.addCard(event)}/>
+                            </GridItem>
+                        </GridContainer>
+                    </CardWrapper>
+                </div> : <Redirect to="/auth"/>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        todos: state.todos.items
+        todos: state.todos.items,
+        cards: state.cards.items
     }
 }
 
