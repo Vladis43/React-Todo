@@ -13,12 +13,9 @@ import TodoModal from './todomodal/TodoModal'
 
 
 const CardWrapper = styled.div`  
-  width: 100%;
+  width: 98%;
   position: absolute;
   top: 100px;
-  
-  display: flex;
-  justify-content: center;
 `;
 const GridContainer = styled(md.Grid)``;
 const GridItem = styled(md.Grid)`
@@ -49,6 +46,13 @@ class Card extends Component {
 
         this.setState({cards: this.state.cards})
 
+        const card = {
+            title: this.state.cardName,
+            userId: window.localStorage.getItem('id')
+        }
+
+        // this.props.addNewCard(card)
+        console.log(card)
     }
 
     handleOpen = () => {

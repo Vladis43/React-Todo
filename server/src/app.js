@@ -6,6 +6,7 @@ import cors from 'cors'
 import config from './config/database'
 
 import todoRouter from './routes/todoRouter'
+import cardRouter from './routes/cardRouter'
 import userRouter from './routes/userRouter'
 
 mongoose.connect(config.DATABASE)
@@ -20,6 +21,7 @@ app.use(expressValidator())
 
 //Routes
 app.use('/todos', todoRouter)
+app.use('/cards', cardRouter)
 app.use('/users', userRouter)
 
 export default app

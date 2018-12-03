@@ -2,10 +2,10 @@ import Todo from '../models/Todo'
 
 module.exports = {
     async FetchTodos(request, response) {
-        const userId = request.params.userId
+        const cardId = request.params.cardId
 
         try {
-            const todo = await Todo.find({userId})
+            const todo = await Todo.find({cardId})
             response.status(200).json(todo)
         } catch (error) {
             response.status(404).json(error)
