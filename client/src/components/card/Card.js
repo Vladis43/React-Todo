@@ -7,16 +7,18 @@ import * as actions from 'store/cards/actions'
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
 
-import Header from "./header/Header"
-import CardItem from './carditem/CardItem'
-import AddCard from './addcard/AddCard'
-import TodoModal from './todomodal/TodoModal'
-
+import Header from "./Header"
+import CardItem from './CardItem'
+import AddCardButton from './AddCardButton'
+import CreatingCard from './modal/CreatingCard'
 
 const CardWrapper = styled.div`  
   width: 98%;
   position: absolute;
   top: 100px;
+  @media screen and (max-device-width: 455px) {
+    top: 50px;
+  }
 `;
 const GridContainer = styled(md.Grid)``;
 const GridItem = styled(md.Grid)`
@@ -24,18 +26,16 @@ const GridItem = styled(md.Grid)`
   justify-content: center;
 `;
 
-
 class Card extends Component {
     state = {
-        open: false,
+        isOpenCreatingCard: false,
         cardName: '',
-        cardNameActive: false,
+        cardDescription: '',
         errorMessage: ''
     }
 
     componentDidMount() {
         const userId = window.localStorage.getItem('id')
-
         this.props.fetchCards(userId)
     }
 
@@ -47,52 +47,51 @@ class Card extends Component {
         this.props.history.push('/auth')
     }
 
-    addCard = (event) => {
+    handleOpenCreatingCard = (event) => {
         event.preventDefault()
-
-        this.setState({open: true})
+        this.setState({isOpenCreatingCard: true})
     }
 
-    handleOpen = () => {
-        this.setState({open: true})
-    }
-
-    handleClose = () => {
-        if (this.state.cardNameActive) {
-            this.setState({open: false})
-        } else {
-            this.setState({errorMessage: 'Specify card name!'})
-        }
+    handleCloseCreatingCard = () => {
+        this.setState({isOpenCreatingCard: false, errorMessage: ''})
     }
 
     handleChangeName = (event) => {
         this.setState({
-            cardName: event.target.value.toUpperCase(),
+            cardName: event.target.value,
             errorMessage: ''
         })
     }
 
-    handleChangeNameActive = () => {
+    handleChangeDescription = (event) => {
         this.setState({
-            cardNameActive: !this.state.cardNameActive
+            cardDescription: event.target.value,
+            errorMessage: ''
         })
-        const card = {
-            title: this.state.cardName,
-            userId: window.localStorage.getItem('id')
+    }
+
+    handleAddNewCard = (event) => {
+        event.preventDefault()
+        const {cardName, cardDescription} = this.state
+
+        if (cardName && cardDescription === '') {
+            this.setState({errorMessage: 'Field is required!'})
+        } else {
+            const card = {
+                title: cardName,
+                description: cardDescription,
+                userId: window.localStorage.getItem('id')
+            }
+            this.props.addNewCard(card)
+            this.setState({isOpenCreatingCard: false})
         }
-        this.props.addNewCard(card)
-
-        this.setState({
-            cardName: '',
-            errorMessage: ''
-        })
     }
+
 
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {open, cardName, cardNameActive, errorMessage} = this.state
+        const {isOpenCreatingCard, cardName, cardDescription, errorMessage} = this.state
 
-        console.log(this.state)
         return (
             window.localStorage.getItem('token') &&
             window.localStorage.getItem('token') !== null &&
@@ -104,30 +103,31 @@ class Card extends Component {
                         username={window.localStorage.getItem('user').toUpperCase()}
                     />
                     <CardWrapper>
-                        <GridContainer container spacing={40}>
+                        <GridContainer container spacing={24} style={{padding: 24}}>
                             {cards.map(card => {
                                 return (
-                                    <GridItem item xs={3} key={card._id}>
+                                    <GridItem item xs={12} sm={6} lg={4} xl={3} key={card._id}>
                                         <CardItem
+                                            card={card}
                                             amountTodo={todos.length}
-                                            openModal={this.handleOpen}
                                             cardName={card.title}
-                                            deleteCard={deleteCard}
+                                            deleteCardAction={deleteCard}
                                         />
                                     </GridItem>
                                 )
                             })}
-                            <TodoModal
-                                openModal={open}
+                            <CreatingCard
+                                isModal={isOpenCreatingCard}
                                 cardName={cardName}
-                                cardNameActive={cardNameActive}
+                                cardDescription={cardDescription}
+                                closeModal={this.handleCloseCreatingCard}
                                 errorMessage={errorMessage}
-                                closeModal={this.handleClose}
-                                ChangeName={event => this.handleChangeName(event)}
-                                ChangeNameActive={this.handleChangeNameActive}
+                                addNewCard={this.handleAddNewCard}
+                                changeName={this.handleChangeName}
+                                changeDescription={this.handleChangeDescription}
                             />
-                            <GridItem item xs={3}>
-                                <AddCard addNewCard={event => this.addCard(event)}/>
+                            <GridItem item xs={12} sm={6} lg={4} xl={3}>
+                                <AddCardButton openModal={this.handleOpenCreatingCard}/>
                             </GridItem>
                         </GridContainer>
                     </CardWrapper>

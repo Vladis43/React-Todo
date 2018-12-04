@@ -7,11 +7,9 @@ const Card = styled(md.Card)`
   width: 300px;
   height: 200px;
 `;
-
 const CardActionArea = styled(md.CardActionArea)`
   height: 100%;
 `;
-
 const CardContent = styled(md.CardContent)`
   height: 80%;
   display: flex;
@@ -21,18 +19,16 @@ const CardContent = styled(md.CardContent)`
   font-size: 64px;
 `;
 
-const AddCard = ({addNewCard}) => {
-    return (
-        <form onSubmit={addNewCard}>
-            <Card>
-                <CardActionArea type="submit">
-                    <CardContent>
-                        +
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </form>
-    )
-}
+const AddCardButton = ({openModal}) => (
+    <form onSubmit={openModal}>
+        <Card>
+            <CardActionArea type="submit">
+                <CardContent>
+                    +
+                </CardContent>
+            </CardActionArea>
+        </Card>
+    </form>
+)
 
-export default AddCard
+export default AddCardButton

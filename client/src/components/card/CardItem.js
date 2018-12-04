@@ -32,7 +32,7 @@ const DeleteButton = styled(md.IconButton)``;
 const CreateButton = styled(md.IconButton)``;
 
 
-const CardItem = ({amountTodo, openModal, cardName, deleteCard}) => (
+const CardItem = ({card, amountTodo, openModal, cardName, deleteCardAction}) => (
     <Card>
         <CardActionArea onClick={openModal}>
             <CardContent>
@@ -45,7 +45,7 @@ const CardItem = ({amountTodo, openModal, cardName, deleteCard}) => (
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <DeleteButton onClick={deleteCard}>
+            <DeleteButton onClick={() => deleteCardAction(card._id)}>
                 <icon.Delete/>
             </DeleteButton>
             <CreateButton onClick={openModal}>

@@ -7,6 +7,10 @@ const card = new Schema({
         type: Schema.Types.String,
         required: true
     },
+    description: {
+        type: Schema.Types.String,
+        required: true
+    },
     userId: {
         type: Schema.Types.ObjectId,
         required: true

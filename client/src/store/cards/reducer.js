@@ -27,7 +27,7 @@ const cardsReducer = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-//AddCard===============================================================================================================
+//AddCardButton===============================================================================================================
         case success('ADD_NEW_CARD'):
             return {
                 ...state,
@@ -44,13 +44,13 @@ const cardsReducer = (state = initialState, action) => {
 
 //DeleteCard============================================================================================================
         case success('DELETE_CARD'):
-            const deletedTodo = state.items.filter((card) =>
+            const deletedCard = state.items.filter((card) =>
                 card._id !== action.meta.id
             )
             return {
                 ...state,
                 isError: false,
-                items: deletedTodo
+                items: deletedCard
             }
 
         case error('DELETE_CARD'):
