@@ -5,9 +5,9 @@ import * as actions from 'store/todos/actions'
 
 import List from '@material-ui/core/List'
 
-import Preloader from './preloader/Preloader'
-import TaskBar from './taskbar/TaskBar'
-import TodoItem from './todoitem/TodoItem'
+import Preloader from '../components/todo/Preloader'
+import TaskBar from '../components/todo/TaskBar'
+import TodoItem from '../components/todo/TodoItem'
 
 
 class Todo extends Component {

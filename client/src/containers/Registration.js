@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import * as actions from 'store/auth/actions'
+import * as actions from 'store/account/actions'
 
 import styled from 'styled-components'
 import * as md from "@material-ui/core/"
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
 
-import GeneralInputs from './generalinputs/GeneralInputs'
-import DetailsInputs from './detailsinputs/DetailsInputs'
+import GeneralInputs from '../components/account/registration/GeneralInputs'
+import DetailsInputs from '../components/account/registration/DetailsInputs'
 
 
 class Registration extends Component {
@@ -164,7 +164,7 @@ class Registration extends Component {
 
                         <AuthorizationField>
                             <AuthorizationTitle>Already have an account?</AuthorizationTitle>
-                            <Link to={'/auth'} style={{textDecoration: "none"}}>
+                            <Link to={'/authorization'} style={{textDecoration: "none"}}>
                                 <AuthorizationButton style={{color: "#34409b"}}>
                                     Sign in
                                 </AuthorizationButton>

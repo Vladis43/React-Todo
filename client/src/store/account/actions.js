@@ -1,4 +1,4 @@
-import {URL} from 'config/config'
+import {URL} from 'config'
 
 export const SIGN_UP = 'SIGN_UP'
 export const signUp = (userData) => ({

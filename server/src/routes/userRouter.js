@@ -7,6 +7,6 @@ const route = Router()
 
 route.post('/register', SignUpValidation, SignUp)
 route.post('/verification/:vCode', Verification)
-route.post('/auth', SignInValidation, SingIn)
+route.post('/account', SignInValidation, SingIn)
 
 export default route

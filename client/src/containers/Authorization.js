@@ -2,13 +2,66 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import * as actions from 'store/auth/actions'
+import * as actions from 'store/account/actions'
 
 import styled from 'styled-components'
 import * as md from '@material-ui/core/'
 import * as icon from '@material-ui/icons/'
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
+
+
+//Styled Components=====================================================================================================
+const time = new Date().getHours()
+const Wrapper = styled.div`
+  background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
+
+  width: 100vw;
+  height: 100vh;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const Card = styled(md.Card)`
+  @media screen and (max-device-width: 400px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
+  }
+`;
+const CardHeader = styled(md.CardContent)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const AccountCircleIcon = styled(icon.AccountCircle)``;
+const CardHeaderTitle = styled(md.Typography)``;
+const InputsField = styled(md.CardContent)`
+  display: flex;
+  flex-direction: column;
+`;
+const EmailInput = styled(md.TextField)``;
+const PasswordInput = styled(md.TextField)``;
+const SignInField = styled(md.CardActions)`
+  display: flex;
+  justify-content: flex-end;
+  @media screen and (max-device-width: 400px) {
+    justify-content: center;
+  }
+`;
+const ConfirmButton = styled(md.Button)``;
+const RegistrationField = styled(md.CardActions)`
+  display: flex;
+  justify-content: center;
+`;
+const RegistrationButton = styled(md.Button)``;
+//======================================================================================================================
 
 
 class Authorization extends Component {
@@ -104,7 +157,7 @@ class Authorization extends Component {
                         <md.Divider/>
 
                         <RegistrationField>
-                            <Link to={'/reg'} style={{textDecoration: "none"}}>
+                            <Link to={'/registration'} style={{textDecoration: "none"}}>
                                 <RegistrationButton style={{color: "#34409b"}}>
                                     Create an account
                                 </RegistrationButton>
@@ -131,59 +184,5 @@ const mapStateToProps = (state) => {
 const mapActionToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch)
 }
-
-
-//Styled Components=====================================================================================================
-const time = new Date().getHours()
-const Wrapper = styled.div`
-  background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
-
-  width: 100vw;
-  height: 100vh;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const Card = styled(md.Card)`
-  @media screen and (max-device-width: 400px) {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
-  }
-`;
-const CardHeader = styled(md.CardContent)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const AccountCircleIcon = styled(icon.AccountCircle)``;
-const CardHeaderTitle = styled(md.Typography)``;
-const InputsField = styled(md.CardContent)`
-  display: flex;
-  flex-direction: column;
-`;
-const EmailInput = styled(md.TextField)``;
-const PasswordInput = styled(md.TextField)``;
-const SignInField = styled(md.CardActions)`
-  display: flex;
-  justify-content: flex-end;
-  @media screen and (max-device-width: 400px) {
-    justify-content: center;
-  }
-`;
-const ConfirmButton = styled(md.Button)``;
-const RegistrationField = styled(md.CardActions)`
-  display: flex;
-  justify-content: center;
-`;
-const RegistrationButton = styled(md.Button)``;
-//======================================================================================================================
-
 
 export default connect(mapStateToProps, mapActionToProps)(Authorization)

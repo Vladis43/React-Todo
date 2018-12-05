@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import * as actions from 'store/auth/actions'
+import * as actions from 'store/account/actions'
 
 import styled from 'styled-components'
 import * as md from '@material-ui/core/'
@@ -93,7 +93,7 @@ class Verification extends Component {
                         <md.Divider/>
 
                         <AuthorizationField>
-                            <Link to={'/auth'} style={{textDecoration: "none"}} onClick={this.loginLink}>
+                            <Link to={'/account'} style={{textDecoration: "none"}} onClick={this.loginLink}>
                                 <AuthorizationButton style={{color: "#34409b"}}>
                                     Log In
                                 </AuthorizationButton>

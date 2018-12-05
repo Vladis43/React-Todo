@@ -3,10 +3,10 @@ import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import store from 'store'
 
-import Card from './card/Card'
-import Registration from './registration/Registration'
-import Authorization from './authorization/Authorization'
-import Verification from './verification/Verification'
+import Card from '../containers/Card'
+import Registration from '../containers/Registration'
+import Authorization from '../containers/Authorization'
+import Verification from '../containers/Verification'
 
 class App extends Component {
     render() {
@@ -15,9 +15,9 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route exact path='/' component={Card}/>
-                        <Route path='/auth' component={Authorization}/>
-                        <Route path='/reg' component={Registration}/>
-                        <Route path='/ver' component={Verification}/>
+                        <Route path='/authorization' component={Authorization}/>
+                        <Route path='/registration' component={Registration}/>
+                        <Route path='/verification' component={Verification}/>
                         <Route render={() => <div>Error 404. This page is not found!</div>}/>
                     </Switch>
                 </Router>

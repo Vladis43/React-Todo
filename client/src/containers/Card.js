@@ -7,10 +7,10 @@ import * as actions from 'store/cards/actions'
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
 
-import Header from "./Header"
-import CardItem from './CardItem'
-import AddCardButton from './AddCardButton'
-import CreatingCard from './modal/CreatingCard'
+import Header from "../components/card/Header"
+import CardItem from '../components/card/CardItem'
+import AddCardButton from '../components/card/AddCardButton'
+import CreatingCard from '../components/card/modal/CreatingCard'
 
 const CardWrapper = styled.div`  
   width: 98%;
@@ -31,6 +31,7 @@ class Card extends Component {
         isOpenCreatingCard: false,
         cardName: '',
         cardDescription: '',
+        imageFileSelected: '',
         errorMessage: ''
     }
 
@@ -44,12 +45,12 @@ class Card extends Component {
         window.localStorage.removeItem('id')
         window.localStorage.removeItem('user')
 
-        this.props.history.push('/auth')
+        this.props.history.push('/authorization')
     }
 
     handleOpenCreatingCard = (event) => {
         event.preventDefault()
-        this.setState({isOpenCreatingCard: true})
+        this.setState({isOpenCreatingCard: true, errorMessage: ''})
     }
 
     handleCloseCreatingCard = () => {
@@ -70,11 +71,24 @@ class Card extends Component {
         })
     }
 
+    handleImageFileSelected = (event) => {
+        if (event.target.files.length === 0) {
+            return
+        }
+        else {
+            this.setState({
+                imageFileSelected: event.target.files[0]
+            })
+        }
+    }
+
     handleAddNewCard = (event) => {
         event.preventDefault()
         const {cardName, cardDescription} = this.state
 
-        if (cardName && cardDescription === '') {
+        if (cardName === '') {
+            this.setState({errorMessage: 'Field is required!'})
+        } else  if (cardDescription === '') {
             this.setState({errorMessage: 'Field is required!'})
         } else {
             const card = {
@@ -83,15 +97,20 @@ class Card extends Component {
                 userId: window.localStorage.getItem('id')
             }
             this.props.addNewCard(card)
-            this.setState({isOpenCreatingCard: false})
+            this.setState({
+                isOpenCreatingCard: false,
+                cardName: '',
+                cardDescription: ''
+            })
         }
     }
 
 
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {isOpenCreatingCard, cardName, cardDescription, errorMessage} = this.state
+        const {isOpenCreatingCard, cardName, cardDescription, imageFileSelected, errorMessage} = this.state
 
+        console.log(this.state)
         return (
             window.localStorage.getItem('token') &&
             window.localStorage.getItem('token') !== null &&
@@ -120,18 +139,20 @@ class Card extends Component {
                                 isModal={isOpenCreatingCard}
                                 cardName={cardName}
                                 cardDescription={cardDescription}
-                                closeModal={this.handleCloseCreatingCard}
+                                imageFileSelected={imageFileSelected}
                                 errorMessage={errorMessage}
+                                closeModal={this.handleCloseCreatingCard}
                                 addNewCard={this.handleAddNewCard}
                                 changeName={this.handleChangeName}
                                 changeDescription={this.handleChangeDescription}
+                                changeImageFile={this.handleImageFileSelected}
                             />
                             <GridItem item xs={12} sm={6} lg={4} xl={3}>
                                 <AddCardButton openModal={this.handleOpenCreatingCard}/>
                             </GridItem>
                         </GridContainer>
                     </CardWrapper>
-                </div> : <Redirect to="/auth"/>
+                </div> : <Redirect to="/authorization"/>
         )
     }
 }

@@ -1,19 +1,15 @@
 import React from 'react'
-
 import * as md from '@material-ui/core'
-import * as icon from '@material-ui/icons'
 import styled from 'styled-components'
-
 import CreatingCardContent from './CreatingCardContent'
 
 const CreatingCardField = styled(md.Dialog)``;
 const CreatingCardActions = styled(md.DialogActions)``;
 
-
 const CreatingCard = (props) => {
     const {
-        isModal, cardName, cardDescription, errorMessage,
-        closeModal, addNewCard, changeName, changeDescription
+        isModal, cardName, cardDescription, imageFileSelected, errorMessage,
+        closeModal, addNewCard, changeName, changeDescription, changeImageFile
     } = props
 
     return (
@@ -23,19 +19,24 @@ const CreatingCard = (props) => {
             aria-labelledby="scroll-dialog-title"
             onClose={closeModal}
         >
-            <CreatingCardActions>
-                <md.Button color="primary" onClick={closeModal}>
-                    <icon.Close/>
-                </md.Button>
-            </CreatingCardActions>
             <CreatingCardContent
                 cardName={cardName}
                 cardDescription={cardDescription}
-                addNewCard={addNewCard}
+                imageFileSelected={imageFileSelected}
                 errorMessage={errorMessage}
+                addNewCard={addNewCard}
                 changeName={changeName}
                 changeDescription={changeDescription}
+                changeImageFile={changeImageFile}
             />
+            <CreatingCardActions>
+                <md.Button color="primary" onClick={closeModal}>
+                    Cancel
+                </md.Button>
+                <md.Button color="primary" onClick={addNewCard}>
+                    Add Card
+                </md.Button>
+            </CreatingCardActions>
         </CreatingCardField>
     )
 }

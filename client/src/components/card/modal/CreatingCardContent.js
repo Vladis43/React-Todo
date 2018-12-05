@@ -1,15 +1,20 @@
 import React from 'react'
 import * as md from "@material-ui/core"
-import * as icon from "@material-ui/icons"
 import styled from "styled-components"
+import UploadImage from './UploadImage'
 
 const Content = styled(md.DialogContent)`
   display: flex;
   flex-direction: column;
 `;
 
-const CreatingCardContent = ({cardName, cardDescription, errorMessage, addNewCard, changeName, changeDescription}) => (
-    <form onSubmit={addNewCard}>
+const CreatingCardContent = (props) => {
+    const {
+        cardName, cardDescription, imageFileSelected, errorMessage,
+        changeName, changeDescription, changeImageFile
+    } = props
+
+    return (
         <Content>
             Please fill in the fields: <br/>
             <md.TextField
@@ -30,14 +35,12 @@ const CreatingCardContent = ({cardName, cardDescription, errorMessage, addNewCar
                 helperText={errorMessage ? errorMessage : ''}
                 error={errorMessage ? true : false}
             />
-            <md.Button
-                color="primary"
-                type="submit"
-            >
-                <icon.Done/>
-            </md.Button>
+            <UploadImage
+                imageFileSelected={imageFileSelected}
+                changeImageFile={changeImageFile}
+            />
         </Content>
-    </form>
-)
+    )
+}
 
 export default CreatingCardContent

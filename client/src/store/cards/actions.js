@@ -1,4 +1,4 @@
-import {URL} from 'config/config'
+import {URL} from 'config'
 
 export const FETCH_CARDS = 'FETCH_CARDS'
 export const fetchCards = (userId) => ({
