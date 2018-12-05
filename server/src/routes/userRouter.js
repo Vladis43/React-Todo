@@ -5,8 +5,8 @@ import SignInValidation from '../validations/signInValidation'
 
 const route = Router()
 
-route.post('/register', SignUpValidation, SignUp)
+route.post('/registration', SignUpValidation, SignUp)
 route.post('/verification/:vCode', Verification)
-route.post('/account', SignInValidation, SingIn)
+route.post('/authorization', SignInValidation, SingIn)
 
 export default route

@@ -5,7 +5,7 @@ export const signUp = (userData) => ({
     type: SIGN_UP,
     payload: {
         request: {
-            url: `${URL}users/register`,
+            url: `${URL}users/registration`,
             method: 'POST',
             data: userData
         }
@@ -28,7 +28,7 @@ export const signIn = (userData) => ({
     type: SIGN_UP,
     payload: {
         request: {
-            url: `${URL}users/auth`,
+            url: `${URL}users/authorization`,
             method: 'POST',
             data: userData
         }

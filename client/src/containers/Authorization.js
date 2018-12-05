@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
 import * as actions from 'store/account/actions'
 
 import styled from 'styled-components'
@@ -9,6 +7,11 @@ import * as md from '@material-ui/core/'
 import * as icon from '@material-ui/icons/'
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
+
+import EmailInput from 'components/account/authorization/EmailInput'
+import PasswordInput from 'components/account/authorization/PasswordInput'
+import SignInButton from 'components/account/authorization/SignInButton'
+import RegistrationButton from 'components/account/authorization/RegistrationButton'
 
 
 //Styled Components=====================================================================================================
@@ -42,25 +45,10 @@ const CardHeader = styled(md.CardContent)`
 `;
 const AccountCircleIcon = styled(icon.AccountCircle)``;
 const CardHeaderTitle = styled(md.Typography)``;
-const InputsField = styled(md.CardContent)`
+const InputsWrapper = styled(md.CardContent)`
   display: flex;
   flex-direction: column;
 `;
-const EmailInput = styled(md.TextField)``;
-const PasswordInput = styled(md.TextField)``;
-const SignInField = styled(md.CardActions)`
-  display: flex;
-  justify-content: flex-end;
-  @media screen and (max-device-width: 400px) {
-    justify-content: center;
-  }
-`;
-const ConfirmButton = styled(md.Button)``;
-const RegistrationField = styled(md.CardActions)`
-  display: flex;
-  justify-content: center;
-`;
-const RegistrationButton = styled(md.Button)``;
 //======================================================================================================================
 
 
@@ -70,15 +58,17 @@ class Authorization extends Component {
         password: ''
     }
 
-    setEmail = (event) => {
-        this.setState({
-            email: event.target.value
-        })
+    componentWillReceiveProps(nextProps) {
+        window.localStorage.setItem('token', nextProps.users.token)
+        window.localStorage.setItem('id', nextProps.users.id)
+        window.localStorage.setItem('user', nextProps.users.username)
+
+        this.props.history.push('/')
     }
 
-    setPassword = (event) => {
+    setValue = (event) => {
         this.setState({
-            password: event.target.value
+            [event.target.name]: event.target.value
         })
     }
 
@@ -89,18 +79,7 @@ class Authorization extends Component {
         this.props.signIn({email, password})
     }
 
-    componentWillReceiveProps(nextProps) {
-        window.localStorage.setItem('token', nextProps.token)
-        window.localStorage.setItem('id', nextProps.id)
-        window.localStorage.setItem('user', nextProps.username)
-
-        if (nextProps.success) {
-            nextProps.history.push('/')
-            if (!nextProps.active) {
-                nextProps.history.push('/ver')
-            }
-        }
-    }
+    //TODO Сделать поля email, password в state объектами и передавать значение и ошибку
 
     render() {
         const {email, password} = this.state
@@ -114,55 +93,27 @@ class Authorization extends Component {
         return (
             <Wrapper>
                 <Card>
-                    <form method="POST" onSubmit={(event) => this.signIn(event)}>
+                    <form onSubmit={(event) => this.signIn(event)}>
                         <CardHeader>
                             <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
                             <CardHeaderTitle variant="h4">Sign in to your account</CardHeaderTitle>
                         </CardHeader>
-
-                        <InputsField>
+                        <InputsWrapper>
                             <EmailInput
-                                size="large"
-                                type="text"
-                                label="Email"
-                                style={{margin: 10}}
                                 value={email}
-                                onChange={(event) => this.setEmail(event)}
-                                helperText={errorMessages.email}
-                                error={errorMessages.email ? true : false}
+                                error={errorMessages.email}
+                                setEmail={this.setValue}
                             />
                             <PasswordInput
-                                size="large"
-                                type="password"
-                                label="Password"
-                                style={{margin: 10}}
+                                name="password"
                                 value={password}
-                                onChange={(event) => this.setPassword(event)}
-                                helperText={errorMessages.password}
-                                error={errorMessages.password ? true : false}
+                                error={errorMessages.password}
+                                setPassword={this.setValue}
                             />
-                        </InputsField>
-
-                        <SignInField>
-                            <ConfirmButton
-                                variant="contained"
-                                size="large"
-                                color="primary"
-                                type="submit"
-                            >
-                                Sign In
-                            </ConfirmButton>
-                        </SignInField>
-
+                        </InputsWrapper>
+                        <SignInButton/>
                         <md.Divider/>
-
-                        <RegistrationField>
-                            <Link to={'/registration'} style={{textDecoration: "none"}}>
-                                <RegistrationButton style={{color: "#34409b"}}>
-                                    Create an account
-                                </RegistrationButton>
-                            </Link>
-                        </RegistrationField>
+                        <RegistrationButton/>
                     </form>
                 </Card>
             </Wrapper>
@@ -172,17 +123,11 @@ class Authorization extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.auth.users.token,
-        success: state.auth.users.success,
-        id: state.auth.users.id,
-        active: state.auth.users.active,
-        username: state.auth.users.username,
+        users: state.auth.users,
         error: state.auth.errorMessage
     }
 }
 
-const mapActionToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch)
-}
+const mapActionToProps = {...actions}
 
 export default connect(mapStateToProps, mapActionToProps)(Authorization)
