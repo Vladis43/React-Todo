@@ -63,7 +63,7 @@ class Authorization extends Component {
         window.localStorage.setItem('id', nextProps.users.id)
         window.localStorage.setItem('user', nextProps.users.username)
 
-        this.props.history.push('/')
+        nextProps.history.push('/')
     }
 
     setValue = (event) => {
@@ -78,8 +78,6 @@ class Authorization extends Component {
 
         this.props.signIn({email, password})
     }
-
-    //TODO Сделать поля email, password в state объектами и передавать значение и ошибку
 
     render() {
         const {email, password} = this.state

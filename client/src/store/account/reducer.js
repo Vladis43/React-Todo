@@ -3,7 +3,8 @@ import {success, error} from 'redux-saga-requests'
 const initialState = {
     isError: false,
     users: [],
-    errorMessage: []
+    errorMessage: [],
+    errorParam: []
 }
 
 const authReducer = (state = initialState, action) => {

@@ -18,14 +18,14 @@ export const verification = (vcode) => ({
     payload: {
         request: {
             url: `${URL}users/verification/${vcode}`,
-            method: 'POST'
+            method: 'POST',
         }
     }
 })
 
 export const SIGN_IN = 'SIGN_IN'
 export const signIn = (userData) => ({
-    type: SIGN_UP,
+    type: SIGN_IN,
     payload: {
         request: {
             url: `${URL}users/authorization`,

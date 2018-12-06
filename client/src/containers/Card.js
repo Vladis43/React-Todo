@@ -110,7 +110,6 @@ class Card extends Component {
         const {todos, cards, deleteCard} = this.props
         const {isOpenCreatingCard, cardName, cardDescription, imageFileSelected, errorMessage} = this.state
 
-        console.log(this.state)
         return (
             window.localStorage.getItem('token') &&
             window.localStorage.getItem('token') !== null &&

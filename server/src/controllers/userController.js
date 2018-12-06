@@ -127,7 +127,7 @@ module.exports = {
                     response.status(404).json({
                         errors: [{
                             param: 'email',
-                            msg: 'User with such email not found!'
+                            msg: 'Wrong email or password!'
                         }],
                         success: false
                     })
@@ -138,7 +138,7 @@ module.exports = {
                         response.status(401).json({
                             errors: [{
                                 param: 'password',
-                                msg: 'Wrong password!'
+                                msg: 'Wrong email or password!'
                             }],
                             success: false
                         })
