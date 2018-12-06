@@ -16,9 +16,6 @@ const PasswordField = styled.div`
         flex-direction: column;
         div {
           display: flex;
-        }
-        //material-ui class
-        .fIhGog {
           margin-left: 0 !important;
         }
     }
@@ -29,53 +26,53 @@ const PasswordConfirmInput = styled(md.TextField)``;
 
 
 const GeneralInputs = (props) => {
-    const {
-        usernameValue, emailValue, passwordValue, passwordConfirmValue,
-        setUsername, setEmail, setPassword, setPasswordConfirm,
-        usernameError, emailError, passwordError, passwordConfirmError
-    } = props
+    const {usernameValue, emailValue, passwordValue, passwordConfirmValue, setValue, errorMessage} = props
 
     return (
         <GeneralInputsField>
             <UsernameInput
+                name="username"
                 size="large"
                 type="text"
                 label="Username"
                 style={{marginBottom: 10}}
                 value={usernameValue}
-                onChange={setUsername}
-                helperText={usernameError}
-                error={usernameError ? true : false}
+                onChange={setValue}
+                helperText={errorMessage.username}
+                error={errorMessage.username ? true : false}
             />
             <EmailInput
+                name="email"
                 size="large"
                 type="text"
                 label="Email"
                 style={{marginBottom: 10}}
                 value={emailValue}
-                onChange={setEmail}
-                helperText={emailError}
-                error={emailError ? true : false}
+                onChange={setValue}
+                helperText={errorMessage.email}
+                error={errorMessage.email ? true : false}
             />
             <PasswordField>
                 <PasswordInput
+                    name="password"
                     size="large"
                     type="password"
                     label="Password"
                     value={passwordValue}
-                    onChange={setPassword}
-                    helperText={passwordError}
-                    error={passwordError ? true : false}
+                    onChange={setValue}
+                    helperText={errorMessage.password}
+                    error={errorMessage.password ? true : false}
                 />
                 <PasswordConfirmInput
+                    name="passwordConfirm"
                     size="large"
                     type="password"
                     label="Confirm password"
                     style={{marginLeft: 20}}
                     value={passwordConfirmValue}
-                    onChange={setPasswordConfirm}
-                    helperText={passwordConfirmError}
-                    error={passwordConfirmError ? true : false}
+                    onChange={setValue}
+                    helperText={errorMessage.passwordConfirm}
+                    error={errorMessage.passwordConfirm ? true : false}
                 />
             </PasswordField>
         </GeneralInputsField>

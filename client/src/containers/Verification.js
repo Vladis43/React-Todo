@@ -93,7 +93,7 @@ class Verification extends Component {
                         <md.Divider/>
 
                         <AuthorizationField>
-                            <Link to={'/account'} style={{textDecoration: "none"}} onClick={this.loginLink}>
+                            <Link to={'/authorization'} style={{textDecoration: "none"}} onClick={this.loginLink}>
                                 <AuthorizationButton style={{color: "#34409b"}}>
                                     Log In
                                 </AuthorizationButton>
