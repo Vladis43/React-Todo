@@ -16,9 +16,9 @@ module.exports = {
             if (errors) {
                 response.status(422).json({errors})
             } else {
-                const usernameExist = await User.findOne({username})
+                const isUsername = await User.findOne({username})
 
-                if (usernameExist) {
+                if (isUsername) {
                     response.status(409).json({
                         errors: [
                             {
@@ -29,9 +29,9 @@ module.exports = {
                         success: false
                     })
                 } else {
-                    const emailExist = await User.findOne({email})
+                    const isEmail = await User.findOne({email})
 
-                    if (emailExist) {
+                    if (isEmail) {
                         response.status(409).json({
                             errors: [
                                 {
@@ -57,7 +57,8 @@ module.exports = {
                                         payload: {
                                             token,
                                             id: user._id,
-                                            username: user.username
+                                            username: user.username,
+                                            email: user.email
                                         }
                                     })
                                 })
@@ -121,9 +122,9 @@ module.exports = {
             response.status(422).json({errors})
         } else {
             try {
-                const account = await User.findOne({email})
+                const user = await User.findOne({email})
 
-                if (!account) {
+                if (!user) {
                     response.status(404).json({
                         errors: [{
                             param: 'email',
@@ -132,7 +133,7 @@ module.exports = {
                         success: false
                     })
                 } else {
-                    const validPassword = bcrypt.compareSync(password, account.password)
+                    const validPassword = bcrypt.compareSync(password, user.password)
 
                     if (!validPassword) {
                         response.status(401).json({
@@ -143,7 +144,7 @@ module.exports = {
                             success: false
                         })
                     } else {
-                        jwt.sign({...account}, config.SECRET_KEY, (error, token) => {
+                        jwt.sign({...user}, config.SECRET_KEY, (error, token) => {
                             if (error) {
                                 response.status(403).json('Forbidden')
                             } else {
@@ -152,9 +153,10 @@ module.exports = {
                                     success: true,
                                     payload: {
                                         token,
-                                        id: account._id,
-                                        username: account.username,
-                                        active: account.active
+                                        id: user._id,
+                                        username: user.username,
+                                        email: user.email,
+                                        active: user.active
                                     }
                                 })
                             }

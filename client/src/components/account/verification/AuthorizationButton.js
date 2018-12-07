@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from "react-router-dom"
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
 
@@ -9,14 +9,14 @@ const Wrapper = styled(md.CardActions)`
 `;
 const Button = styled(md.Button)``;
 
-const RegistrationButton = () => (
+const AuthorizationButton = ({loginLink}) => (
     <Wrapper>
-        <Link to={'/registration'} style={{textDecoration: "none"}}>
+        <Link to={'/authorization'} style={{textDecoration: "none"}} onClick={loginLink}>
             <Button style={{color: "#34409b"}}>
-                Create an account
+                Log In
             </Button>
         </Link>
     </Wrapper>
 )
 
-export default RegistrationButton
+export default AuthorizationButton

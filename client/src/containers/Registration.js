@@ -58,13 +58,7 @@ class Registration extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {token, id, username, success} = nextProps.users
-
-        window.localStorage.setItem('token', token)
-        window.localStorage.setItem('id', id)
-        window.localStorage.setItem('user', username)
-
-        if (success) {
+        if (nextProps.users.success) {
             nextProps.history.push('/verification')
         }
     }
