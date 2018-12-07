@@ -94,8 +94,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapActionToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch)
-}
-
-export default connect(mapStateToProps, mapActionToProps)(Todo)
+export default connect(mapStateToProps, {...actions})(Todo)

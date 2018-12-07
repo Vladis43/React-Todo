@@ -1,44 +1,45 @@
 import React from 'react'
 import * as md from '@material-ui/core'
 import styled from 'styled-components'
-import CreatingCardContent from './CreatingCardContent'
+import AddCardContent from './AddCardContent'
 
-const CreatingCardField = styled(md.Dialog)``;
-const CreatingCardActions = styled(md.DialogActions)``;
+const Modal = styled(md.Dialog)``;
+const Title = styled(md.DialogTitle)``;
+const CardActions = styled(md.DialogActions)``;
 
-const CreatingCard = (props) => {
+const AddCard = (props) => {
     const {
         isModal, cardName, cardDescription, imageFileSelected, errorMessage,
-        closeModal, addNewCard, changeName, changeDescription, changeImageFile
+        closeModal, addNewCard, changeValue, changeImageFile
     } = props
 
     return (
-        <CreatingCardField
+        <Modal
             fullWidth
             open={isModal}
-            aria-labelledby="scroll-dialog-title"
+            aria-labelledby="title"
             onClose={closeModal}
         >
-            <CreatingCardContent
+            <Title id="title">Please fill in the fields</Title>
+            <AddCardContent
                 cardName={cardName}
                 cardDescription={cardDescription}
                 imageFileSelected={imageFileSelected}
                 errorMessage={errorMessage}
                 addNewCard={addNewCard}
-                changeName={changeName}
-                changeDescription={changeDescription}
+                changeValue={changeValue}
                 changeImageFile={changeImageFile}
             />
-            <CreatingCardActions>
+            <CardActions>
                 <md.Button color="primary" onClick={closeModal}>
                     Cancel
                 </md.Button>
                 <md.Button color="primary" onClick={addNewCard}>
                     Add Card
                 </md.Button>
-            </CreatingCardActions>
-        </CreatingCardField>
+            </CardActions>
+        </Modal>
     )
 }
 
-export default CreatingCard
+export default AddCard

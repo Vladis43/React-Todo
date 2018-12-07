@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Redirect} from "react-router-dom"
-import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as actions from 'store/cards/actions'
 
@@ -10,7 +9,7 @@ import * as md from '@material-ui/core'
 import Header from "../components/card/Header"
 import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
-import CreatingCard from '../components/card/modal/CreatingCard'
+import AddCard from '../components/card/modal/AddCard'
 
 const CardWrapper = styled.div`  
   width: 98%;
@@ -28,7 +27,7 @@ const GridItem = styled(md.Grid)`
 
 class Card extends Component {
     state = {
-        isOpenCreatingCard: false,
+        isOpenAddCardModal: false,
         cardName: '',
         cardDescription: '',
         imageFileSelected: '',
@@ -40,7 +39,7 @@ class Card extends Component {
         this.props.fetchCards(userId)
     }
 
-    handleLogOut = () => {
+    LogOut = () => {
         window.localStorage.removeItem('token')
         window.localStorage.removeItem('id')
         window.localStorage.removeItem('user')
@@ -48,41 +47,38 @@ class Card extends Component {
         this.props.history.push('/authorization')
     }
 
-    handleOpenCreatingCard = (event) => {
+    OpenAddCardModal = (event) => {
         event.preventDefault()
-        this.setState({isOpenCreatingCard: true, errorMessage: ''})
+        this.setState({isOpenAddCardModal: true})
     }
 
-    handleCloseCreatingCard = () => {
-        this.setState({isOpenCreatingCard: false, errorMessage: ''})
-    }
-
-    handleChangeName = (event) => {
+    CloseAddCardModal = () => {
         this.setState({
-            cardName: event.target.value,
+            isOpenAddCardModal: false,
+            cardName: '',
+            cardDescription: '',
             errorMessage: ''
         })
     }
 
-    handleChangeDescription = (event) => {
+    handleChangeValue = (event) => {
         this.setState({
-            cardDescription: event.target.value,
+            [event.target.name]: event.target.value,
             errorMessage: ''
         })
     }
 
     handleImageFileSelected = (event) => {
         if (event.target.files.length === 0) {
-            return
-        }
-        else {
+            return null
+        } else {
             this.setState({
                 imageFileSelected: event.target.files[0]
             })
         }
     }
 
-    handleAddNewCard = (event) => {
+    AddNewCard = (event) => {
         event.preventDefault()
         const {cardName, cardDescription} = this.state
 
@@ -105,10 +101,9 @@ class Card extends Component {
         }
     }
 
-
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {isOpenCreatingCard, cardName, cardDescription, imageFileSelected, errorMessage} = this.state
+        const {isOpenAddCardModal, cardName, cardDescription, imageFileSelected, errorMessage} = this.state
 
         return (
             window.localStorage.getItem('token') &&
@@ -117,7 +112,7 @@ class Card extends Component {
 
                 <div>
                     <Header
-                        logOut={this.handleLogOut}
+                        logOut={this.LogOut}
                         username={window.localStorage.getItem('user').toUpperCase()}
                     />
                     <CardWrapper>
@@ -134,20 +129,19 @@ class Card extends Component {
                                     </GridItem>
                                 )
                             })}
-                            <CreatingCard
-                                isModal={isOpenCreatingCard}
+                            <AddCard
+                                isModal={isOpenAddCardModal}
                                 cardName={cardName}
                                 cardDescription={cardDescription}
                                 imageFileSelected={imageFileSelected}
                                 errorMessage={errorMessage}
-                                closeModal={this.handleCloseCreatingCard}
-                                addNewCard={this.handleAddNewCard}
-                                changeName={this.handleChangeName}
-                                changeDescription={this.handleChangeDescription}
+                                closeModal={this.CloseAddCardModal}
+                                addNewCard={this.AddNewCard}
+                                changeValue={this.handleChangeValue}
                                 changeImageFile={this.handleImageFileSelected}
                             />
                             <GridItem item xs={12} sm={6} lg={4} xl={3}>
-                                <AddCardButton openModal={this.handleOpenCreatingCard}/>
+                                <AddCardButton openModal={this.OpenAddCardModal}/>
                             </GridItem>
                         </GridContainer>
                     </CardWrapper>
@@ -163,8 +157,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapActionToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch)
-}
-
-export default connect(mapStateToProps, mapActionToProps)(Card)
+export default connect(mapStateToProps, {...actions})(Card)
