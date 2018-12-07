@@ -1,6 +1,6 @@
 import Todo from '../models/Todo'
 
-module.exports = {
+export default {
     async FetchTodos(request, response) {
         const cardId = request.params.cardId
 
@@ -15,7 +15,6 @@ module.exports = {
     async AddNewTodo(request, response) {
         try {
             const todo = await Todo(request.body).save()
-
             response.status(201).json(todo)
         } catch (error) {
             response.status(404).json(error)

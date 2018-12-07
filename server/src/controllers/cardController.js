@@ -1,6 +1,6 @@
 import Card from '../models/Card'
 
-module.exports = {
+export default {
     async FetchCards(request, response) {
         const userId = request.params.userId
 
@@ -15,7 +15,6 @@ module.exports = {
     async AddNewCard(request, response) {
         try {
             const card = await Card(request.body).save()
-
             response.status(201).json(card)
         } catch (error) {
             response.status(404).json(error)

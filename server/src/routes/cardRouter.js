@@ -1,10 +1,10 @@
 import {Router} from 'express'
-import {FetchCards, AddNewCard, DeleteCard} from '../controllers/cardController'
+import cardController from '../controllers/cardController'
 
 const route = Router()
 
-route.get('/:userId', FetchCards)
-route.post('/', AddNewCard)
-route.delete('/:id', DeleteCard)
+route.get('/:userId', cardController.FetchCards)
+route.post('/', cardController.AddNewCard)
+route.delete('/:id', cardController.DeleteCard)
 
 export default route

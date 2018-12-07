@@ -1,11 +1,11 @@
 import {Router} from 'express'
-import {FetchTodos, AddNewTodo, ToggleTodo, DeleteTodo} from '../controllers/todoController'
+import todoController from '../controllers/todoController'
 
 const route = Router()
 
-route.get('/:cardId', FetchTodos)
-route.post('/', AddNewTodo)
-route.patch('/:id', ToggleTodo)
-route.delete('/:id', DeleteTodo)
+route.get('/:cardId', todoController.FetchTodos)
+route.post('/', todoController.AddNewTodo)
+route.patch('/:id', todoController.ToggleTodo)
+route.delete('/:id', todoController.DeleteTodo)
 
 export default route
