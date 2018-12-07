@@ -59,11 +59,11 @@ class Authorization extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {token, id, username, email, success, active} = nextProps.users
+        const {token, id, username, success, active} = nextProps.users
 
         if (success) {
             if (!active) {
-                window.localStorage.setItem('email', email)
+                window.localStorage.setItem('user', username)
 
                 nextProps.history.push('/verification')
             } else {
@@ -136,6 +136,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapActionToProps = {...actions}
-
-export default connect(mapStateToProps, mapActionToProps)(Authorization)
+export default connect(mapStateToProps, {...actions})(Authorization)

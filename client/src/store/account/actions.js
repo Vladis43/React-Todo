@@ -13,12 +13,15 @@ export const signUp = (userData) => ({
 })
 
 export const VERIFICATION = 'VERIFICATION'
-export const verification = (vcode) => ({
+export const verification = (user, code) => ({
     type: VERIFICATION,
     payload: {
         request: {
-            url: `${URL}users/verification/${vcode}`,
+            url: `${URL}users/verification/${user}`,
             method: 'POST',
+            data: {
+                verificationCode: code
+            }
         }
     }
 })

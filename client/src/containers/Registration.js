@@ -58,7 +58,10 @@ class Registration extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.users.success) {
+        const {success, username} = nextProps.users
+
+        if (success) {
+            window.localStorage.setItem('user', username)
             nextProps.history.push('/verification')
         }
     }
@@ -138,6 +141,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapActionToProps = {...actions}
-
-export default connect(mapStateToProps, mapActionToProps)(Registration)
+export default connect(mapStateToProps, {...actions})(Registration)

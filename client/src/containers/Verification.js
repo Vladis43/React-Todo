@@ -51,7 +51,12 @@ class Verification extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.success) {
+        const {token, id, success} = nextProps.users
+
+        if (success) {
+            window.localStorage.setItem('token', token)
+            window.localStorage.setItem('id', id)
+
             nextProps.history.push('/')
         } else {
             this.setState({
@@ -69,25 +74,26 @@ class Verification extends Component {
     verification = (event) => {
         event.preventDefault()
         const {code} = this.state
+        const user = window.localStorage.getItem('user')
 
         if (code === '') {
             this.setState({
                 errorMessage: 'Field is required!'
             })
         } else {
-            this.props.verification(code)
+            this.props.verification(user, code)
         }
     }
 
     loginLink = () => {
-        window.localStorage.removeItem('email')
+        window.localStorage.removeItem('user')
     }
 
     render() {
         return (
             <Wrapper>
                 <Card>
-                    <form method="POST" onSubmit={(event) => this.verification(event)}>
+                    <form method="POST" onSubmit={this.verification}>
                         <CardHeader>
                             <CardHeaderTitle variant="h4">Please, confirm your email!</CardHeaderTitle>
                         </CardHeader>
@@ -112,11 +118,9 @@ class Verification extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        success: state.auth.users.success,
+        users: state.auth.users,
         error: state.auth.errorMessage
     }
 }
 
-const mapActionToProps = {...actions}
-
-export default connect(mapStateToProps, mapActionToProps)(Verification)
+export default connect(mapStateToProps, {...actions})(Verification)

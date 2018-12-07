@@ -6,7 +6,7 @@ import User from '../models/User'
 import mailer from '../misc/mailer'
 
 
-module.exports = {
+export default {
     async SignUp(request, response) {
         const {username, email} = request.body
         const errors = request.validationErrors()
@@ -16,9 +16,9 @@ module.exports = {
             if (errors) {
                 response.status(422).json({errors})
             } else {
-                const isUsername = await User.findOne({username})
+                const username = await User.findOne({username})
 
-                if (isUsername) {
+                if (username) {
                     response.status(409).json({
                         errors: [
                             {
@@ -29,9 +29,9 @@ module.exports = {
                         success: false
                     })
                 } else {
-                    const isEmail = await User.findOne({email})
+                    const user = await User.findOne({email})
 
-                    if (isEmail) {
+                    if (user) {
                         response.status(409).json({
                             errors: [
                                 {
@@ -42,42 +42,25 @@ module.exports = {
                             success: false
                         })
                     } else {
-                        User.create({
+                        const newUser = await User.create({
                             ...request.body,
                             password: bcrypt.hashSync(request.body.password),
                             verificationCode
-                        }, (error, user) => {
-                            if (error) {
-                                response.status(409).json({error})
-                            } else {
-                                jwt.sign({id: user._id}, config.SECRET_KEY, (error, token) => {
-                                    response.status(201).json({
-                                        message: 'Sing Up is successful',
-                                        success: true,
-                                        payload: {
-                                            token,
-                                            id: user._id,
-                                            username: user.username,
-                                            email: user.email
-                                        }
-                                    })
-                                })
-                            }
                         })
 
-                        //Compose an email
-                        const html = `
-                            Hi there,
-                            <br/>
-                            Thank you for registering in Todo application!
-                            <br/><br/>
-                            Please verify your email:
-                            <br/>
-                            Code: <b>${verificationCode}</b>
-                            `;
+                        if (!newUser) {
+                            response.status(409).json({error})
+                        } else {
+                            response.status(201).json({
+                                message: 'Sing Up is successful',
+                                success: true,
+                                payload: {
+                                    username: newUser.username
+                                }
+                            })
+                        }
 
-                        //Send the email
-                        mailer.sendEmail('admin@todo.com', email, 'Please, verify your email!', html)
+                        mailer.sendEmail('admin@todo.com', email, 'Please, verify your email!', verificationCode)
                     }
                 }
             }
@@ -87,27 +70,46 @@ module.exports = {
     },
 
     async Verification(request, response) {
-        const verificationCode = request.params.vCode
+        const {verificationCode} = request.body
+        const verificationUser = request.params.user
 
         try {
-            const user = await User.findOneAndUpdate({verificationCode}, {active: true, verificationCode: ''})
+            const user = await User.findOne({username: verificationUser})
 
             if (!user) {
                 response.status(404).json({
                     errors: [
                         {
-                            param: 'verificationCode',
-                            msg: 'Wrong verification code!'
+                            param: 'email',
+                            msg: 'User not found!'
                         }
                     ],
                     success: false
                 })
             } else {
-                await user.save()
-                response.status(201).json({
-                    message: 'Email confirmed!',
-                    success: true
-                })
+                if (verificationCode === user.verificationCode) {
+                    await user.update({active: true, verificationCode: ''})
+                    jwt.sign({id: user._id}, config.SECRET_KEY, (error, token) => {
+                        response.status(201).json({
+                            message: 'Email is confirmed!',
+                            success: true,
+                            payload: {
+                                token,
+                                id: user._id
+                            }
+                        })
+                    })
+                } else {
+                    response.status(409).json({
+                        errors: [
+                            {
+                                param: 'username',
+                                msg: 'Wrong verification code!'
+                            }
+                        ],
+                        success: false
+                    })
+                }
             }
         } catch (error) {
             response.status(500).json({error})
@@ -133,9 +135,9 @@ module.exports = {
                         success: false
                     })
                 } else {
-                    const validPassword = bcrypt.compareSync(password, user.password)
+                    const isPasswordValid = bcrypt.compareSync(password, user.password)
 
-                    if (!validPassword) {
+                    if (!isPasswordValid) {
                         response.status(401).json({
                             errors: [{
                                 param: 'password',

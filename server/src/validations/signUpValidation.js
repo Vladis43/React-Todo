@@ -14,7 +14,7 @@ route.use('/', (request, response, next) => {
     request.checkBody('passwordConfirm', 'Password do not match!').equals(request.body.password)
     request.checkBody('age', 'Age is required!').notEmpty()
     request.checkBody('age', 'Age must be a number!').isNumeric()
-    request.checkBody('age', 'Are you still alive??').len({max: 2})
+    request.checkBody('age', 'Wrong value!').len({max: 2})
     request.checkBody('sex', 'Sex is required!').notEmpty()
     request.checkBody('country', 'Country is required!').notEmpty()
     request.checkBody('city', 'City is required!').notEmpty()

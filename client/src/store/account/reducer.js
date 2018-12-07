@@ -3,8 +3,7 @@ import {success, error} from 'redux-saga-requests'
 const initialState = {
     isError: false,
     users: [],
-    errorMessage: [],
-    errorParam: []
+    errorMessage: []
 }
 
 const authReducer = (state = initialState, action) => {
@@ -47,15 +46,14 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isError: false,
                 errorMessage: [],
-                users: {...action.payload.data}
+                users: {...action.payload.data, ...action.payload.data.payload}
             }
 
         case error('VERIFICATION'):
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.response.data.errors,
-                users: {...action.payload.response.data}
+                errorMessage: action.payload.response.data.errors
             }
 
 //SignIn================================================================================================================
