@@ -133,7 +133,6 @@ class Card extends Component {
                                         <CardItem
                                             card={card}
                                             amountTodo={todos.length}
-                                            cardName={card.title}
                                             deleteCardAction={deleteCard}
                                         />
                                     </GridItem>
