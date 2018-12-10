@@ -9,8 +9,8 @@ const CardActions = styled(md.DialogActions)``;
 
 const AddCard = (props) => {
     const {
-        isModal, cardName, cardDescription, imageFileSelected, errorMessage,
-        closeModal, addNewCard, changeValue, changeImageFile
+        isModal, cardName, cardDescription, imageURL, errorMessage,
+        closeModal, addNewCard, changeValue, handleImageChange
     } = props
 
     return (
@@ -24,11 +24,11 @@ const AddCard = (props) => {
             <AddCardContent
                 cardName={cardName}
                 cardDescription={cardDescription}
-                imageFileSelected={imageFileSelected}
+                imageURL={imageURL}
                 errorMessage={errorMessage}
                 addNewCard={addNewCard}
                 changeValue={changeValue}
-                changeImageFile={changeImageFile}
+                handleImageChange={handleImageChange}
             />
             <CardActions>
                 <md.Button color="primary" onClick={closeModal}>

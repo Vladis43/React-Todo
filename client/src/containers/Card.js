@@ -30,7 +30,8 @@ class Card extends Component {
         isOpenAddCardModal: false,
         cardName: '',
         cardDescription: '',
-        imageFileSelected: '',
+        imageFile: '',
+        imageURL: '',
         errorMessage: ''
     }
 
@@ -49,16 +50,18 @@ class Card extends Component {
 
     OpenAddCardModal = (event) => {
         event.preventDefault()
-        this.setState({isOpenAddCardModal: true})
+        this.setState({
+            isOpenAddCardModal: true,
+            cardName: '',
+            cardDescription: '',
+            imageFile: '',
+            imageURL: '',
+            errorMessage: ''
+        })
     }
 
     CloseAddCardModal = () => {
-        this.setState({
-            isOpenAddCardModal: false,
-            cardName: '',
-            cardDescription: '',
-            errorMessage: ''
-        })
+        this.setState({isOpenAddCardModal: false})
     }
 
     handleChangeValue = (event) => {
@@ -68,19 +71,23 @@ class Card extends Component {
         })
     }
 
-    handleImageFileSelected = (event) => {
-        if (event.target.files.length === 0) {
-            return null
-        } else {
+    handleImageChange = (event) => {
+        const reader = new FileReader()
+        const file = event.target.files[0]
+
+        reader.onloadend = () => {
             this.setState({
-                imageFileSelected: event.target.files[0]
+                imageFile: file,
+                imageURL: reader.result
             })
         }
+
+        reader.readAsDataURL(file)
     }
 
     AddNewCard = (event) => {
         event.preventDefault()
-        const {cardName, cardDescription} = this.state
+        const {cardName, cardDescription, imageFile} = this.state
 
         if (cardName === '') {
             this.setState({errorMessage: 'Field is required!'})
@@ -90,20 +97,17 @@ class Card extends Component {
             const card = {
                 title: cardName,
                 description: cardDescription,
+                image: imageFile,
                 userId: window.localStorage.getItem('id')
             }
             this.props.addNewCard(card)
-            this.setState({
-                isOpenCreatingCard: false,
-                cardName: '',
-                cardDescription: ''
-            })
+            this.setState({isOpenAddCardModal: false})
         }
     }
 
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {isOpenAddCardModal, cardName, cardDescription, imageFileSelected, errorMessage} = this.state
+        const {isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
 
         return (
             window.localStorage.getItem('token') &&
@@ -133,12 +137,12 @@ class Card extends Component {
                                 isModal={isOpenAddCardModal}
                                 cardName={cardName}
                                 cardDescription={cardDescription}
-                                imageFileSelected={imageFileSelected}
+                                imageURL={imageURL}
                                 errorMessage={errorMessage}
                                 closeModal={this.CloseAddCardModal}
                                 addNewCard={this.AddNewCard}
                                 changeValue={this.handleChangeValue}
-                                changeImageFile={this.handleImageFileSelected}
+                                handleImageChange={this.handleImageChange}
                             />
                             <GridItem item xs={12} sm={6} lg={4} xl={3}>
                                 <AddCardButton openModal={this.OpenAddCardModal}/>

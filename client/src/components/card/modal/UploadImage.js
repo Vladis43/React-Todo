@@ -3,46 +3,43 @@ import * as md from "@material-ui/core"
 import * as icon from "@material-ui/icons"
 import styled from "styled-components"
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 40%;
+  display: flex;
+  align-items: center;
+`;
 
 
-const getBase64 = (img, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
-
-
-class UploadImage extends React.Component{
-
-    handleChange = (info) => {
-        getBase64(info.file.originFileObj, imageUrl => this.setState({
-            imageUrl
-        }));
-    }
-
-    render() {
-        return (
-            <Wrapper>
-                <input
-                    accept="image/*"
-                    style={{display: 'none'}}
-                    id="contained-button-file"
-                    type="file"
-                    // onChange={this.props.changeImageFile}
-                    onChange={this.handleChange}
-                />
-                <label htmlFor="contained-button-file">
-                    <md.Button variant="contained" component="span">
-                        Upload
-                        <icon.CloudUpload/>
-                    </md.Button>
-                </label>
-                <img src={this.state.imageURL} alt=""/>
-                {/*{this.props.imageFileSelected.name}*/}
-            </Wrapper>
-        )
-    }
-}
+const UploadImage = ({imageURL, handleImageChange}) => (
+    <Wrapper>
+        <input
+            accept="image/*"
+            style={{display: 'none'}}
+            id="contained-button-file"
+            type="file"
+            onChange={handleImageChange}
+        />
+        <label htmlFor="contained-button-file">
+            {!imageURL ?
+                <md.Button
+                    variant="outlined"
+                    color="primary"
+                    component="span"
+                    style={{width: 200, height: 150}}
+                >
+                    <icon.CloudUpload fontSize="large"/>
+                </md.Button> :
+                <md.Card>
+                    <md.CardActionArea>
+                        <md.CardMedia
+                            image={imageURL}
+                            style={{width: 200, height: 150}}
+                        />
+                    </md.CardActionArea>
+                </md.Card>
+            }
+        </label>
+    </Wrapper>
+)
 
 export default UploadImage

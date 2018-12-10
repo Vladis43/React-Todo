@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import userController from '../controllers/userController'
-import SignUpValidation from '../validations/signUpValidation'
-import SignInValidation from '../validations/signInValidation'
+import SignUpValidation from '../middlewares/signUpValidation'
+import SignInValidation from '../middlewares/signInValidation'
 
 const route = Router()
 

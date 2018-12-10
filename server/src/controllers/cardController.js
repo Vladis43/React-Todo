@@ -13,8 +13,13 @@ export default {
     },
 
     async AddNewCard(request, response) {
+        console.log(request.file)
+
         try {
-            const card = await Card(request.body).save()
+            const card = await Card.create({
+                ...request.body,
+                image: request.file.path
+            })
             response.status(201).json(card)
         } catch (error) {
             response.status(404).json(error)

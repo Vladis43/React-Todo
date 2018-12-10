@@ -17,6 +17,7 @@ const app = express()
 app.use(bodyParser.urlencoded({exception: true}))
 app.use(bodyParser.json())
 app.use(cors())
+app.use(express.static('uploads'))
 app.use(expressValidator())
 
 //Routes
