@@ -13,8 +13,6 @@ export default {
     },
 
     async AddNewCard(request, response) {
-        console.log(request.file)
-
         try {
             const card = await Card.create({
                 ...request.body,

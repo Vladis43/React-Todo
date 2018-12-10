@@ -13,13 +13,14 @@ const Wrapper = styled.div`
 const UploadImage = ({imageURL, handleImageChange}) => (
     <Wrapper>
         <input
+            name="image"
             accept="image/*"
             style={{display: 'none'}}
-            id="contained-button-file"
+            id="image"
             type="file"
             onChange={handleImageChange}
         />
-        <label htmlFor="contained-button-file">
+        <label htmlFor="image">
             {!imageURL ?
                 <md.Button
                     variant="outlined"

@@ -100,7 +100,13 @@ class Card extends Component {
                 image: imageFile,
                 userId: window.localStorage.getItem('id')
             }
-            this.props.addNewCard(card)
+            const cardFormData = new FormData()
+
+            Object.keys(card).forEach((key) => {
+                cardFormData.append(key, card[key])
+            })
+
+            this.props.addNewCard(cardFormData)
             this.setState({isOpenAddCardModal: false})
         }
     }
