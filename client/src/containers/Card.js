@@ -37,7 +37,9 @@ class Card extends Component {
 
     componentDidMount() {
         const userId = window.localStorage.getItem('id')
-        this.props.fetchCards(userId)
+        if (userId) {
+            this.props.fetchCards(userId)
+        }
     }
 
     OpenAddCardModal = (event) => {
@@ -83,7 +85,7 @@ class Card extends Component {
 
         if (cardName === '') {
             this.setState({errorMessage: 'Field is required!'})
-        } else  if (cardDescription === '') {
+        } else if (cardDescription === '') {
             this.setState({errorMessage: 'Field is required!'})
         } else {
             const card = {
@@ -106,44 +108,45 @@ class Card extends Component {
     render() {
         const {todos, cards, deleteCard} = this.props
         const {isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
+        const token = window.localStorage.getItem('token')
+
+        if (!token) {
+            return <Redirect to='/authorization'/>
+        }
 
         return (
-            window.localStorage.getItem('token') &&
-            window.localStorage.getItem('token') !== null &&
-            window.localStorage.getItem('token') !== 'undefined' ?
-
-                <div>
-                    <Header history={this.props.history}/>
-                    <CardWrapper>
-                        <GridContainer container spacing={24} style={{padding: 24}}>
-                            {cards.map(card => {
-                                return (
-                                    <GridItem item xs={12} sm={6} lg={4} xl={3} key={card._id}>
-                                        <CardItem
-                                            card={card}
-                                            amountTodo={todos.length}
-                                            deleteCardAction={deleteCard}
-                                        />
-                                    </GridItem>
-                                )
-                            })}
-                            <AddCard
-                                isModal={isOpenAddCardModal}
-                                cardName={cardName}
-                                cardDescription={cardDescription}
-                                imageURL={imageURL}
-                                errorMessage={errorMessage}
-                                closeModal={this.CloseAddCardModal}
-                                addNewCard={this.AddNewCard}
-                                changeValue={this.handleChangeValue}
-                                handleImageChange={this.handleImageChange}
-                            />
-                            <GridItem item xs={12} sm={6} lg={4} xl={3}>
-                                <AddCardButton openModal={this.OpenAddCardModal}/>
-                            </GridItem>
-                        </GridContainer>
-                    </CardWrapper>
-                </div> : <Redirect to="/authorization"/>
+            <div>
+                <Header history={this.props.history}/>
+                <CardWrapper>
+                    <GridContainer container spacing={24} style={{padding: 24}}>
+                        {cards.map(card => {
+                            return (
+                                <GridItem item xs={12} sm={6} lg={4} xl={3} key={card._id}>
+                                    <CardItem
+                                        card={card}
+                                        amountTodo={todos.length}
+                                        deleteCardAction={deleteCard}
+                                    />
+                                </GridItem>
+                            )
+                        })}
+                        <AddCard
+                            isModal={isOpenAddCardModal}
+                            cardName={cardName}
+                            cardDescription={cardDescription}
+                            imageURL={imageURL}
+                            errorMessage={errorMessage}
+                            closeModal={this.CloseAddCardModal}
+                            addNewCard={this.AddNewCard}
+                            changeValue={this.handleChangeValue}
+                            handleImageChange={this.handleImageChange}
+                        />
+                        <GridItem item xs={12} sm={6} lg={4} xl={3}>
+                            <AddCardButton openModal={this.OpenAddCardModal}/>
+                        </GridItem>
+                    </GridContainer>
+                </CardWrapper>
+            </div>
         )
     }
 }

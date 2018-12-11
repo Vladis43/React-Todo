@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {connect} from "react-redux"
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import * as actions from 'store/account/actions'
 import styled from 'styled-components'
 import * as md from '@material-ui/core/'
@@ -90,6 +91,12 @@ class Verification extends Component {
     }
 
     render() {
+        const user = window.localStorage.getItem('user')
+
+        if (!user) {
+            return <Redirect to='/authorization'/>
+        }
+
         return (
             <Wrapper>
                 <Card>
