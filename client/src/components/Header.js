@@ -27,15 +27,11 @@ class Header extends Component {
 
     LogOut = () => {
         window.localStorage.removeItem('token')
-        window.localStorage.removeItem('id')
-        window.localStorage.removeItem('user')
-
         this.props.history.push('/authorization')
     }
 
     render() {
-        const username = window.localStorage.getItem('user').toUpperCase()
-
+        console.log(this.props.username)
         return (
             <Root>
                 <AppBar color="primary">
@@ -44,7 +40,7 @@ class Header extends Component {
                             Todo App
                         </Typography>
                         <Typography variant="h6" color="inherit">
-                            {username}
+                            {this.props.username}
                         </Typography>
                         <md.Tooltip title="Log out">
                             <md.Button

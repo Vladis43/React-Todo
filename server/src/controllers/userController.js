@@ -93,10 +93,7 @@ export default {
                         response.status(201).json({
                             message: 'Email is confirmed!',
                             success: true,
-                            payload: {
-                                token,
-                                id: user._id
-                            }
+                            token
                         })
                     })
                 } else {
@@ -153,13 +150,7 @@ export default {
                                 response.status(200).json({
                                     message: 'Sing In is successful',
                                     success: true,
-                                    payload: {
-                                        token,
-                                        id: user._id,
-                                        username: user.username,
-                                        email: user.email,
-                                        active: user.active
-                                    }
+                                    token
                                 })
                             }
                         })

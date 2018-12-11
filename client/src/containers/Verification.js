@@ -52,12 +52,10 @@ class Verification extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {token, id, success} = nextProps.users
+        const {token, success} = nextProps.users
 
         if (success) {
             window.localStorage.setItem('token', token)
-            window.localStorage.setItem('id', id)
-
             nextProps.history.push('/')
         } else {
             this.setState({
@@ -83,6 +81,7 @@ class Verification extends Component {
             })
         } else {
             this.props.verification(user, code)
+            window.localStorage.removeItem('user')
         }
     }
 
@@ -100,7 +99,7 @@ class Verification extends Component {
         return (
             <Wrapper>
                 <Card>
-                    <form method="POST" onSubmit={this.verification}>
+                    <form onSubmit={this.verification}>
                         <CardHeader>
                             <CardHeaderTitle variant="h4">Please, confirm your email!</CardHeaderTitle>
                         </CardHeader>

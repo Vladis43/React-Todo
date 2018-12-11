@@ -58,10 +58,10 @@ class Registration extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {success, username} = nextProps.users
+        const {success, payload} = nextProps.users
 
         if (success) {
-            window.localStorage.setItem('user', username)
+            window.localStorage.setItem('user', payload.username)
             nextProps.history.push('/verification')
         }
     }

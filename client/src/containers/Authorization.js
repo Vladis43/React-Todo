@@ -59,18 +59,16 @@ class Authorization extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {token, id, username, success, active} = nextProps.users
+        const {token, success} = nextProps.users
 
         if (success) {
+            const {username, active} = nextProps.users.payload
+
             if (!active) {
                 window.localStorage.setItem('user', username)
-
                 nextProps.history.push('/verification')
             } else {
                 window.localStorage.setItem('token', token)
-                window.localStorage.setItem('id', id)
-                window.localStorage.setItem('user', username)
-
                 nextProps.history.push('/')
             }
         }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import {Redirect} from "react-router-dom"
 import {connect} from 'react-redux'
 import * as actions from 'store/cards/actions'
+import jwt_decode from 'jwt-decode'
 
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
@@ -10,6 +10,7 @@ import Header from "../components/Header"
 import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
 import AddCard from '../components/card/modal/AddCard'
+
 
 const CardWrapper = styled.div`  
   width: 98%;
@@ -25,8 +26,10 @@ const GridItem = styled(md.Grid)`
   justify-content: center;
 `;
 
+
 class Card extends Component {
     state = {
+        user: '',
         isOpenAddCardModal: false,
         cardName: '',
         cardDescription: '',
@@ -36,9 +39,18 @@ class Card extends Component {
     }
 
     componentDidMount() {
-        const userId = window.localStorage.getItem('id')
-        if (userId) {
-            this.props.fetchCards(userId)
+        const token = window.localStorage.getItem('token')
+
+        if (!token) {
+            this.props.history.push('/authorization')
+        } else {
+            this.setState({
+                user: jwt_decode(token)._doc
+            })
+            const userId = jwt_decode(token)._doc._id
+            if (userId) {
+                this.props.fetchCards(userId)
+            }
         }
     }
 
@@ -81,7 +93,7 @@ class Card extends Component {
 
     AddNewCard = (event) => {
         event.preventDefault()
-        const {cardName, cardDescription, imageFile} = this.state
+        const {user, cardName, cardDescription, imageFile} = this.state
 
         if (cardName === '') {
             this.setState({errorMessage: 'Field is required!'})
@@ -92,7 +104,7 @@ class Card extends Component {
                 title: cardName,
                 description: cardDescription,
                 image: imageFile,
-                userId: window.localStorage.getItem('id')
+                userId: user._id
             }
             const cardFormData = new FormData()
 
@@ -107,16 +119,11 @@ class Card extends Component {
 
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
-        const token = window.localStorage.getItem('token')
-
-        if (!token) {
-            return <Redirect to='/authorization'/>
-        }
+        const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
 
         return (
             <div>
-                <Header history={this.props.history}/>
+                <Header username={user.username} history={this.props.history}/>
                 <CardWrapper>
                     <GridContainer container spacing={24} style={{padding: 24}}>
                         {cards.map(card => {
@@ -154,6 +161,7 @@ class Card extends Component {
 const mapStateToProps = (state) => {
     return {
         todos: state.todos.items,
+        users: state.auth.users,
         cards: state.cards.items
     }
 }
