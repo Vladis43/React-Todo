@@ -6,7 +6,7 @@ import * as actions from 'store/cards/actions'
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
 
-import Header from "../components/card/Header"
+import Header from "../components/Header"
 import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
 import AddCard from '../components/card/modal/AddCard'
@@ -38,14 +38,6 @@ class Card extends Component {
     componentDidMount() {
         const userId = window.localStorage.getItem('id')
         this.props.fetchCards(userId)
-    }
-
-    LogOut = () => {
-        window.localStorage.removeItem('token')
-        window.localStorage.removeItem('id')
-        window.localStorage.removeItem('user')
-
-        this.props.history.push('/authorization')
     }
 
     OpenAddCardModal = (event) => {
@@ -121,10 +113,7 @@ class Card extends Component {
             window.localStorage.getItem('token') !== 'undefined' ?
 
                 <div>
-                    <Header
-                        logOut={this.LogOut}
-                        username={window.localStorage.getItem('user').toUpperCase()}
-                    />
+                    <Header history={this.props.history}/>
                     <CardWrapper>
                         <GridContainer container spacing={24} style={{padding: 24}}>
                             {cards.map(card => {
