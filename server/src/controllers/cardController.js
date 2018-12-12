@@ -6,7 +6,10 @@ export default {
 
         try {
             const card = await Card.find({userId})
-            response.status(200).json(card)
+            response.status(200).json({
+                message: 'Cards fetched!',
+                card
+            })
         } catch (error) {
             response.status(404).json(error)
         }
@@ -18,7 +21,10 @@ export default {
                 ...request.body,
                 image: request.file.path
             })
-            response.status(201).json(card)
+            response.status(201).json({
+                message: 'Card successfully created!',
+                card
+            })
         } catch (error) {
             response.status(404).json(error)
         }
@@ -29,7 +35,10 @@ export default {
 
         try {
             const card = await Card.findByIdAndDelete(id)
-            response.status(200).json(card)
+            response.status(200).json({
+                message: 'Card deleted!',
+                card
+            })
         } catch (error) {
             response.status(404).json(error)
         }

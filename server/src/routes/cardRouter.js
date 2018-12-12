@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import multer from "multer"
 import cardController from '../controllers/cardController'
+import verifyToken from '../middlewares/verifyToken'
 
 const route = Router()
 
@@ -14,8 +15,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage})
 
-route.get('/:userId', cardController.FetchCards)
-route.post('/', upload.single('image'), cardController.AddNewCard)
-route.delete('/:id', cardController.DeleteCard)
+route.get('/:userId', verifyToken, cardController.FetchCards)
+route.post('/', verifyToken, upload.single('image'), cardController.AddNewCard)
+route.delete('/:id', verifyToken, cardController.DeleteCard)
 
 export default route

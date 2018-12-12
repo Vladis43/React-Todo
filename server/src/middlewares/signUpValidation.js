@@ -16,6 +16,7 @@ route.use('/', (request, response, next) => {
     request.checkBody('age', 'Age must be a number!').isNumeric()
     request.checkBody('age', 'Wrong value!').len({max: 2})
     request.checkBody('sex', 'Sex is required!').notEmpty()
+    request.checkBody('sex', 'Sex must be not a number!').isAlpha()
     request.checkBody('country', 'Country is required!').notEmpty()
     request.checkBody('city', 'City is required!').notEmpty()
 

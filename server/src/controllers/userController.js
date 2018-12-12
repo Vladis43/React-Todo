@@ -20,12 +20,7 @@ export default {
 
                 if (username) {
                     response.status(409).json({
-                        errors: [
-                            {
-                                param: 'username',
-                                msg: 'This username is already taken!'
-                            }
-                        ],
+                        message: 'This username is already taken!',
                         success: false
                     })
                 } else {
@@ -33,12 +28,7 @@ export default {
 
                     if (user) {
                         response.status(409).json({
-                            errors: [
-                                {
-                                    param: 'email',
-                                    msg: 'This email is already taken!'
-                                }
-                            ],
+                            message: 'This email is already taken!',
                             success: false
                         })
                     } else {
@@ -78,32 +68,26 @@ export default {
 
             if (!user) {
                 response.status(404).json({
-                    errors: [
-                        {
-                            param: 'email',
-                            msg: 'User not found!'
-                        }
-                    ],
+                    message: 'User not found!',
                     success: false
                 })
             } else {
                 if (verificationCode === user.verificationCode) {
                     await user.update({active: true, verificationCode: ''})
-                    jwt.sign({id: user._id}, config.SECRET_KEY, (error, token) => {
+                    const token = jwt.sign({userId: user._id}, config.SECRET_KEY)
+
+                    if (!token) {
+                        response.status(403).json({message: 'Forbidden!'})
+                    } else {
                         response.status(201).json({
                             message: 'Email is confirmed!',
                             success: true,
                             token
                         })
-                    })
+                    }
                 } else {
                     response.status(409).json({
-                        errors: [
-                            {
-                                param: 'username',
-                                msg: 'Wrong verification code!'
-                            }
-                        ],
+                        message: 'Wrong verification code!',
                         success: false
                     })
                 }
@@ -125,10 +109,7 @@ export default {
 
                 if (!user) {
                     response.status(404).json({
-                        errors: [{
-                            param: 'email',
-                            msg: 'Wrong email or password!'
-                        }],
+                        message: 'Wrong email or password!',
                         success: false
                     })
                 } else {
@@ -136,24 +117,21 @@ export default {
 
                     if (!isPasswordValid) {
                         response.status(401).json({
-                            errors: [{
-                                param: 'password',
-                                msg: 'Wrong email or password!'
-                            }],
+                            message: 'Wrong email or password!',
                             success: false
                         })
                     } else {
-                        jwt.sign({...user}, config.SECRET_KEY, (error, token) => {
-                            if (error) {
-                                response.status(403).json('Forbidden')
-                            } else {
-                                response.status(200).json({
-                                    message: 'Sing In is successful',
-                                    success: true,
-                                    token
-                                })
-                            }
-                        })
+                        const token = jwt.sign({userId: user._id}, config.SECRET_KEY)
+
+                        if (!token) {
+                            response.status(403).json({message: 'Forbidden!'})
+                        } else {
+                            response.status(200).json({
+                                message: 'Sing In is successful',
+                                success: true,
+                                token
+                            })
+                        }
                     }
                 }
             } catch (error) {
