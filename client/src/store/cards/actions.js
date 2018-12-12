@@ -12,13 +12,16 @@ export const fetchCards = (userId) => ({
 })
 
 export const ADD_NEW_CARD = 'ADD_NEW_CARD'
-export const addNewCard = (card) => ({
+export const addNewCard = (card, token) => ({
     type: ADD_NEW_CARD,
     payload: {
         request: {
             url: `${URL}cards`,
             method: 'POST',
-            data: card
+            data: card,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     }
 })

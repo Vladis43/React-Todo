@@ -1,5 +1,5 @@
 import {success, error} from 'redux-saga-requests'
-import jwt_decode from 'jwt-decode'
+import jwt from 'jsonwebtoken'
 
 const initialState = {
     isError: false,
@@ -30,7 +30,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.response.data.errors
+                errorMessage: action.payload.response.data.message
             }
 
 //Verification==========================================================================================================
@@ -54,7 +54,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.response.data.errors
+                errorMessage: action.payload.response.data.message
             }
 
 //SignIn================================================================================================================
@@ -67,7 +67,7 @@ const authReducer = (state = initialState, action) => {
             }
 
         case success('SIGN_IN'):
-            const payload = {payload: jwt_decode(action.payload.data.token)._doc}
+            const payload = {payload: jwt.decode(action.payload.data.token)._doc}
 
             return {
                 ...state,
@@ -80,7 +80,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: true,
-                errorMessage: action.payload.response.data.errors
+                errorMessage: action.payload.response.data.message
             }
 
 //======================================================================================================================

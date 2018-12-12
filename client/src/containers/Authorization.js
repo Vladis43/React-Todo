@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {connect} from "react-redux"
+import {connect} from 'react-redux'
 import * as actions from 'store/account/actions'
 
 import styled from 'styled-components'
+import {ValidatorForm} from 'react-material-ui-form-validator'
 import * as md from '@material-ui/core/'
 import * as icon from '@material-ui/icons/'
 import backgroundImage from 'assets/todo-background.png'
@@ -12,6 +13,7 @@ import EmailInput from 'components/account/authorization/EmailInput'
 import PasswordInput from 'components/account/authorization/PasswordInput'
 import SignInButton from 'components/account/authorization/SignInButton'
 import RegistrationButton from 'components/account/authorization/RegistrationButton'
+import Snackbar from 'components/account/authorization/Snackbar'
 
 
 //Styled Components=====================================================================================================
@@ -38,6 +40,7 @@ const Card = styled(md.Card)`
     background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
   }
 `;
+const Form = styled(ValidatorForm)``;
 const CardHeader = styled(md.CardContent)`
   display: flex;
   flex-direction: column;
@@ -49,13 +52,15 @@ const InputsWrapper = styled(md.CardContent)`
   display: flex;
   flex-direction: column;
 `;
+
 //======================================================================================================================
 
 
 class Authorization extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        openSnackbar: false
     }
 
     componentWillReceiveProps(nextProps) {
@@ -85,21 +90,27 @@ class Authorization extends Component {
         const {email, password} = this.state
 
         this.props.signIn({email, password})
+
+        if (this.props.errorMessage) {
+            this.setState({openSnackbar: true})
+        }
+    }
+
+    handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ open: false });
     }
 
     render() {
-        const {email, password} = this.state
-        const {error} = this.props
-
-        const errorMessages = {
-            email: error.filter(error => error.param === 'email').map(error => error.msg)[0],
-            password: error.filter(error => error.param === 'password').map(error => error.msg)[0]
-        }
+        const {email, password, openSnackbar} = this.state
 
         return (
             <Wrapper>
                 <Card>
-                    <form onSubmit={(event) => this.signIn(event)}>
+                    <Form onSubmit={this.signIn}>
                         <CardHeader>
                             <AccountCircleIcon color="disabled" style={{fontSize: 120}}/>
                             <CardHeaderTitle variant="h4">Sign in to your account</CardHeaderTitle>
@@ -107,30 +118,34 @@ class Authorization extends Component {
                         <InputsWrapper>
                             <EmailInput
                                 value={email}
-                                error={errorMessages.email}
                                 setEmail={this.setValue}
                             />
                             <PasswordInput
-                                name="password"
                                 value={password}
-                                error={errorMessages.password}
                                 setPassword={this.setValue}
                             />
                         </InputsWrapper>
                         <SignInButton/>
                         <md.Divider/>
                         <RegistrationButton/>
-                    </form>
+                        <Snackbar
+                            open={openSnackbar}
+                            errorMessage={this.props.errorMessage}
+                            handleCloseSnackbar={this.handleCloseSnackbar}
+                        />
+                    </Form>
                 </Card>
             </Wrapper>
         )
     }
 }
 
+//TODO Доделать снэкбар с ошибкой, сделать фронт валидацию регистрации и обработку серверных ошибок, закончить фронт токен
+
 const mapStateToProps = (state) => {
     return {
         users: state.auth.users,
-        error: state.auth.errorMessage
+        errorMessage: state.auth.errorMessage
     }
 }
 

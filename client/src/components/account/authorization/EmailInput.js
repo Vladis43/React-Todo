@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as md from '@material-ui/core'
+import {TextValidator} from 'react-material-ui-form-validator'
 
-const Input = styled(md.TextField)``;
+const Input = styled(TextValidator)``;
 
-const EmailInput = ({value, setEmail, error}) => (
+const EmailInput = ({value, setEmail}) => (
     <Input
         name="email"
         size="large"
@@ -13,8 +13,8 @@ const EmailInput = ({value, setEmail, error}) => (
         style={{margin: 10}}
         value={value}
         onChange={setEmail}
-        helperText={error}
-        error={error ? true : false}
+        validators={['required', 'isEmail']}
+        errorMessages={['this field is required', 'email is not valid']}
     />
 )
 

@@ -106,13 +106,14 @@ class Card extends Component {
                 image: imageFile,
                 userId: user._id
             }
+            const token = window.localStorage.getItem('token')
             const cardFormData = new FormData()
 
             Object.keys(card).forEach((key) => {
                 cardFormData.append(key, card[key])
             })
 
-            this.props.addNewCard(cardFormData)
+            this.props.addNewCard(cardFormData, token)
             this.setState({isOpenAddCardModal: false})
         }
     }
@@ -121,6 +122,7 @@ class Card extends Component {
         const {todos, cards, deleteCard} = this.props
         const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
 
+        console.log(this.state)
         return (
             <div>
                 <Header username={user.username} history={this.props.history}/>

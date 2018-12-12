@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as md from '@material-ui/core'
+import {TextValidator} from 'react-material-ui-form-validator'
 
-const Input = styled(md.TextField)``;
+const Input = styled(TextValidator)``;
 
-const PasswordInput = ({value, setPassword, error}) => (
+const PasswordInput = ({value, setPassword}) => (
     <Input
         name="password"
         size="large"
@@ -13,8 +13,8 @@ const PasswordInput = ({value, setPassword, error}) => (
         style={{margin: 10}}
         value={value}
         onChange={setPassword}
-        helperText={error}
-        error={error ? true : false}
+        validators={['required', 'minStringLength:8']}
+        errorMessages={['this field is required', 'password must be at least 8 characters']}
     />
 )
 

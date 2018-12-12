@@ -90,18 +90,6 @@ class Registration extends Component {
 
     render() {
         const {username, email, password, passwordConfirm, age, sex, country, city} = this.state
-        const {error} = this.props
-
-        const errorMessages = {
-            username: error.filter(error => error.param === 'username').map(error => error.msg)[0],
-            email: error.filter(error => error.param === 'email').map(error => error.msg)[0],
-            password: error.filter(error => error.param === 'password').map(error => error.msg)[0],
-            passwordConfirm: error.filter(error => error.param === 'passwordConfirm').map(error => error.msg)[0],
-            age: error.filter(error => error.param === 'age').map(error => error.msg)[0],
-            sex: error.filter(error => error.param === 'sex').map(error => error.msg)[0],
-            country: error.filter(error => error.param === 'country').map(error => error.msg)[0],
-            city: error.filter(error => error.param === 'city').map(error => error.msg)[0]
-        }
 
         return (
             <Wrapper>
@@ -114,7 +102,6 @@ class Registration extends Component {
                             passwordValue={password}
                             passwordConfirmValue={passwordConfirm}
                             setValue={this.setValue}
-                            errorMessage={errorMessages}
                         />
                         <DetailsInputs
                             ageValue={age}
@@ -122,7 +109,6 @@ class Registration extends Component {
                             countryValue={country}
                             cityValue={city}
                             setValue={this.setValue}
-                            errorMessage={errorMessages}
                         />
                         <SingUpButton/>
                         <md.Divider/>
@@ -136,8 +122,7 @@ class Registration extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.auth.users,
-        error: state.auth.errorMessage
+        users: state.auth.users
     }
 }
 

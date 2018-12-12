@@ -31,7 +31,6 @@ class Header extends Component {
     }
 
     render() {
-        console.log(this.props.username)
         return (
             <Root>
                 <AppBar color="primary">
