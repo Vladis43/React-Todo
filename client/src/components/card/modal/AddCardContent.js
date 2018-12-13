@@ -37,8 +37,8 @@ const AddCardContent = (props) => {
                     value={cardName}
                     style={{marginBottom: 46}}
                     onChange={changeValue}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
+                    validators={['required', 'maxStringLength: 15']}
+                    errorMessages={['this field is required', 'no more than 15 characters']}
                 />
                 <CardDescription
                     name="cardDescription"

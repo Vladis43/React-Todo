@@ -66,6 +66,10 @@ class Authorization extends Component {
     componentWillReceiveProps(nextProps) {
         const {token, success} = nextProps.users
 
+        if (nextProps.isError) {
+            this.setState({openSnackbar: true})
+        }
+
         if (success) {
             const {username, active} = nextProps.users.payload
 
@@ -90,18 +94,14 @@ class Authorization extends Component {
         const {email, password} = this.state
 
         this.props.signIn({email, password})
-
-        if (this.props.errorMessage) {
-            this.setState({openSnackbar: true})
-        }
     }
 
     handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
-            return;
+            return
         }
 
-        this.setState({ openSnackbar: false });
+        this.setState({ openSnackbar: false })
     }
 
     render() {
@@ -143,7 +143,8 @@ class Authorization extends Component {
 const mapStateToProps = (state) => {
     return {
         users: state.auth.users,
-        errorMessage: state.auth.errorMessage
+        errorMessage: state.auth.errorMessage,
+        isError: state.auth.isError
     }
 }
 

@@ -74,6 +74,10 @@ class Registration extends Component {
     componentWillReceiveProps(nextProps) {
         const {success, payload} = nextProps.users
 
+        if (nextProps.isError) {
+            this.setState({openSnackbar: true})
+        }
+
         if (success) {
             window.localStorage.setItem('user', payload.username)
             nextProps.history.push('/verification')
@@ -104,10 +108,6 @@ class Registration extends Component {
             country,
             city
         })
-
-        if (this.props.errorMessage) {
-            this.setState({openSnackbar: true})
-        }
     }
 
     handleCloseSnackbar = (event, reason) => {
@@ -158,7 +158,8 @@ class Registration extends Component {
 const mapStateToProps = (state) => {
     return {
         users: state.auth.users,
-        errorMessage: state.auth.errorMessage
+        errorMessage: state.auth.errorMessage,
+        isError: state.auth.isError
     }
 }
 

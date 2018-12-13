@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import * as actions from 'store/account/actions'
 import styled from 'styled-components'
 import * as md from '@material-ui/core/'
@@ -55,10 +54,23 @@ class Verification extends Component {
         openSnackbar: false
     }
 
+    componentDidMount() {
+        const user = window.localStorage.getItem('user')
+
+        if (!user) {
+            this.props.history.push('/authorization')
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const {token, success} = nextProps.users
 
+        if (nextProps.isError) {
+            this.setState({openSnackbar: true})
+        }
+
         if (success) {
+            window.localStorage.removeItem('user')
             window.localStorage.setItem('token', token)
             nextProps.history.push('/')
         }
@@ -77,11 +89,7 @@ class Verification extends Component {
         const user = window.localStorage.getItem('user')
 
         this.props.verification(user, code)
-        if (this.props.errorMessage) {
-            this.setState({openSnackbar: true})
-        } else {
-            window.localStorage.removeItem('user')
-        }
+
     }
 
     handleCloseSnackbar = (event, reason) => {
@@ -97,12 +105,6 @@ class Verification extends Component {
     }
 
     render() {
-        const user = window.localStorage.getItem('user')
-
-        if (!user) {
-            return <Redirect to='/authorization'/>
-        }
-
         return (
             <Wrapper>
                 <Card>
@@ -136,7 +138,8 @@ class Verification extends Component {
 const mapStateToProps = (state) => {
     return {
         users: state.auth.users,
-        errorMessage: state.auth.errorMessage
+        errorMessage: state.auth.errorMessage,
+        isError: state.auth.isError
     }
 }
 
