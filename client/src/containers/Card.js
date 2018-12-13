@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import * as actions from 'store/cards/actions'
-import jwt_decode from 'jwt-decode'
+import jwt from 'jsonwebtoken'
 
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
@@ -34,8 +34,7 @@ class Card extends Component {
         cardName: '',
         cardDescription: '',
         imageFile: '',
-        imageURL: '',
-        errorMessage: ''
+        imageURL: ''
     }
 
     componentDidMount() {
@@ -45,11 +44,12 @@ class Card extends Component {
             this.props.history.push('/authorization')
         } else {
             this.setState({
-                user: jwt_decode(token)._doc
+                user: jwt.decode(token).payload
             })
-            const userId = jwt_decode(token)._doc._id
+
+            const userId = jwt.decode(token).payload.userId
             if (userId) {
-                this.props.fetchCards(userId)
+                this.props.fetchCards(userId, token)
             }
         }
     }
@@ -61,8 +61,7 @@ class Card extends Component {
             cardName: '',
             cardDescription: '',
             imageFile: '',
-            imageURL: '',
-            errorMessage: ''
+            imageURL: ''
         })
     }
 
@@ -72,8 +71,7 @@ class Card extends Component {
 
     handleChangeValue = (event) => {
         this.setState({
-            [event.target.name]: event.target.value,
-            errorMessage: ''
+            [event.target.name]: event.target.value
         })
     }
 
@@ -95,37 +93,34 @@ class Card extends Component {
         event.preventDefault()
         const {user, cardName, cardDescription, imageFile} = this.state
 
-        if (cardName === '') {
-            this.setState({errorMessage: 'Field is required!'})
-        } else if (cardDescription === '') {
-            this.setState({errorMessage: 'Field is required!'})
-        } else {
-            const card = {
-                title: cardName,
-                description: cardDescription,
-                image: imageFile,
-                userId: user._id
-            }
-            const token = window.localStorage.getItem('token')
-            const cardFormData = new FormData()
-
-            Object.keys(card).forEach((key) => {
-                cardFormData.append(key, card[key])
-            })
-
-            this.props.addNewCard(cardFormData, token)
-            this.setState({isOpenAddCardModal: false})
+        const card = {
+            title: cardName,
+            description: cardDescription,
+            image: imageFile,
+            userId: user.userId
         }
+
+        const token = window.localStorage.getItem('token')
+        const cardFormData = new FormData()
+
+        Object.keys(card).forEach((key) => {
+            cardFormData.append(key, card[key])
+        })
+
+        this.props.addNewCard(cardFormData, token)
+        this.setState({isOpenAddCardModal: false})
     }
 
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
+        const {isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
 
-        console.log(this.state)
         return (
             <div>
-                <Header username={user.username} history={this.props.history}/>
+                <Header
+                    username={jwt.decode(window.localStorage.getItem('token')).payload.username}
+                    history={this.props.history}
+                />
                 <CardWrapper>
                     <GridContainer container spacing={24} style={{padding: 24}}>
                         {cards.map(card => {

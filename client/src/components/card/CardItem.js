@@ -53,7 +53,7 @@ const CardItem = ({card, amountTodo, openModal, deleteCardAction}) => (
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <DeleteButton onClick={() => deleteCardAction(card._id)}>
+            <DeleteButton onClick={() => deleteCardAction(card._id, window.localStorage.getItem('token'))}>
                 <icon.Delete/>
             </DeleteButton>
             <CreateButton onClick={openModal}>

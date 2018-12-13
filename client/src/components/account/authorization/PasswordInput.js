@@ -13,7 +13,7 @@ const PasswordInput = ({value, setPassword}) => (
         style={{margin: 10}}
         value={value}
         onChange={setPassword}
-        validators={['required', 'minStringLength:8']}
+        validators={['required', 'minStringLength: 8']}
         errorMessages={['this field is required', 'password must be at least 8 characters']}
     />
 )

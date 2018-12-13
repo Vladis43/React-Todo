@@ -4,6 +4,7 @@ import * as actions from 'store/account/actions'
 
 import styled from 'styled-components'
 import * as md from "@material-ui/core/"
+import {ValidatorForm} from 'react-material-ui-form-validator'
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
 
@@ -11,6 +12,7 @@ import GeneralInputs from 'components/account/registration/GeneralInputs'
 import DetailsInputs from 'components/account/registration/DetailsInputs'
 import SingUpButton from 'components/account/registration/SingUpButton'
 import AuthorizationButton from 'components/account/registration/AuthorizationButton'
+import Snackbar from 'components/account/Snackbar'
 
 
 //Styled Components=====================================================================================================
@@ -37,11 +39,13 @@ const Card = styled(md.Card)`
     background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
   }
 `;
+const Form = styled(ValidatorForm)``;
 const CardHeader = styled(md.CardContent)`
   display: flex;
   justify-content: center;
   font-size: 28px;
 `;
+
 //======================================================================================================================
 
 
@@ -52,9 +56,19 @@ class Registration extends Component {
         password: '',
         passwordConfirm: '',
         age: '',
-        sex: '',
+        sex: 'male',
         country: '',
-        city: ''
+        city: '',
+        openSnackbar: false
+    }
+
+    componentDidMount() {
+        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+            if (value !== this.state.password) {
+                return false;
+            }
+            return true;
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,6 +83,10 @@ class Registration extends Component {
     setValue = (event) => {
         this.setState({
             [event.target.name]: event.target.value
+        })
+
+        this.setState({
+            selectError: ''
         })
     }
 
@@ -86,15 +104,27 @@ class Registration extends Component {
             country,
             city
         })
+
+        if (this.props.errorMessage) {
+            this.setState({openSnackbar: true})
+        }
+    }
+
+    handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({openSnackbar: false});
     }
 
     render() {
-        const {username, email, password, passwordConfirm, age, sex, country, city} = this.state
+        const {username, email, password, passwordConfirm, age, sex, country, city, openSnackbar} = this.state
 
         return (
             <Wrapper>
                 <Card>
-                    <form onSubmit={this.signUp}>
+                    <Form onSubmit={this.signUp}>
                         <CardHeader>Create your account</CardHeader>
                         <GeneralInputs
                             usernameValue={username}
@@ -113,7 +143,12 @@ class Registration extends Component {
                         <SingUpButton/>
                         <md.Divider/>
                         <AuthorizationButton/>
-                    </form>
+                        <Snackbar
+                            open={openSnackbar}
+                            errorMessage={this.props.errorMessage}
+                            handleCloseSnackbar={this.handleCloseSnackbar}
+                        />
+                    </Form>
                 </Card>
             </Wrapper>
         )
@@ -122,7 +157,8 @@ class Registration extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.auth.users
+        users: state.auth.users,
+        errorMessage: state.auth.errorMessage
     }
 }
 

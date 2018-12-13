@@ -16,10 +16,10 @@ export default {
             if (errors) {
                 response.status(422).json({errors})
             } else {
-                const username = await User.findOne({username})
+                const userName = await User.findOne({username})
 
-                if (username) {
-                    response.status(409).json({
+                if (userName) {
+                    return response.status(409).json({
                         message: 'This username is already taken!',
                         success: false
                     })
@@ -27,7 +27,7 @@ export default {
                     const user = await User.findOne({email})
 
                     if (user) {
-                        response.status(409).json({
+                        return response.status(409).json({
                             message: 'This email is already taken!',
                             success: false
                         })
@@ -74,7 +74,11 @@ export default {
             } else {
                 if (verificationCode === user.verificationCode) {
                     await user.update({active: true, verificationCode: ''})
-                    const token = jwt.sign({userId: user._id}, config.SECRET_KEY)
+                    const payload = {
+                        userId: user._id,
+                        username: user.username
+                    }
+                    const token = jwt.sign({payload}, config.SECRET_KEY)
 
                     if (!token) {
                         response.status(403).json({message: 'Forbidden!'})
@@ -121,7 +125,12 @@ export default {
                             success: false
                         })
                     } else {
-                        const token = jwt.sign({userId: user._id}, config.SECRET_KEY)
+                        const payload = {
+                            userId: user._id,
+                            username: user.username,
+                            active: user.active
+                        }
+                        const token = jwt.sign({payload}, config.SECRET_KEY)
 
                         if (!token) {
                             response.status(403).json({message: 'Forbidden!'})

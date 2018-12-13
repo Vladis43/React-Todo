@@ -17,7 +17,7 @@ const cardsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: false,
-                items: action.payload.data
+                items: action.payload.data.card
             }
 
         case error('FETCH_CARDS'):
@@ -32,7 +32,7 @@ const cardsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: false,
-                items: [...state.items, action.payload.data]
+                items: [...state.items, action.payload.data.card]
             }
 
         case error('ADD_NEW_CARD'):

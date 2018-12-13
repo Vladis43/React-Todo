@@ -4,11 +4,13 @@ import {Redirect} from 'react-router-dom'
 import * as actions from 'store/account/actions'
 import styled from 'styled-components'
 import * as md from '@material-ui/core/'
+import {ValidatorForm} from 'react-material-ui-form-validator'
 import backgroundImage from 'assets/todo-background.png'
 import backgroundImageNight from 'assets/todo-background-night.png'
 
 import ConfirmField from '../components/account/verification/ConfirmField'
 import AuthorizationButton from '../components/account/verification/AuthorizationButton'
+import Snackbar from 'components/account/Snackbar'
 
 
 //Styled Components=====================================================================================================
@@ -35,6 +37,7 @@ const Card = styled(md.Card)`
     background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
   }
 `;
+const Form = styled(ValidatorForm)``;
 const CardHeader = styled(md.CardContent)`
   display: flex;
   flex-direction: column;
@@ -42,13 +45,14 @@ const CardHeader = styled(md.CardContent)`
 `;
 const CardHeaderTitle = styled(md.Typography)``;
 const TextField = styled(md.CardContent)``;
+
 //======================================================================================================================
 
 
 class Verification extends Component {
     state = {
         code: '',
-        errorMessage: ''
+        openSnackbar: false
     }
 
     componentWillReceiveProps(nextProps) {
@@ -57,12 +61,9 @@ class Verification extends Component {
         if (success) {
             window.localStorage.setItem('token', token)
             nextProps.history.push('/')
-        } else {
-            this.setState({
-                errorMessage: 'Wrong verification code!'
-            })
         }
     }
+
 
     setCode = (event) => {
         this.setState({
@@ -75,14 +76,20 @@ class Verification extends Component {
         const {code} = this.state
         const user = window.localStorage.getItem('user')
 
-        if (code === '') {
-            this.setState({
-                errorMessage: 'Field is required!'
-            })
+        this.props.verification(user, code)
+        if (this.props.errorMessage) {
+            this.setState({openSnackbar: true})
         } else {
-            this.props.verification(user, code)
             window.localStorage.removeItem('user')
         }
+    }
+
+    handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ openSnackbar: false });
     }
 
     loginLink = () => {
@@ -99,7 +106,7 @@ class Verification extends Component {
         return (
             <Wrapper>
                 <Card>
-                    <form onSubmit={this.verification}>
+                    <Form onSubmit={this.verification}>
                         <CardHeader>
                             <CardHeaderTitle variant="h4">Please, confirm your email!</CardHeaderTitle>
                         </CardHeader>
@@ -111,11 +118,15 @@ class Verification extends Component {
                         <ConfirmField
                             codeValue={this.state.code}
                             setCode={this.setCode}
-                            errorMessage={this.state.errorMessage}
                         />
                         <md.Divider/>
                         <AuthorizationButton loginLink={this.loginLink}/>
-                    </form>
+                        <Snackbar
+                            open={this.state.openSnackbar}
+                            errorMessage={this.props.errorMessage}
+                            handleCloseSnackbar={this.handleCloseSnackbar}
+                        />
+                    </Form>
                 </Card>
             </Wrapper>
         )
@@ -125,7 +136,7 @@ class Verification extends Component {
 const mapStateToProps = (state) => {
     return {
         users: state.auth.users,
-        error: state.auth.errorMessage
+        errorMessage: state.auth.errorMessage
     }
 }
 

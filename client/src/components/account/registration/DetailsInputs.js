@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
+import {TextValidator} from 'react-material-ui-form-validator'
 import SexSelect from './SexSelect'
 
 
@@ -18,14 +19,14 @@ const DetailsInputsField = styled(md.CardContent)`
     display: flex;
   }
 `;
-const AgeInput = styled(md.TextField)``;
-const CountryInput = styled(md.TextField)``;
-const CityInput = styled(md.TextField)``;
+const AgeInput = styled(TextValidator)``;
+const CountryInput = styled(TextValidator)``;
+const CityInput = styled(TextValidator)``;
 //======================================================================================================================
 
 
 const DetailsInputs = (props) => {
-    const {ageValue, sexValue, countryValue, cityValue, setValue, errorMessage} = props
+    const {ageValue, sexValue, countryValue, cityValue, setValue} = props
 
     return (
         <DetailsInputsField>
@@ -40,10 +41,10 @@ const DetailsInputs = (props) => {
                     style={{marginRight: 20, width: 200}}
                     value={ageValue}
                     onChange={setValue}
-                    helperText={errorMessage.age}
-                    error={errorMessage.age ? true : false}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                 />
-                <SexSelect sexValue={sexValue} setValue={setValue} errorMessage={errorMessage}/>
+                <SexSelect sexValue={sexValue} setValue={setValue}/>
             </div>
             <div>
                 <CountryInput
@@ -54,8 +55,8 @@ const DetailsInputs = (props) => {
                     style={{marginRight: 20}}
                     value={countryValue}
                     onChange={setValue}
-                    helperText={errorMessage.country}
-                    error={errorMessage.country ? true : false}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                 />
                 <CityInput
                     name="city"
@@ -64,8 +65,8 @@ const DetailsInputs = (props) => {
                     label="City"
                     value={cityValue}
                     onChange={setValue}
-                    helperText={errorMessage.city}
-                    error={errorMessage.city ? true : false}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                 />
             </div>
         </DetailsInputsField>

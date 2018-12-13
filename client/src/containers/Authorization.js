@@ -13,7 +13,7 @@ import EmailInput from 'components/account/authorization/EmailInput'
 import PasswordInput from 'components/account/authorization/PasswordInput'
 import SignInButton from 'components/account/authorization/SignInButton'
 import RegistrationButton from 'components/account/authorization/RegistrationButton'
-import Snackbar from 'components/account/authorization/Snackbar'
+import Snackbar from 'components/account/Snackbar'
 
 
 //Styled Components=====================================================================================================
@@ -101,7 +101,7 @@ class Authorization extends Component {
             return;
         }
 
-        this.setState({ open: false });
+        this.setState({ openSnackbar: false });
     }
 
     render() {
@@ -139,8 +139,6 @@ class Authorization extends Component {
         )
     }
 }
-
-//TODO Доделать снэкбар с ошибкой, сделать фронт валидацию регистрации и обработку серверных ошибок, закончить фронт токен
 
 const mapStateToProps = (state) => {
     return {

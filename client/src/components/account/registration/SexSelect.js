@@ -11,7 +11,7 @@ const Form = styled(md.FormControl)`
 const Label = styled(md.InputLabel)``;
 const Select = styled(md.Select)``;
 
-const SexSelect = ({sexValue, setValue, errorMessage}) => (
+const SexSelect = ({sexValue, setValue}) => (
     <Form>
         <Label htmlFor="sex-id">Sex</Label>
         <Select
@@ -21,13 +21,11 @@ const SexSelect = ({sexValue, setValue, errorMessage}) => (
                 name: 'sex',
                 id: 'sex-id',
             }}
-            error={errorMessage.sex ? true : false}
         >
             <md.MenuItem value={'male'}>Male</md.MenuItem>
             <md.MenuItem value={'female'}>Female</md.MenuItem>
             <md.MenuItem value={'other'}>Other</md.MenuItem>
         </Select>
-        <md.FormHelperText>{errorMessage.sex}</md.FormHelperText>
     </Form>
 )
 

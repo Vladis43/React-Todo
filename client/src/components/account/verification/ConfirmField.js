@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import * as md from '@material-ui/core'
+import {TextValidator} from 'react-material-ui-form-validator'
 
 
 const Wrapper = styled(md.CardActions)`
@@ -10,13 +11,13 @@ const Wrapper = styled(md.CardActions)`
     justify-content: center;
   }
 `;
-const Input = styled(md.TextField)``;
+const Input = styled(TextValidator)``;
 const Button = styled(md.Button)`
   width: 100%;
 `;
 
 
-const ConfirmField = ({codeValue, setCode, errorMessage}) => (
+const ConfirmField = ({codeValue, setCode}) => (
     <Wrapper style={{marginBottom: 20}}>
         <Input
             fullWidth
@@ -26,8 +27,8 @@ const ConfirmField = ({codeValue, setCode, errorMessage}) => (
             placeholder="Code..."
             value={codeValue}
             onChange={setCode}
-            helperText={errorMessage}
-            error={errorMessage ? true : false}
+            validators={['required']}
+            errorMessages={['this field is required']}
         />
         <Button
             variant="contained"

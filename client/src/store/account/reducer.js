@@ -47,7 +47,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isError: false,
                 errorMessage: [],
-                users: {...action.payload.data, ...action.payload.data.payload}
+                users: {...action.payload.data, ...{payload: jwt.decode(action.payload.data.token).payload}}
             }
 
         case error('VERIFICATION'):
@@ -67,13 +67,11 @@ const authReducer = (state = initialState, action) => {
             }
 
         case success('SIGN_IN'):
-            const payload = {payload: jwt.decode(action.payload.data.token)._doc}
-
             return {
                 ...state,
                 isError: false,
                 errorMessage: [],
-                users: {...action.payload.data, ...payload}
+                users: {...action.payload.data, ...{payload: jwt.decode(action.payload.data.token).payload}}
             }
 
         case error('SIGN_IN'):

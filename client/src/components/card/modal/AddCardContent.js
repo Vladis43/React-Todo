@@ -2,6 +2,7 @@ import React from 'react'
 import * as md from "@material-ui/core"
 import styled from "styled-components"
 import UploadImage from './UploadImage'
+import {TextValidator} from 'react-material-ui-form-validator'
 
 const Content = styled(md.DialogContent)`
   display: flex;
@@ -12,18 +13,15 @@ const InputWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-const CardName = styled(md.TextField)`
+const CardName = styled(TextValidator)`
   width: 100%;
 `;
-const CardDescription = styled(md.TextField)`
+const CardDescription = styled(TextValidator)`
   width: 100%;
 `;
 
 const AddCardContent = (props) => {
-    const {
-        cardName, cardDescription, imageURL, errorMessage,
-        changeValue, handleImageChange
-    } = props
+    const {cardName, cardDescription, imageURL, changeValue, handleImageChange} = props
 
     return (
         <Content>
@@ -39,8 +37,8 @@ const AddCardContent = (props) => {
                     value={cardName}
                     style={{marginBottom: 46}}
                     onChange={changeValue}
-                    helperText={errorMessage ? errorMessage : ''}
-                    error={errorMessage ? true : false}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                 />
                 <CardDescription
                     name="cardDescription"
@@ -50,8 +48,8 @@ const AddCardContent = (props) => {
                     variant="outlined"
                     value={cardDescription}
                     onChange={changeValue}
-                    helperText={errorMessage ? errorMessage : ''}
-                    error={errorMessage ? true : false}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                 />
             </InputWrapper>
         </Content>

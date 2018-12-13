@@ -1,12 +1,15 @@
 import {URL} from 'config'
 
 export const FETCH_CARDS = 'FETCH_CARDS'
-export const fetchCards = (userId) => ({
+export const fetchCards = (userId, token) => ({
     type: FETCH_CARDS,
     payload: {
         request: {
             url: `${URL}cards/${userId}`,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     }
 })
@@ -27,12 +30,15 @@ export const addNewCard = (card, token) => ({
 })
 
 export const DELETE_CARD = 'DELETE_CARD'
-export const deleteCard = (id) => ({
+export const deleteCard = (id, token) => ({
     type: DELETE_CARD,
     payload: {
         request: {
             url: `${URL}cards/${id}`,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     },
     meta: {
