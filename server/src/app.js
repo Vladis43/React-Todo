@@ -1,15 +1,17 @@
 import express from 'express'
 import expressValidator from 'express-validator'
 import mongoose from "mongoose"
+import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import config from './config/database'
 
 import todoRouter from './routes/todoRouter'
 import cardRouter from './routes/cardRouter'
 import userRouter from './routes/userRouter'
 
-mongoose.connect(config.DATABASE)
+dotenv.config()
+
+mongoose.connect(process.env.DATABASE)
 
 const app = express()
 

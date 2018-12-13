@@ -1,11 +1,10 @@
 import nodemailer from 'nodemailer'
-import config from '../config/mailer'
 
 const transport = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: config.USER,
-        pass: config.PASS
+        user: process.env.MAILER_USER,
+        pass: process.env.MAILER_PASS
     },
     tls: {
         rejectUnauthorized: false

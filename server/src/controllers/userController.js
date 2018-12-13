@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt-nodejs'
 import jwt from 'jsonwebtoken'
 import randomstring from 'randomstring'
-import config from '../config/database'
 import User from '../models/User'
 import mailer from '../misc/mailer'
 
@@ -78,7 +77,7 @@ export default {
                         userId: user._id,
                         username: user.username
                     }
-                    const token = jwt.sign({payload}, config.SECRET_KEY)
+                    const token = jwt.sign({payload}, process.env.SECRET_KEY)
 
                     if (!token) {
                         response.status(403).json({message: 'Forbidden!'})
@@ -130,7 +129,7 @@ export default {
                             username: user.username,
                             active: user.active
                         }
-                        const token = jwt.sign({payload}, config.SECRET_KEY)
+                        const token = jwt.sign({payload}, process.env.SECRET_KEY)
 
                         if (!token) {
                             response.status(403).json({message: 'Forbidden!'})
