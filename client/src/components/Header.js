@@ -39,7 +39,7 @@ class Header extends Component {
                             Todo App
                         </Typography>
                         <Typography variant="h6" color="inherit">
-                            {this.props.username.toUpperCase()}
+                            {this.props.username}
                         </Typography>
                         <md.Tooltip title="Log out">
                             <md.Button

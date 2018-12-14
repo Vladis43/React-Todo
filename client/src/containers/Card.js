@@ -113,12 +113,12 @@ class Card extends Component {
 
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
+        const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
 
         return (
             <div>
                 <Header
-                    username={jwt.decode(window.localStorage.getItem('token')).payload.username}
+                    username={user.username}
                     history={this.props.history}
                 />
                 <CardWrapper>
