@@ -39,7 +39,13 @@ const CreateButton = styled(md.IconButton)``;
 
 const CardItem = ({card, amountTodo, openModal, deleteCardAction}) => (
     <Card>
-        <CardActionArea onClick={openModal}>
+        <CardActionArea
+            onClick={openModal}
+            style={card.imageURL ? {
+                background: `url(${card.imageURL}) no-repeat`,
+                backgroundSize: 100 + '%'
+            } : {}}
+        >
             <CardContent>
                 <CardName>
                     {card.title.toUpperCase()}

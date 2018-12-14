@@ -36,13 +36,13 @@ export default {
 
                 const card = await Card.create({
                     ...request.body,
-                    imageId: image._id
+                    imageId: image._id,
+                    imageURL: `${process.env.URL}/${image.path}`
                 })
 
                 response.status(201).json({
                     message: 'Card successfully created!',
-                    card,
-                    image
+                    card
                 })
             }
         } catch (error) {
