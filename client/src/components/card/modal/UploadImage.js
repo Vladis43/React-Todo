@@ -7,6 +7,11 @@ const Wrapper = styled.div`
   width: 40%;
   display: flex;
   align-items: center;
+  
+  @media screen and (max-device-width: 455px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 

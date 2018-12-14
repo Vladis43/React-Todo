@@ -1,4 +1,7 @@
+import fs from 'fs'
+
 import Card from '../models/Card'
+import Image from '../models/Image'
 
 export default {
     async FetchCards(request, response) {
@@ -17,14 +20,31 @@ export default {
 
     async AddNewCard(request, response) {
         try {
-            const card = await Card.create({
-                ...request.body,
-                image: request.file.path
-            })
-            response.status(201).json({
-                message: 'Card successfully created!',
-                card
-            })
+            if (request.file === undefined) {
+                const card = await Card.create({
+                    ...request.body
+                })
+
+                response.status(201).json({
+                    message: 'Card successfully created!',
+                    card
+                })
+            } else {
+                const image = await Image.create({
+                    ...request.file
+                })
+
+                const card = await Card.create({
+                    ...request.body,
+                    imageId: image._id
+                })
+
+                response.status(201).json({
+                    message: 'Card successfully created!',
+                    card,
+                    image
+                })
+            }
         } catch (error) {
             response.status(404).json(error)
         }
@@ -35,6 +55,13 @@ export default {
 
         try {
             const card = await Card.findByIdAndDelete(id)
+
+            if (card.imageId) {
+                const image = await Image.findById(card.imageId)
+                fs.unlinkSync(image.path)
+                await Image.findByIdAndDelete(card.imageId)
+            }
+
             response.status(200).json({
                 message: 'Card deleted!',
                 card

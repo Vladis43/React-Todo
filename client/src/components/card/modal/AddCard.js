@@ -4,7 +4,13 @@ import styled from 'styled-components'
 import {ValidatorForm} from 'react-material-ui-form-validator'
 import AddCardContent from './AddCardContent'
 
-const Modal = styled(md.Dialog)``;
+const Modal = styled(md.Dialog)`
+  @media screen and (max-device-width: 455px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 const Form = styled(ValidatorForm)``;
 const Title = styled(md.DialogTitle)``;
 const CardActions = styled(md.DialogActions)``;
