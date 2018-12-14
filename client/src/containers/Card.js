@@ -10,6 +10,7 @@ import Header from "../components/Header"
 import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
 import AddCard from '../components/card/modal/AddCard'
+import Snackbar from '../components/Snackbar'
 
 
 const CardWrapper = styled.div`  
@@ -34,7 +35,9 @@ class Card extends Component {
         cardName: '',
         cardDescription: '',
         imageFile: '',
-        imageURL: ''
+        imageURL: '',
+        openSnackbar: false,
+        errorMessage: ''
     }
 
     componentDidMount() {
@@ -80,6 +83,18 @@ class Card extends Component {
         const file = event.target.files[0]
 
         if (file !== undefined) {
+            const isJPEG = file.type === 'image/jpeg'
+            const isJPG = file.type === 'image/jpg'
+            const isPNG = file.type === 'image/png'
+            if (!isJPEG && !isJPG && !isPNG) {
+                return this.setState({
+                    imageFile: '',
+                    imageURL: '',
+                    openSnackbar: true,
+                    errorMessage: 'You can upload JPEG, JPG, PNG file!'
+                })
+            }
+
             reader.onloadend = () => {
                 this.setState({
                     imageFile: file,
@@ -118,9 +133,17 @@ class Card extends Component {
         this.setState({isOpenAddCardModal: false})
     }
 
+    handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+
+        this.setState({ openSnackbar: false })
+    }
+
     render() {
         const {todos, cards, deleteCard} = this.props
-        const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, errorMessage} = this.state
+        const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, openSnackbar, errorMessage} = this.state
 
         return (
             <div>
@@ -157,6 +180,11 @@ class Card extends Component {
                         </GridItem>
                     </GridContainer>
                 </CardWrapper>
+                <Snackbar
+                    open={openSnackbar}
+                    errorMessage={errorMessage}
+                    handleCloseSnackbar={this.handleCloseSnackbar}
+                />
             </div>
         )
     }

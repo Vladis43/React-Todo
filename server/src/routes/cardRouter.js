@@ -13,7 +13,20 @@ const storage = multer.diskStorage({
         cb(null, new Date().toISOString() + file.originalname)
     }
 })
-const upload = multer({storage})
+const fileFilter = (request, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+const upload = multer({
+    storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5 // 5 Mb
+    },
+    fileFilter
+})
 
 route.get('/:userId', verifyToken, cardController.FetchCards)
 route.post('/', verifyToken, upload.single('image'), cardController.AddNewCard)

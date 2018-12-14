@@ -12,7 +12,7 @@ import GeneralInputs from 'components/account/registration/GeneralInputs'
 import DetailsInputs from 'components/account/registration/DetailsInputs'
 import SingUpButton from 'components/account/registration/SingUpButton'
 import AuthorizationButton from 'components/account/registration/AuthorizationButton'
-import Snackbar from 'components/account/Snackbar'
+import Snackbar from 'components/Snackbar'
 
 
 //Styled Components=====================================================================================================

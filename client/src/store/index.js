@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware} from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import logger from './middleware/logger'
 import {combineReducers} from 'redux'
 import todosReducer from './todos/reducer'
@@ -17,7 +17,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middleware = applyMiddleware(sagaMiddleware, logger)
 
-const store = createStore(rootReducer, middleware)
+const store = createStore(rootReducer, compose(middleware, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()))
 
 sagaMiddleware.run(rootSaga)
 

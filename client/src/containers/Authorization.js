@@ -13,7 +13,7 @@ import EmailInput from 'components/account/authorization/EmailInput'
 import PasswordInput from 'components/account/authorization/PasswordInput'
 import SignInButton from 'components/account/authorization/SignInButton'
 import RegistrationButton from 'components/account/authorization/RegistrationButton'
-import Snackbar from 'components/account/Snackbar'
+import Snackbar from 'components/Snackbar'
 
 
 //Styled Components=====================================================================================================

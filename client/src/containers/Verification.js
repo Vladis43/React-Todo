@@ -9,7 +9,7 @@ import backgroundImageNight from 'assets/todo-background-night.png'
 
 import ConfirmField from '../components/account/verification/ConfirmField'
 import AuthorizationButton from '../components/account/verification/AuthorizationButton'
-import Snackbar from 'components/account/Snackbar'
+import Snackbar from 'components/Snackbar'
 
 
 //Styled Components=====================================================================================================
