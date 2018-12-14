@@ -79,14 +79,21 @@ class Card extends Component {
         const reader = new FileReader()
         const file = event.target.files[0]
 
-        reader.onloadend = () => {
+        if (file !== undefined) {
+            reader.onloadend = () => {
+                this.setState({
+                    imageFile: file,
+                    imageURL: reader.result
+                })
+            }
+
+            reader.readAsDataURL(file)
+        } else {
             this.setState({
-                imageFile: file,
-                imageURL: reader.result
+                imageFile: '',
+                imageURL: ''
             })
         }
-
-        reader.readAsDataURL(file)
     }
 
     AddNewCard = (event) => {

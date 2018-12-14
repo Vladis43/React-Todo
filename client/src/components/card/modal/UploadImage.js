@@ -36,7 +36,7 @@ const UploadImage = ({imageURL, handleImageChange}) => (
                     <icon.CloudUpload fontSize="large"/>
                 </md.Button> :
                 <md.Card>
-                    <md.CardActionArea>
+                    <md.CardActionArea component="span">
                         <md.CardMedia
                             image={imageURL}
                             style={{width: 200, height: 150}}
