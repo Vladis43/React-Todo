@@ -224,6 +224,8 @@ class Card extends Component {
     }
 }
 
+//TODO сделать одну модалку
+
 const mapStateToProps = (state) => {
     return {
         users: state.auth.users,

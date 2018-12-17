@@ -14,7 +14,7 @@ export default {
                 card
             })
         } catch (error) {
-            response.status(404).json(error)
+            response.status(500).json(error)
         }
     },
 
@@ -46,7 +46,57 @@ export default {
                 })
             }
         } catch (error) {
-            response.status(404).json(error)
+            response.status(500).json(error)
+        }
+    },
+
+    async EditCard(request, response) {
+        const id = request.params.id
+
+        try {
+            if (request.file === undefined) {
+                const card = await Card.findByIdAndUpdate(id, request.body)
+                if (card) {
+                    const editedCard = await Card.findById(id)
+                    response.status(200).json({
+                        message: 'Card edited!',
+                        editedCard
+                    })
+                } else {
+                    response.status(418).json({
+                        message: 'Failed to edit card!'
+                    })
+                }
+            } else {
+                const card = await Card.findById(id)
+                if (!card) {
+                    response.status(404).json({
+                        message: 'There is no such card!'
+                    })
+                } else {
+                    const image = await Image.findByIdAndUpdate(card.imageId, request.file)
+                    fs.unlinkSync(image.path)
+                    const newImage = await Image.findById(card.imageId)
+                    const newCard = await Card.findByIdAndUpdate(id, {
+                        ...request.body,
+                        imageId: newImage._id,
+                        imageURL: `${process.env.URL}/${newImage.path}`
+                    })
+                    if (newCard) {
+                        const editedCard = await Card.findById(id)
+                        response.status(200).json({
+                            message: 'Card edited!',
+                            editedCard
+                        })
+                    } else {
+                        response.status(418).json({
+                            message: 'Failed to edit card!'
+                        })
+                    }
+                }
+            }
+        } catch (error) {
+            response.status(500).json(error)
         }
     },
 
@@ -54,20 +104,20 @@ export default {
         const id = request.params.id
 
         try {
-            const card = await Card.findByIdAndDelete(id)
+            const deletedCard = await Card.findByIdAndDelete(id)
 
-            if (card.imageId) {
-                const image = await Image.findById(card.imageId)
+            if (deletedCard.imageId) {
+                const image = await Image.findById(deletedCard.imageId)
                 fs.unlinkSync(image.path)
-                await Image.findByIdAndDelete(card.imageId)
+                await Image.findByIdAndDelete(deletedCard.imageId)
             }
 
             response.status(200).json({
                 message: 'Card deleted!',
-                card
+                deletedCard
             })
         } catch (error) {
-            response.status(404).json(error)
+            response.status(500).json(error)
         }
     }
 }
