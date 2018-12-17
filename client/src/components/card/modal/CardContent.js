@@ -29,7 +29,7 @@ const CardDescription = styled(TextValidator)`
   width: 100%;
 `;
 
-const AddCardContent = (props) => {
+const CardContent = (props) => {
     const {cardName, cardDescription, imageURL, changeValue, handleImageChange} = props
 
     return (
@@ -40,11 +40,11 @@ const AddCardContent = (props) => {
             />
             <InputWrapper>
                 <CardName
+                    style={{marginBottom: 46}}
                     name="cardName"
                     autoFocus
                     label="Card name"
                     value={cardName}
-                    style={{marginBottom: 46}}
                     onChange={changeValue}
                     validators={['required', 'maxStringLength: 15']}
                     errorMessages={['this field is required', 'no more than 15 characters']}
@@ -52,7 +52,6 @@ const AddCardContent = (props) => {
                 <CardDescription
                     name="cardDescription"
                     label="Description"
-                    placeholder="Description"
                     multiline
                     variant="outlined"
                     value={cardDescription}
@@ -65,4 +64,4 @@ const AddCardContent = (props) => {
     )
 }
 
-export default AddCardContent
+export default CardContent

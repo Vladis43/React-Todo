@@ -10,6 +10,7 @@ import Header from "../components/Header"
 import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
 import AddCard from '../components/card/modal/AddCard'
+import EditCard from '../components/card/modal/EditCard'
 import Snackbar from '../components/Snackbar'
 
 
@@ -31,7 +32,8 @@ const GridItem = styled(md.Grid)`
 class Card extends Component {
     state = {
         user: '',
-        isOpenAddCardModal: false,
+        isEdit: false,
+        isOpenCardModal: false,
         cardName: '',
         cardDescription: '',
         imageFile: '',
@@ -57,10 +59,10 @@ class Card extends Component {
         }
     }
 
-    OpenAddCardModal = (event) => {
+    openAddCardModal = (event) => {
         event.preventDefault()
         this.setState({
-            isOpenAddCardModal: true,
+            isOpenCardModal: true,
             cardName: '',
             cardDescription: '',
             imageFile: '',
@@ -68,8 +70,21 @@ class Card extends Component {
         })
     }
 
-    CloseAddCardModal = () => {
-        this.setState({isOpenAddCardModal: false})
+    openEditCardModal = (card) => {
+        this.setState({
+            isEdit: true,
+            isOpenCardModal: true,
+            cardName: card.title,
+            cardDescription: card.description,
+            imageURL: card.imageURL
+        })
+    }
+
+    closeCardModal = () => {
+        this.setState({
+            isEdit: false,
+            isOpenCardModal: false
+        })
     }
 
     handleChangeValue = (event) => {
@@ -111,7 +126,7 @@ class Card extends Component {
         }
     }
 
-    AddNewCard = (event) => {
+    addNewCard = (event) => {
         event.preventDefault()
         const {user, cardName, cardDescription, imageFile} = this.state
 
@@ -130,7 +145,11 @@ class Card extends Component {
         })
 
         this.props.addNewCard(cardFormData, token)
-        this.setState({isOpenAddCardModal: false})
+        this.setState({isOpenCardModal: false})
+    }
+
+    editCard = () => {
+        console.log('edited')
     }
 
     handleCloseSnackbar = (event, reason) => {
@@ -138,12 +157,14 @@ class Card extends Component {
             return
         }
 
-        this.setState({ openSnackbar: false })
+        this.setState({openSnackbar: false})
     }
 
     render() {
-        const {todos, cards, deleteCard} = this.props
-        const {user, isOpenAddCardModal, cardName, cardDescription, imageURL, openSnackbar, errorMessage} = this.state
+        const {cards, deleteCard} = this.props
+        const {
+            user, isEdit, isOpenCardModal, cardName, cardDescription, imageURL, openSnackbar, errorMessage
+        } = this.state
 
         return (
             <div>
@@ -158,25 +179,38 @@ class Card extends Component {
                                 <GridItem item xs={12} sm={6} lg={4} xl={3} key={card._id}>
                                     <CardItem
                                         card={card}
-                                        amountTodo={todos.length}
+                                        openEditCardModal={() => this.openEditCardModal(card)}
                                         deleteCardAction={deleteCard}
                                     />
                                 </GridItem>
                             )
                         })}
-                        <AddCard
-                            isModal={isOpenAddCardModal}
-                            cardName={cardName}
-                            cardDescription={cardDescription}
-                            imageURL={imageURL}
-                            errorMessage={errorMessage}
-                            closeModal={this.CloseAddCardModal}
-                            addNewCard={this.AddNewCard}
-                            changeValue={this.handleChangeValue}
-                            handleImageChange={this.handleImageChange}
-                        />
+                        {!isEdit ?
+                            <AddCard
+                                isModal={isOpenCardModal}
+                                cardName={cardName}
+                                cardDescription={cardDescription}
+                                imageURL={imageURL}
+                                errorMessage={errorMessage}
+                                closeModal={this.closeCardModal}
+                                addNewCard={this.addNewCard}
+                                changeValue={this.handleChangeValue}
+                                handleImageChange={this.handleImageChange}
+                            /> :
+                            <EditCard
+                                isModal={isOpenCardModal}
+                                cardName={cardName}
+                                cardDescription={cardDescription}
+                                imageURL={imageURL}
+                                errorMessage={errorMessage}
+                                closeModal={this.closeCardModal}
+                                editCard={this.editCard}
+                                changeValue={this.handleChangeValue}
+                                handleImageChange={this.handleImageChange}
+                            />
+                        }
                         <GridItem item xs={12} sm={6} lg={4} xl={3}>
-                            <AddCardButton openModal={this.OpenAddCardModal}/>
+                            <AddCardButton openModal={this.openAddCardModal}/>
                         </GridItem>
                     </GridContainer>
                 </CardWrapper>
@@ -192,7 +226,6 @@ class Card extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        todos: state.todos.items,
         users: state.auth.users,
         cards: state.cards.items
     }

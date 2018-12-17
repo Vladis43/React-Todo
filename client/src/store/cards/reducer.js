@@ -27,7 +27,7 @@ const cardsReducer = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-//AddCardButton===============================================================================================================
+//AddCard===============================================================================================================
         case success('ADD_NEW_CARD'):
             return {
                 ...state,
@@ -41,6 +41,11 @@ const cardsReducer = (state = initialState, action) => {
                 isError: true,
                 errorMessage: action.payload.message
             }
+
+//EditCard==============================================================================================================
+        case success('EDIT_CARD'):
+            console.log(action.meta.id)
+            return {}
 
 //DeleteCard============================================================================================================
         case success('DELETE_CARD'):

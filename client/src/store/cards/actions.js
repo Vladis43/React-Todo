@@ -29,6 +29,24 @@ export const addNewCard = (card, token) => ({
     }
 })
 
+export const EDIT_CARD = 'EDIT_CARD'
+export const editCard = (id, card, token) => ({
+    type: EDIT_CARD,
+    payload: {
+        request: {
+            url: `${URL}cards/${id}`,
+            method: 'PUT',
+            data: card,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    },
+    meta: {
+        id
+    }
+})
+
 export const DELETE_CARD = 'DELETE_CARD'
 export const deleteCard = (id, token) => ({
     type: DELETE_CARD,

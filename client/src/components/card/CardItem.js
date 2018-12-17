@@ -24,11 +24,6 @@ const CardDescription = styled.div`
   color: #c6c6c6;
   font-size: 18px;
 `;
-const TodoCount = styled.div`
-  color: #c6c6c6;
-  font-size: 16px;
-  display: flex;
-`;
 const CardActions = styled(md.CardActions)`
   display: flex;
   justify-content: space-evenly;
@@ -37,10 +32,9 @@ const DeleteButton = styled(md.IconButton)``;
 const CreateButton = styled(md.IconButton)``;
 
 
-const CardItem = ({card, amountTodo, openModal, deleteCardAction}) => (
+const CardItem = ({card, openEditCardModal, deleteCardAction}) => (
     <Card>
         <CardActionArea
-            onClick={openModal}
             style={card.imageURL ? {
                 background: `url(${card.imageURL}) no-repeat`,
                 backgroundSize: 100 + '%'
@@ -53,16 +47,13 @@ const CardItem = ({card, amountTodo, openModal, deleteCardAction}) => (
                 <CardDescription>
                     {card.description.substr(0, 25)}
                 </CardDescription>
-                <TodoCount>
-                    {`${amountTodo} items`.toUpperCase()}
-                </TodoCount>
             </CardContent>
         </CardActionArea>
         <CardActions>
             <DeleteButton onClick={() => deleteCardAction(card._id, window.localStorage.getItem('token'))}>
                 <icon.Delete/>
             </DeleteButton>
-            <CreateButton onClick={openModal}>
+            <CreateButton onClick={openEditCardModal}>
                 <icon.Create/>
             </CreateButton>
         </CardActions>
