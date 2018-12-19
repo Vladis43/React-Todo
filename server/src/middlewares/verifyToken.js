@@ -8,11 +8,16 @@ route.use('/', (request, response, next) => {
         const bearerHeader = request.headers['authorization']
         const bearer = bearerHeader.split(' ')
         const bearerToken = bearer[1]
-        request.userData = jwt.verify(bearerToken, process.env.SECRET_KEY)
+        const decoded = jwt.verify(bearerToken, process.env.SECRET_KEY)
 
-        next()
+        if (!decoded) {
+            response.status(401).json({message: 'Unauthorized: Invalid token'})
+        } else {
+            request.userData = decoded
+            next()
+        }
     } catch (error) {
-        response.status(403).json({message: 'Authorization failed!'})
+        response.status(401).json({message: 'Unauthorized: No token provided'})
     }
 })
 
