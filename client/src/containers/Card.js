@@ -31,7 +31,6 @@ const GridItem = styled(md.Grid)`
 
 class Card extends Component {
     state = {
-        user: '',
         isEdit: false,
         isOpenCardModal: false,
         cardName: '',
@@ -48,14 +47,7 @@ class Card extends Component {
         if (!token) {
             this.props.history.push('/authorization')
         } else {
-            this.setState({
-                user: jwt.decode(token).payload
-            })
-
-            const userId = jwt.decode(token).payload.userId
-            if (userId) {
-                this.props.fetchCards(userId, token)
-            }
+            this.props.fetchCards(token)
         }
     }
 
@@ -130,13 +122,12 @@ class Card extends Component {
 
     addNewCard = (event) => {
         event.preventDefault()
-        const {user, cardName, cardDescription, imageFile} = this.state
+        const {cardName, cardDescription, imageFile} = this.state
 
         const card = {
             title: cardName,
             description: cardDescription,
-            image: imageFile,
-            userId: user.userId
+            image: imageFile
         }
 
         const token = window.localStorage.getItem('token')
@@ -181,14 +172,15 @@ class Card extends Component {
 
     render() {
         const {cards, deleteCard} = this.props
-        const {
-            user, isEdit, isOpenCardModal, cardName, cardDescription, imageURL, openSnackbar, errorMessage
-        } = this.state
+        const {isEdit, isOpenCardModal, cardName, cardDescription, imageURL, openSnackbar, errorMessage} = this.state
+
+        const token = window.localStorage.getItem('token')
+        const username = token ? jwt.decode(token).payload.username : ''
 
         return (
             <div>
                 <Header
-                    username={user.username}
+                    username={username}
                     history={this.props.history}
                 />
                 <CardWrapper>

@@ -28,7 +28,7 @@ const upload = multer({
     fileFilter
 })
 
-route.get('/:userId', verifyToken, cardController.FetchCards)
+route.get('/', verifyToken, cardController.FetchCards)
 route.post('/', verifyToken, upload.single('image'), cardController.AddNewCard)
 route.put('/:id', verifyToken, upload.single('image'), cardController.EditCard)
 route.delete('/:id', verifyToken, cardController.DeleteCard)

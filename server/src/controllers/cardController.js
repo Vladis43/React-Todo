@@ -1,11 +1,9 @@
 import fs from 'fs'
-
 import Card from '../models/Card'
-import Image from '../models/Image'
 
 export default {
     async FetchCards(request, response) {
-        const userId = request.params.userId
+        const userId = request.userData.payload.userId
 
         try {
             const card = await Card.find({userId})
@@ -19,10 +17,13 @@ export default {
     },
 
     async AddNewCard(request, response) {
+        const userId = request.userData.payload.userId
+        const imageFile = request.file
+
         try {
-            if (request.file === undefined) {
+            if (imageFile === undefined) {
                 const card = await Card.create({
-                    ...request.body
+                    ...request.body, userId
                 })
 
                 response.status(201).json({
@@ -30,14 +31,10 @@ export default {
                     card
                 })
             } else {
-                const image = await Image.create({
-                    ...request.file
-                })
-
                 const card = await Card.create({
-                    ...request.body,
-                    imageId: image._id,
-                    imageURL: `${process.env.URL}/${image.path}`
+                    ...request.body, userId,
+                    image: imageFile.path,
+                    imageURL: `${process.env.URL}/${imageFile.path}`
                 })
 
                 response.status(201).json({
@@ -52,50 +49,32 @@ export default {
 
     async EditCard(request, response) {
         const id = request.params.id
+        const imageFile = request.file
 
         try {
-            console.log(request.file)
+            if (imageFile === undefined) {
+                const card = await Card.findByIdAndUpdate(id, {...request.body}, {new: true})
 
-            if (request.file === undefined) {
-                const card = await Card.findByIdAndUpdate(id, request.body)
-                if (card) {
-                    const editedCard = await Card.findById(id)
-                    response.status(200).json({
-                        message: 'Card edited!',
-                        editedCard
-                    })
-                } else {
-                    response.status(418).json({
-                        message: 'Failed to edit card!'
-                    })
-                }
+                response.status(200).json({
+                    message: 'Card edited!',
+                    card
+                })
             } else {
-                const card = await Card.findById(id)
-                if (!card) {
-                    response.status(404).json({
-                        message: 'There is no such card!'
-                    })
-                } else {
-                    const image = await Image.findByIdAndUpdate(card.imageId, request.file)
-                    fs.unlinkSync(image.path)
-                    const newImage = await Image.findById(card.imageId)
-                    const newCard = await Card.findByIdAndUpdate(id, {
-                        ...request.body,
-                        imageId: newImage._id,
-                        imageURL: `${process.env.URL}/${newImage.path}`
-                    })
-                    if (newCard) {
-                        const editedCard = await Card.findById(id)
-                        response.status(200).json({
-                            message: 'Card edited!',
-                            editedCard
-                        })
-                    } else {
-                        response.status(418).json({
-                            message: 'Failed to edit card!'
-                        })
-                    }
+                const oldCard = await Card.findById(id)
+                if (oldCard.image) {
+                    fs.unlinkSync(oldCard.image)
                 }
+
+                const card = await Card.findByIdAndUpdate(id, {
+                    ...request.body,
+                    image: imageFile.path,
+                    imageURL: `${process.env.URL}/${imageFile.path}`
+                }, {new: true})
+
+                response.status(200).json({
+                    message: 'Card edited!',
+                    card
+                })
             }
         } catch (error) {
             response.status(500).json(error)
@@ -108,10 +87,8 @@ export default {
         try {
             const deletedCard = await Card.findByIdAndDelete(id)
 
-            if (deletedCard.imageId) {
-                const image = await Image.findById(deletedCard.imageId)
-                fs.unlinkSync(image.path)
-                await Image.findByIdAndDelete(deletedCard.imageId)
+            if (deletedCard.image) {
+                fs.unlinkSync(deletedCard.image)
             }
 
             response.status(200).json({

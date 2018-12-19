@@ -45,7 +45,7 @@ const cardsReducer = (state = initialState, action) => {
 //EditCard==============================================================================================================
         case success('EDIT_CARD'):
             const editedCard = state.items.map(card => {
-                return action.meta.id === card._id ? action.payload.data.editedCard : card
+                return action.meta.id === card._id ? action.payload.data.card : card
             })
 
             return {

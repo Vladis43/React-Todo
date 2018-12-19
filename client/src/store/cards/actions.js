@@ -1,11 +1,11 @@
 import {URL} from 'config'
 
 export const FETCH_CARDS = 'FETCH_CARDS'
-export const fetchCards = (userId, token) => ({
+export const fetchCards = (token) => ({
     type: FETCH_CARDS,
     payload: {
         request: {
-            url: `${URL}cards/${userId}`,
+            url: `${URL}cards`,
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

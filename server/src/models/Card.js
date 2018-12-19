@@ -11,8 +11,8 @@ const card = new Schema({
         type: Schema.Types.String,
         required: true
     },
-    imageId: {
-        type: Schema.Types.ObjectId
+    image: {
+        type: Schema.Types.String
     },
     imageURL: {
         type: Schema.Types.String
