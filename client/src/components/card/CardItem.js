@@ -34,12 +34,7 @@ const CreateButton = styled(md.IconButton)``;
 
 const CardItem = ({card, openEditCardModal, deleteCardAction}) => (
     <Card>
-        <CardActionArea
-            style={card.imageURL ? {
-                background: `url(${card.imageURL}) no-repeat`,
-                backgroundSize: 100 + '%'
-            } : {}}
-        >
+        <CardActionArea style={card.imageURL ? {background: `url(${card.imageURL}) 0% 0% / 100% no-repeat`} : {}}>
             <CardContent>
                 <CardName>
                     {card.title.toUpperCase()}

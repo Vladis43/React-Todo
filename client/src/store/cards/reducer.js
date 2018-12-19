@@ -44,8 +44,22 @@ const cardsReducer = (state = initialState, action) => {
 
 //EditCard==============================================================================================================
         case success('EDIT_CARD'):
-            console.log(action.meta.id)
-            return {}
+            const editedCard = state.items.map(card => {
+                return action.meta.id === card._id ? action.payload.data.editedCard : card
+            })
+
+            return {
+                ...state,
+                isError: false,
+                items: editedCard
+            }
+
+        case error('EDIT_CARD'):
+            return {
+                ...state,
+                isError: true,
+                errorMessage: action.payload.message
+            }
 
 //DeleteCard============================================================================================================
         case success('DELETE_CARD'):

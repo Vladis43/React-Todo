@@ -78,6 +78,7 @@ class Card extends Component {
             cardDescription: card.description,
             imageURL: card.imageURL
         })
+        window.localStorage.setItem('cardID', card._id)
     }
 
     closeCardModal = () => {
@@ -85,6 +86,7 @@ class Card extends Component {
             isEdit: false,
             isOpenCardModal: false
         })
+        window.localStorage.removeItem('cardID')
     }
 
     handleChangeValue = (event) => {
@@ -149,7 +151,24 @@ class Card extends Component {
     }
 
     editCard = () => {
-        console.log('edited')
+        const {cardName, cardDescription, imageFile} = this.state
+        const token = window.localStorage.getItem('token')
+        const id = window.localStorage.getItem('cardID')
+        const card = {
+            title: cardName,
+            description: cardDescription,
+            image: imageFile
+        }
+
+        const cardFormData = new FormData()
+
+        Object.keys(card).forEach((key) => {
+            cardFormData.append(key, card[key])
+        })
+
+        this.props.editCard(id, cardFormData, token)
+        this.setState({isOpenCardModal: false})
+        window.localStorage.removeItem('cardID')
     }
 
     handleCloseSnackbar = (event, reason) => {

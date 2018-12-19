@@ -54,6 +54,8 @@ export default {
         const id = request.params.id
 
         try {
+            console.log(request.file)
+
             if (request.file === undefined) {
                 const card = await Card.findByIdAndUpdate(id, request.body)
                 if (card) {
