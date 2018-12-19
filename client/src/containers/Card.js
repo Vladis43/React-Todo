@@ -158,7 +158,7 @@ class Card extends Component {
         })
 
         this.props.editCard(id, cardFormData, token)
-        this.setState({isOpenCardModal: false})
+        this.setState({isEdit: false, isOpenCardModal: false})
         window.localStorage.removeItem('cardID')
     }
 
@@ -177,6 +177,7 @@ class Card extends Component {
         const token = window.localStorage.getItem('token')
         const username = token ? jwt.decode(token).payload.username : ''
 
+        console.log(this.state)
         return (
             <div>
                 <Header
