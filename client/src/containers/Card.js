@@ -177,7 +177,6 @@ class Card extends Component {
         const token = window.localStorage.getItem('token')
         const username = token ? jwt.decode(token).payload.username : ''
 
-        console.log(this.state)
         return (
             <div>
                 <Header
