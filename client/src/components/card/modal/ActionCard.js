@@ -15,10 +15,10 @@ const Form = styled(ValidatorForm)``;
 const Title = styled(md.DialogTitle)``;
 const CardActions = styled(md.DialogActions)``;
 
-const EditCard = (props) => {
+const ActionCard = (props) => {
     const {
         isModal, cardName, cardDescription, imageURL, errorMessage,
-        closeModal, editCard, changeValue, handleImageChange
+        closeModal, actionCard, isEdit, changeValue, handleImageChange
     } = props
 
     return (
@@ -28,7 +28,7 @@ const EditCard = (props) => {
             aria-labelledby="title"
             onClose={closeModal}
         >
-            <Form onSubmit={editCard}>
+            <Form onSubmit={actionCard}>
                 <Title id="title">Please fill in the fields</Title>
                 <CardContent
                     cardName={cardName}
@@ -43,7 +43,7 @@ const EditCard = (props) => {
                         Cancel
                     </md.Button>
                     <md.Button color="primary" type="submit">
-                        Save changes
+                        {isEdit ? 'Save changes' : 'Add card'}
                     </md.Button>
                 </CardActions>
             </Form>
@@ -51,4 +51,4 @@ const EditCard = (props) => {
     )
 }
 
-export default EditCard
+export default ActionCard

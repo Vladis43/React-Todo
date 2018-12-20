@@ -27,7 +27,7 @@ const cardsReducer = (state = initialState, action) => {
                 errorMessage: action.payload.message
             }
 
-//AddCard===============================================================================================================
+//ActionCard===============================================================================================================
         case success('ADD_NEW_CARD'):
             return {
                 ...state,

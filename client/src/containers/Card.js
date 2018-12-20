@@ -9,8 +9,7 @@ import * as md from '@material-ui/core'
 import Header from "../components/Header"
 import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
-import AddCard from '../components/card/modal/AddCard'
-import EditCard from '../components/card/modal/EditCard'
+import ActionCard from '../components/card/modal/ActionCard'
 import Snackbar from '../components/Snackbar'
 
 
@@ -196,30 +195,18 @@ class Card extends Component {
                                 </GridItem>
                             )
                         })}
-                        {!isEdit ?
-                            <AddCard
-                                isModal={isOpenCardModal}
-                                cardName={cardName}
-                                cardDescription={cardDescription}
-                                imageURL={imageURL}
-                                errorMessage={errorMessage}
-                                closeModal={this.closeCardModal}
-                                addNewCard={this.addNewCard}
-                                changeValue={this.handleChangeValue}
-                                handleImageChange={this.handleImageChange}
-                            /> :
-                            <EditCard
-                                isModal={isOpenCardModal}
-                                cardName={cardName}
-                                cardDescription={cardDescription}
-                                imageURL={imageURL}
-                                errorMessage={errorMessage}
-                                closeModal={this.closeCardModal}
-                                editCard={this.editCard}
-                                changeValue={this.handleChangeValue}
-                                handleImageChange={this.handleImageChange}
-                            />
-                        }
+                        <ActionCard
+                            isModal={isOpenCardModal}
+                            cardName={cardName}
+                            cardDescription={cardDescription}
+                            imageURL={imageURL}
+                            errorMessage={errorMessage}
+                            closeModal={this.closeCardModal}
+                            actionCard={!isEdit ? this.addNewCard : this.editCard}
+                            isEdit={isEdit}
+                            changeValue={this.handleChangeValue}
+                            handleImageChange={this.handleImageChange}
+                        />
                         <GridItem item xs={12} sm={6} lg={4} xl={3}>
                             <AddCardButton openModal={this.openAddCardModal}/>
                         </GridItem>
@@ -234,8 +221,6 @@ class Card extends Component {
         )
     }
 }
-
-//TODO сделать одну модалку
 
 const mapStateToProps = (state) => {
     return {
