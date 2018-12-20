@@ -1,3 +1,4 @@
+import fs from 'fs'
 import Card from '../models/Card'
 
 export default {
