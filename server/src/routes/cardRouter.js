@@ -2,6 +2,7 @@ import {Router} from 'express'
 import multer from "multer"
 import cardController from '../controllers/cardController'
 import verifyToken from '../middlewares/verifyToken'
+import cardValidation from '../middlewares/cardValidation'
 
 const route = Router()
 
@@ -29,8 +30,8 @@ const upload = multer({
 })
 
 route.get('/', verifyToken, cardController.FetchCards)
-route.post('/', verifyToken, upload.single('image'), cardController.AddNewCard)
-route.put('/:id', verifyToken, upload.single('image'), cardController.EditCard)
+route.post('/', verifyToken, upload.single('image'), cardValidation, cardController.AddNewCard)
+route.put('/:id', verifyToken, upload.single('image'), cardValidation, cardController.EditCard)
 route.delete('/:id', verifyToken, cardController.DeleteCard)
 
 export default route
