@@ -1,36 +1,44 @@
 import {URL} from 'config'
 
 export const FETCH_TODOS = 'FETCH_TODOS'
-export const fetchTodos = (cardId) => ({
+export const fetchTodos = (cardId, token) => ({
     type: FETCH_TODOS,
     payload: {
         request: {
             url: `${URL}todos/${cardId}`,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     }
 })
 
 export const ADD_NEW_TODO = 'ADD_NEW_TODO'
-export const addNewTodo = (todo) => ({
+export const addNewTodo = (cardId, todo, token) => ({
     type: ADD_NEW_TODO,
     payload: {
         request: {
-            url: `${URL}todos`,
+            url: `${URL}todos/${cardId}`,
             method: 'POST',
-            data: todo
+            data: todo,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     }
 })
 
 export const TOGGLE_TODO = 'TOGGLE_TODO'
-export const toggleTodo = (id, completed) => ({
+export const toggleTodo = (id, token) => ({
     type: TOGGLE_TODO,
     payload: {
         request: {
             url: `${URL}todos/${id}`,
-            method: 'PATCH',
-            data: {completed: !completed}
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     },
     meta: {
@@ -39,12 +47,15 @@ export const toggleTodo = (id, completed) => ({
 })
 
 export const DELETE_TODO = 'DELETE_TODO'
-export const deleteTodo = (id) => ({
+export const deleteTodo = (id, token) => ({
     type: DELETE_TODO,
     payload: {
         request: {
             url: `${URL}todos/${id}`,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }
     },
     meta: {

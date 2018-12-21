@@ -11,6 +11,7 @@ import CardItem from '../components/card/CardItem'
 import AddCardButton from '../components/card/AddCardButton'
 import ActionCard from '../components/card/modal/ActionCard'
 import Snackbar from '../components/Snackbar'
+import Todo from '../containers/Todo'
 
 
 const CardWrapper = styled.div`  
@@ -32,6 +33,7 @@ class Card extends Component {
     state = {
         isEdit: false,
         isOpenCardModal: false,
+        isOpenTodoModal: false,
         cardName: '',
         cardDescription: '',
         imageFile: '',
@@ -72,10 +74,19 @@ class Card extends Component {
         window.localStorage.setItem('cardID', card._id)
     }
 
+    openTodoModal = (card) => {
+        this.setState({
+            isOpenTodoModal: true,
+            cardName: card.title
+        })
+        window.localStorage.setItem('cardID', card._id)
+    }
+
     closeCardModal = () => {
         this.setState({
             isEdit: false,
-            isOpenCardModal: false
+            isOpenCardModal: false,
+            isOpenTodoModal: false
         })
         window.localStorage.removeItem('cardID')
     }
@@ -190,11 +201,21 @@ class Card extends Component {
                                     <CardItem
                                         card={card}
                                         openEditCardModal={() => this.openEditCardModal(card)}
+                                        openTodo={() => this.openTodoModal(card)}
                                         deleteCardAction={deleteCard}
                                     />
                                 </GridItem>
                             )
                         })}
+
+                        {this.state.isOpenTodoModal ?
+                            <Todo
+                                isModal={this.state.isOpenTodoModal}
+                                closeModal={this.closeCardModal}
+                                title={cardName}
+                            /> : ''
+                        }
+
                         <ActionCard
                             isModal={isOpenCardModal}
                             cardName={cardName}

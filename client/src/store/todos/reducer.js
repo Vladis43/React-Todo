@@ -18,7 +18,7 @@ const todosReducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
                 isError: false,
-                items: action.payload.data
+                items: action.payload.data.todo
             }
 
         case error('FETCH_TODOS'):
@@ -33,7 +33,7 @@ const todosReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isError: false,
-                items: [...state.items, action.payload.data]
+                items: [...state.items, action.payload.data.todo]
             }
 
         case error('ADD_NEW_TODO'):

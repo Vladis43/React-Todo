@@ -10,6 +10,8 @@ const TodoListContainer = styled.div`
 
 const TodoItem = (props) => {
     const {todo, toggleTodoAction, deleteTodoAction} = props
+    const token = window.localStorage.getItem('token')
+
     return (
         <TodoListContainer>
             <md.Checkbox
@@ -17,7 +19,7 @@ const TodoItem = (props) => {
                 checked={todo.completed}
                 onChange={() => toggleTodoAction(todo._id, todo.completed)}
             />
-            <md.ListItem button onClick={() => toggleTodoAction(todo._id, todo.completed)}>
+            <md.ListItem button onClick={() => toggleTodoAction(todo._id, token)}>
                 <md.ListItemText
                     primary={todo.title}
                     style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}/>
@@ -25,7 +27,7 @@ const TodoItem = (props) => {
             <md.Button
                 mini
                 color="secondary"
-                onClick={() => deleteTodoAction(todo._id)}
+                onClick={() => deleteTodoAction(todo._id, token)}
             >
                 <ClearIcon/>
             </md.Button>

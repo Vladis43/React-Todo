@@ -32,9 +32,12 @@ const DeleteButton = styled(md.IconButton)``;
 const CreateButton = styled(md.IconButton)``;
 
 
-const CardItem = ({card, openEditCardModal, deleteCardAction}) => (
+const CardItem = ({card, openEditCardModal, openTodo, deleteCardAction}) => (
     <Card>
-        <CardActionArea style={card.imageURL ? {background: `url(${card.imageURL}) 0% 0% / 100% no-repeat`} : {}}>
+        <CardActionArea
+            onClick={openTodo}
+            style={card.imageURL ? {background: `url(${card.imageURL}) 0% 0% / 100% no-repeat`} : {}}
+        >
             <CardContent>
                 <CardName>
                     {card.title.toUpperCase()}
