@@ -5,7 +5,9 @@ import {ValidatorForm} from 'react-material-ui-form-validator'
 import CardContent from './CardContent'
 
 const Modal = styled(md.Dialog)`
+    margin-bottom: 250px;
   @media screen and (max-device-width: 455px) {
+    margin-bottom: 0;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -15,7 +15,7 @@ import Snackbar from 'components/Snackbar'
 //Styled Components=====================================================================================================
 const time = new Date().getHours()
 const Wrapper = styled.div`
-  background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}") 0 0 / 100% no-repeat;
+  background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}") no-repeat;
 
   width: 100vw;
   height: 100vh;
@@ -33,7 +33,7 @@ const Card = styled(md.Card)`
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}")  no-repeat;
+    background:url("${time > 7 && time < 18 ? backgroundImage : backgroundImageNight}") no-repeat;
   }
 `;
 const Form = styled(ValidatorForm)``;

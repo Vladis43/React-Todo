@@ -77,7 +77,9 @@ class Card extends Component {
     openTodoModal = (card) => {
         this.setState({
             isOpenTodoModal: true,
-            cardName: card.title
+            cardName: card.title,
+            cardDescription: card.description,
+            imageURL: card.imageURL
         })
         window.localStorage.setItem('cardID', card._id)
     }
@@ -213,6 +215,8 @@ class Card extends Component {
                                 isModal={this.state.isOpenTodoModal}
                                 closeModal={this.closeCardModal}
                                 title={cardName}
+                                description={cardDescription}
+                                image={imageURL}
                             /> : ''
                         }
 

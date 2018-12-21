@@ -21,7 +21,7 @@ const CardName = styled.div`
   font-size: 22px;
 `;
 const CardDescription = styled.div`
-  color: #c6c6c6;
+  color: #ffffff;
   font-size: 18px;
 `;
 const CardActions = styled(md.CardActions)`

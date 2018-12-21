@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from "styled-components"
 
-import * as md from '@material-ui/core/'
+import * as md from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 
 const AddTodoForm = styled.form`
     display: flex;
 `;
-
 const InputField = styled.div`
     width: 100%;
 `;
