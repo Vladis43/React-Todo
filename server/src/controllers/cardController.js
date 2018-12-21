@@ -1,5 +1,6 @@
 import fs from 'fs'
 import Card from '../models/Card'
+import Todo from '../models/Todo'
 
 export default {
     async FetchCards(request, response) {
@@ -96,10 +97,11 @@ export default {
 
         try {
             const deletedCard = await Card.findByIdAndDelete(id)
-
             if (deletedCard.image) {
                 fs.unlinkSync(deletedCard.image)
             }
+
+            await Todo.deleteMany({cardId: id})
 
             response.status(200).json({
                 message: 'Card deleted!',

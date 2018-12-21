@@ -1,4 +1,5 @@
 import {Router} from 'express'
+import fs from 'fs'
 import multer from "multer"
 import cardController from '../controllers/cardController'
 import verifyToken from '../middlewares/verifyToken'
@@ -8,7 +9,12 @@ const route = Router()
 
 const storage = multer.diskStorage({
     destination: (request, file, cb) => {
-        cb(null, './uploads/')
+        if (fs.existsSync('./uploads/')) {
+            cb(null, './uploads/')
+        } else {
+            fs.mkdirSync('./uploads/')
+            cb(null, './uploads/')
+        }
     },
     filename: (request, file, cb) => {
         cb(null, new Date().toISOString() + file.originalname)

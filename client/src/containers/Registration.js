@@ -65,8 +65,9 @@ class Registration extends Component {
     componentDidMount() {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
             if (value !== this.state.password) {
-                return false;
+                return false
             }
+            return true
         })
     }
 
